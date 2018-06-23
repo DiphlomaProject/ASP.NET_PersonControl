@@ -1,0 +1,55 @@
+﻿@model ASP.NET_PersonControl.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table id="books" class="table table-hover">
+    <tbody>
+        <tr>
+            <td style="width:150px;"><strong>Name:</strong></td>
+            <td>@Model.USERNAME</td>
+        </tr>
+        <tr>
+            <td><strong>ID:</strong></td>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td>@Model.EMAIL</td>
+        </tr>
+        <tr>
+            <td><strong>Email confrimed</strong></td>
+            <td>@Model.EMAILCONFIRMED</td>
+        </tr>
+        <tr>
+            <td><strong>Phone</strong></td>
+            <td>@Model.PHONENUMBER</td>
+        </tr>
+        <tr>
+            <td><strong>Phone confrimed</strong></td>
+            <td>@Model.PHONENUMBERCONFIRMED</td>
+        </tr>
+        <tr>
+            <td><strong>Two factor enabled</strong></td>
+            <td>@Model.TWOFACTORENABLED</td>
+        </tr>
+        <tr>
+            <td><strong>Lockout end date UTC</strong></td>
+            <td>@Model.LOCKOUTENDDATEUTC</td>
+        </tr>
+        <tr>
+            <td><strong>Lockeout enabled</strong></td>
+            <td>@Model.LOCKOUTENABLED</td>
+        </tr>
+        <tr>
+            <td><strong>Access failed cout</strong></td>
+            <td>@Model.ACCESSFAILEDCOUNT</td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Edit", "Employee", new { @id = @Model.Id }) + "'");">Edit</button>
+<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Delete", "Employee", new { @id = @Model.Id }) + "'");">Delete</button>

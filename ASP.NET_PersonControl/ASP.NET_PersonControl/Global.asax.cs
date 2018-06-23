@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +14,8 @@ namespace ASP.NET_PersonControl
     {
         protected void Application_Start()
         {
+            Database.SetInitializer<ASP.NET_PersonControl.Models.EmployeesContext>(null); // it will crate table if we haven't it
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
