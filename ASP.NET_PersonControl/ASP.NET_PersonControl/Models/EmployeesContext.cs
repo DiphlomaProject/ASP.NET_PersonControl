@@ -8,8 +8,8 @@ namespace ASP.NET_PersonControl.Models
 {
     public class EmployeesContext : DbContext
     {
-        public DbSet<Employee> employeesDBContext { get; set; }
-        public DbSet<Roles> roles { get; set; }
+        public DbSet<AspNetUsers> employeesDBContext { get; set; }
+        public DbSet<Role> roles { get; set; }
         public DbSet<UserRoles> userRoles { get; set; }
     }
 }

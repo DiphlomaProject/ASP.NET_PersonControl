@@ -20,6 +20,10 @@ namespace ASP.NET_PersonControl.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<AspNetUsers> employeesDBContext { get; set; }
+        public DbSet<Role> roles { get; set; }
+        public DbSet<UserRoles> userRoles { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

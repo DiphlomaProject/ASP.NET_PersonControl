@@ -15,7 +15,7 @@ namespace ASP.NET_PersonControl.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            List<Employee> employees = employeesContext.employeesDBContext.ToList<Employee>();
+            List<AspNetUsers> employees = employeesContext.employeesDBContext.ToList<AspNetUsers>();
             return View();
         }
 
@@ -27,7 +27,7 @@ namespace ASP.NET_PersonControl.Controllers
             if(id == null)
                 return RedirectToAction("Index");
 
-            Employee employee = employeesContext.employeesDBContext.Single(emp => emp.Id == id);
+            AspNetUsers employee = employeesContext.employeesDBContext.Single(emp => emp.Id == id);
             return View(employee);
         }
 

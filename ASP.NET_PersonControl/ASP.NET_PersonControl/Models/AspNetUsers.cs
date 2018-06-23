@@ -6,8 +6,8 @@ using System.Web;
 
 namespace ASP.NET_PersonControl.Models
 {
-    [Table("AspNetUsers")] // set like class for a table
-    public class Employee
+    //[Table("AspNetUsers")] // set like class for a table
+    public class AspNetUsers
     {
         public string Id { get; set; }
         public string EMAIL { get; set; }
@@ -19,8 +19,12 @@ namespace ASP.NET_PersonControl.Models
         public bool LOCKOUTENABLED { get; set; }
         public int ACCESSFAILEDCOUNT { get; set; }
         public string USERNAME { get; set; }    // first and last name
+
         public string COUNTRY { get; set; } //ukraine
         public string CITY { get; set; }    // donetsk
         public string ADDRESS { get; set; } // like sobinova 169*/
+
+        /*public string roleID  { get; set; }
+        public Role role { get; set; }*/
     }
 }
