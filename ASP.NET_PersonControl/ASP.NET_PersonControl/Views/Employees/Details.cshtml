@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.USERNAME details.</h2>
 
 <table id="books" class="table table-hover">
     <tbody>
@@ -47,6 +47,18 @@
         <tr>
             <td><strong>Access failed cout</strong></td>
             <td>@Model.ACCESSFAILEDCOUNT</td>
+        </tr>
+        <tr>
+            <td><strong>Country</strong></td>
+            <td>@Model.COUNTRY</td>
+        </tr>
+        <tr>
+            <td><strong>City</strong></td>
+            <td>@Model.CITY</td>
+        </tr>
+        <tr>
+            <td><strong>Address</strong></td>
+            <td>@Model.ADDRESS</td>
         </tr>
     </tbody>
 </table>

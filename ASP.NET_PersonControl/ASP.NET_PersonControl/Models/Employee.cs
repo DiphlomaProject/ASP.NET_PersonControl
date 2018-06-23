@@ -19,8 +19,8 @@ namespace ASP.NET_PersonControl.Models
         public bool LOCKOUTENABLED { get; set; }
         public int ACCESSFAILEDCOUNT { get; set; }
         public string USERNAME { get; set; }    // first and last name
-        /*public string country { get; set; } //ukraine
-        public string city { get; set; }    // donetsk
-        public string address { get; set; } // like sobinova 169*/
+        public string COUNTRY { get; set; } //ukraine
+        public string CITY { get; set; }    // donetsk
+        public string ADDRESS { get; set; } // like sobinova 169*/
     }
 }

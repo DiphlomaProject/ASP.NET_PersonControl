@@ -10,20 +10,23 @@ namespace ASP.NET_PersonControl.Controllers
 {
     public class EmployeesController : Controller
     {
-        EmployeesContext employeesContext = new EmployeesContext();
+        EmployeesContext employeesContext = new EmployeesContext(); // cennect to data base;
+
         // GET: Employees
         public ActionResult Index()
         {
             List<Employee> employees = employeesContext.employeesDBContext.ToList<Employee>();
-
             return View();
         }
 
         // GET: Employees/Details/5
-        //http://localhost:60071/Employees/Details/a22f9811-a4ae-4cd6-b95e-182b12b030a8
+        //http://localhost:60071/Employees/Details/7673810d-e10e-4ad0-a8ba-ac6ca89e40cf
         //http://localhost:60071/Employees/Details/5262d911-d7cd-4478-b8ce-40a1adb7b229
         public ActionResult Details(string id)
         {
+            if(id == null)
+                return RedirectToAction("Index");
+
             Employee employee = employeesContext.employeesDBContext.Single(emp => emp.Id == id);
             return View(employee);
         }
