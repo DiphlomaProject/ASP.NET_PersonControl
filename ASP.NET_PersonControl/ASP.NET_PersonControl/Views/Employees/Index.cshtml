@@ -1,4 +1,4 @@
-﻿@model ASP.NET_PersonControl.Models.AspNetUsers
+﻿@model  IEnumerable<ASP.NET_PersonControl.Models.AspNetUsers>
 
 @{
     ViewBag.Title = "Employees";
@@ -6,3 +6,32 @@
 
 <h2>Employees </h2>
 
+<table id="books" class="table table-bordered table-hover">
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Email confrimed</th>
+        <th>Phone</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>Role</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var employee in Model)
+    {
+    <tr>
+        <td>@Html.ActionLink(employee.USERNAME, "Details", "Employees", new { @id = employee.Id }, null)</td>
+        <td>@employee.EMAIL</td>
+        <td>@employee.EMAILCONFIRMED</td>
+        <td>@employee.PHONENUMBER</td>
+        <td>@employee.COUNTRY</td>
+        <td>@employee.CITY</td>
+        <td>@employee.role</td>
+    </tr>
+    }
+</tbody>
+</table>
+<br />
+<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Employees") + "'");">Create</button>

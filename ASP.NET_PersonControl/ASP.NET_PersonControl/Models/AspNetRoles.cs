@@ -7,9 +7,9 @@ using System.Web;
 namespace ASP.NET_PersonControl.Models
 {
     //[Table("AspNetRoles")] // set like class for a table
-    public class Role
+    public class AspNetRoles
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
         public string NAME { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace ASP.NET_PersonControl
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<ASP.NET_PersonControl.Models.EmployeesContext>(null); // it will crate table if we haven't it
+            //Database.SetInitializer<ASP.NET_PersonControl.Models.EmployeesContext>(null); // it will crate table if we haven't it
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
