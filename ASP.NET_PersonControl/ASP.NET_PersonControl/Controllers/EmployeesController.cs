@@ -154,10 +154,14 @@ namespace ASP.NET_PersonControl.Controllers
         // GET: Employees/Delete/5
         public ActionResult Delete(string id)
         {
-            var bookInDB = _context.employeesDBContext.SingleOrDefault(c => c.Id == id);
-            if (bookInDB != null)
+            var empl = _context.employeesDBContext.SingleOrDefault(c => c.Id == id);
+            if (empl != null)
             {
-                _context.employeesDBContext.Remove(bookInDB);
+                _context.employeesDBContext.Remove(empl);
+
+                AspNetUserRoles userRoles = _context.userRoles.SingleOrDefault(c => c.USERID == empl.Id);
+                if (userRoles != null)
+                        _context.employeesDBContext.Remove(empl);
             }
 
             _context.SaveChanges();
