@@ -9,8 +9,9 @@ using ASP.NET_PersonControl.ViewModels;
 
 namespace ASP.NET_PersonControl.Controllers
 {
+   
     public class EmployeesController : Controller
-    {
+    { public static AspNetUsers usersID = new AspNetUsers();
         public EmployeesContext _context { get; set; } // cennect to data base;
 
         public EmployeesController()
@@ -130,9 +131,21 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         // GET: Employees/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            var tempinfo = new  AspNetUsers();
+            var empl = _context.employeesDBContext.SingleOrDefault(c => c.Id == id);
+            //if (empl != null)
+            //{
+
+
+               // AspNetUserRoles userRoles = _context.userRoles.SingleOrDefault(c => c.USERID == empl.Id);
+                var viewModel = new EmployeeFormViewModel()
+                {
+                    user = empl
+                };
+            //}
+            return View("Edit", viewModel);
         }
 
         // POST: Employees/Edit/5

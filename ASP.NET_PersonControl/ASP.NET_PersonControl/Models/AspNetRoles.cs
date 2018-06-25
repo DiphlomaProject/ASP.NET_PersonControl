@@ -11,5 +11,7 @@ namespace ASP.NET_PersonControl.Models
     {
         public string Id { get; set; }
         public string NAME { get; set; }
+
+     
     }
 }
