@@ -2,9 +2,35 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
 
-<h2>Index</h2>
+<h2>Roles</h2>
+
+<table id="roles" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Role Id</th>
+            <th>Role name</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model.Roles)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+                <td>@Html.ActionLink("Delete", "DeleteRole", "Employees", new { @id = role.Id }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br/>
+<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("CreateRoleView", "Employees") + "'");">New role</button>
+
+
+<h2>Users</h2>
 
 <table id="books" class="table table-bordered table-hover">
     <thead>
@@ -14,20 +40,23 @@
             <th>Email confrimed</th>
             <th>Phone</th>
             <th>Country</th>
-            <th>City</th>
+            <th>Role</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var employee in Model.Users)
         {
-        <tr>
-            <td>@Html.ActionLink(employee.UserName, "Details", "Employees", new { @id = employee.Id }, null)</td>
-            <td>@employee.Email</td>
-            <td>@employee.EmailConfirmed</td>
-            <td>@employee.PhoneNumber</td>
-            <td>@employee.Country</td>
-            <td>@employee.City</td>
-        </tr>
+            <tr>
+                <td>@Html.ActionLink(employee.UserName, "Details", "Employees", new { @id = employee.Id }, null)</td>
+                <td>@employee.Email</td>
+                <td>@employee.EmailConfirmed</td>
+                <td>@employee.PhoneNumber</td>
+                <td>@employee.Country</td>
+                <td>@foreach (string roleName in employee.RoleNames)
+                {
+                    @roleName;
+                }</td>
+            </tr>  
         }
     </tbody>
 </table>

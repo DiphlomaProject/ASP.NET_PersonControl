@@ -9,7 +9,7 @@ namespace ASP.NET_PersonControl.ViewModels
 {
     public class EmployeeFormViewModel
     {
-        public string roleId;
+        public string RoleId { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
         public ApplicationUser user { get; set; }
     }

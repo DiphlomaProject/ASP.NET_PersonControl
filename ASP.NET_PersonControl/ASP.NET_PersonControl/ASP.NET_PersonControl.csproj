@@ -231,6 +231,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdministrationFormViewModel.cs" />
     <Compile Include="ViewModels\EmployeeFormViewModel.cs" />
+    <Compile Include="ViewModels\NewRoleFormModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -295,6 +296,7 @@
     <Content Include="Views\Employees\Create.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\CreateRoleView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

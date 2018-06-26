@@ -10,7 +10,6 @@ namespace ASP.NET_PersonControl.ViewModels
     public class AdministrationFormViewModel
     {
         public List<IdentityRole> Roles { get; set; }
-
         public List<ApplicationUser> Users { get; set; }
     }
 }

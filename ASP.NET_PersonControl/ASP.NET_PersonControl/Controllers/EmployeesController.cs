@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Web.Security;
 using ASP.NET_PersonControl.Models;
 using ASP.NET_PersonControl.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -42,6 +43,13 @@ namespace ASP.NET_PersonControl.Controllers
                 Roles = roleManager.Roles.ToList(),     // получить список ролей
                 Users = dbContext.Users.ToList()        // получить список пользователей
             };
+
+            var userRoles = _context.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
+            foreach (ApplicationUser user in viewModel.Users)
+                user.RoleNames = (from r in userRoles
+                                 from u in r.Users
+                                 where u.UserId == user.Id
+                                 select r.Name).ToList();
 
             return View(viewModel);
         }
@@ -89,8 +97,56 @@ namespace ASP.NET_PersonControl.Controllers
             }
         }
 
+        public ActionResult CreateRoleView()
+        {
+            var viewModel = new NewRoleFormModel
+            {
+                Roles = _context.Roles.ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        // GET: /Administration/New
         [ValidateAntiForgeryToken]
-        public ActionResult Save(ApplicationUser user)
+        [HttpPost, ActionName("NewRole")]
+        public async Task<ActionResult> CreateNewRole(NewRoleFormModel role)
+        {
+            // Создание новой роли
+            var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            await roleManager.CreateAsync(new IdentityRole(role.RoleNeme));
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet, ActionName("DeleteRole")]
+        public async Task<ActionResult> DeleteRoleConfirmed(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                // Удаление роли
+                var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+                var role = await roleManager.FindByIdAsync(id);
+                await roleManager.DeleteAsync(role);
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Save(ApplicationUser user, EmployeeFormViewModel employeeForm)
         {
 
             if (!ModelState.IsValid)
@@ -130,8 +186,19 @@ namespace ASP.NET_PersonControl.Controllers
                 userInDB.Address = user.Address;
             }
 
-            //if (user.Id != null)
-            //    _context.userRoles.Add(new IdentityRole() { role = user.roleId, USERID = user.Id });
+            if (user.Id != null && employeeForm.RoleId != null)
+            {
+                //RoleProvider p = Roles.Provider;
+                //p.AddUsersToRoles(new string[] { "jon" }, new string[] { "admin" });
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+
+                //remove from old roles 
+                var roles = UserManager.GetRoles(user.Id);
+                UserManager.RemoveFromRoles(user.Id, roles.ToArray());
+
+                //add role
+                UserManager.AddToRole(user.Id, _context.Roles.SingleOrDefault(r => r.Id == employeeForm.RoleId).Name);
+            }
 
             _context.SaveChanges();
 
@@ -149,7 +216,8 @@ namespace ASP.NET_PersonControl.Controllers
                // AspNetUserRoles userRoles = _context.userRoles.SingleOrDefault(c => c.USERID == empl.Id);
                 var viewModel = new EmployeeFormViewModel()
                 {
-                    user = empl
+                    user = empl,
+                    Roles = _context.Roles.ToList()
                 };
             //}
             return View("Edit", viewModel);

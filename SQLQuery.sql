@@ -6,6 +6,7 @@ select AspNetUsers.Email, AspNetUserRoles.UserId, AspNetUserRoles.RoleId, AspNet
   select * from AspNetUserRoles;
   select * from AspNetUsers;
  alter table AspNetUsers add Country nvarchar (256), City nvarchar(256), Address nvarchar(256); 
+DELETE FROM AspNetUserRoles;
 
  insert into AspNetRoles (Id, Name) values ( (select COUNT(Id) + 1 from AspNetRoles), 'Admin' );
  insert into AspNetUserRoles(userid, roleid) values ( 'ce2f2694-a66e-453a-8555-be3d1191b19d', 1 );
