@@ -60,9 +60,15 @@ namespace ASP.NET_PersonControl.Controllers
             if(id == null)
                 return RedirectToAction("Index");
 
-            IdentityUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
-            if(employee != null)
+            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+            if (employee != null)
+            {
+                employee.RoleNames = (from r in roleManager.Roles.ToList()
+                                      from u in r.Users
+                                      where u.UserId == employee.Id
+                                      select r.Name).ToList();
                 return View(employee);
+            }
             else
                 return RedirectToAction("Index");
         }

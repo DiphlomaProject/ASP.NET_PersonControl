@@ -60,6 +60,15 @@
             <td><strong>Address</strong></td>
             <td>@Model.Address</td>
         </tr>
+        <tr>
+            <td><strong>Role</strong></td>
+            <td>
+                @foreach (string roleName in Model.RoleNames)
+                {
+                    @roleName;
+                }
+            </td>
+        </tr>
     </tbody>
 </table>
 <br />
