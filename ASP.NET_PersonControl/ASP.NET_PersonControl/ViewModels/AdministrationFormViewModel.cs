@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+
 namespace ASP.NET_PersonControl.ViewModels
 {
-    public class EmployeeFormViewModel
+    public class AdministrationFormViewModel
     {
-        public string roleId;
-        public IEnumerable<IdentityRole> Roles { get; set; }
-        public ApplicationUser user { get; set; }
+        public List<IdentityRole> Roles { get; set; }
+
+        public List<ApplicationUser> Users { get; set; }
     }
 }

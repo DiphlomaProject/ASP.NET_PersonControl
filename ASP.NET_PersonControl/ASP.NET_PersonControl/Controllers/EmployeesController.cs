@@ -1,41 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 using ASP.NET_PersonControl.Models;
 using ASP.NET_PersonControl.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ASP.NET_PersonControl.Controllers
 {
    
     public class EmployeesController : Controller
-    { public static AspNetUsers usersID = new AspNetUsers();
-        public EmployeesContext _context { get; set; } // cennect to data base;
+    { 
+        public ApplicationDbContext _context { get; set; } // cennect to data base;
+        public RoleManager<IdentityRole> roleManager { get; set; }
 
         public EmployeesController()
         {
-            _context = new EmployeesContext();
+            _context = new ApplicationDbContext();
+
+            // Создать хранилище ролей
+            var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+
+            // Создать менеджер ролей
+            roleManager = new RoleManager<IdentityRole>(roleStore);
         }
 
         // GET: Employees
         public ActionResult Index()
-        {
-            List<AspNetUsers> employees = _context.employeesDBContext.ToList<AspNetUsers>();
-            List<AspNetRoles> roles = _context.roles.ToList();
-            List<AspNetUserRoles> userRoles = _context.userRoles.ToList();
-            //AspNetUserRoles userRoles = _context.userRoles.SingleOrDefault(c => c.USERID == "ce2f2694-a66e-453a-8555-be3d1191b19d");
+        {   
+            // Создать контекст для работы с БД
+            var dbContext = new ApplicationDbContext();
 
-            //read employees' role
-            foreach (AspNetUserRoles userToRole in userRoles)
-                if (employees.SingleOrDefault(u => u.Id == userToRole.USERID) != null && roles.SingleOrDefault(r => r.Id == userToRole.ROLEID) != null)
-                {
-                    employees.SingleOrDefault(u => u.Id == userToRole.USERID).role = roles.SingleOrDefault(r => r.Id == userToRole.ROLEID).NAME;
-                    employees.SingleOrDefault(u => u.Id == userToRole.USERID).roleId = roles.SingleOrDefault(r => r.Id == userToRole.ROLEID).Id;
-                }
+            var viewModel = new AdministrationFormViewModel
+            {
+                Roles = roleManager.Roles.ToList(),     // получить список ролей
+                Users = dbContext.Users.ToList()        // получить список пользователей
+            };
 
-            return View(employees);
+            return View(viewModel);
         }
 
         // GET: Employees/Details/5
@@ -44,7 +52,7 @@ namespace ASP.NET_PersonControl.Controllers
             if(id == null)
                 return RedirectToAction("Index");
 
-            AspNetUsers employee = _context.employeesDBContext.SingleOrDefault(emp => emp.Id == id);
+            IdentityUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
             if(employee != null)
                 return View(employee);
             else
@@ -54,12 +62,12 @@ namespace ASP.NET_PersonControl.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            var empl = new AspNetUsers();
+            var empl = new ApplicationUser();
 
             var viewModel = new EmployeeFormViewModel
             {
                 user = empl,
-                roles = _context.roles.ToList()
+                Roles = _context.Roles.ToList()
             };
 
             return View("Create", viewModel);
@@ -82,7 +90,7 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        public ActionResult Save(AspNetUsers user)
+        public ActionResult Save(ApplicationUser user)
         {
 
             if (!ModelState.IsValid)
@@ -90,7 +98,7 @@ namespace ASP.NET_PersonControl.Controllers
                 var viewModel = new EmployeeFormViewModel
                 {
                     user = user,
-                    roles = _context.roles.ToList()
+                    Roles = _context.Roles.ToList()
                 };
 
                 return View("Create", viewModel);
@@ -98,32 +106,32 @@ namespace ASP.NET_PersonControl.Controllers
 
             if (user.Id == null)
             {
-                user.Id = (_context.employeesDBContext.Count() + 1).ToString();
-                _context.employeesDBContext.Add(user);
+                user.Id = (_context.Users.Count() + 1).ToString();
+                _context.Users.Add(user);
             }
             else
             {
-                var userInDB = _context.employeesDBContext.SingleOrDefault(c => c.Id == user.Id);
+                var userInDB = _context.Users.SingleOrDefault(c => c.Id == user.Id);
 
                 if (userInDB == null)
-                    userInDB = new AspNetUsers();
+                    userInDB = new ApplicationUser();
 
-                userInDB.EMAIL = user.EMAIL;
-                userInDB.EMAILCONFIRMED = user.EMAILCONFIRMED;
-                userInDB.PHONENUMBER = user.PHONENUMBER;
-                userInDB.PHONENUMBERCONFIRMED = user.PHONENUMBERCONFIRMED;
-                userInDB.TWOFACTORENABLED = user.TWOFACTORENABLED;
-                userInDB.LOCKOUTENDDATEUTC = user.LOCKOUTENDDATEUTC;
-                userInDB.LOCKOUTENABLED = user.LOCKOUTENABLED;
-                userInDB.ACCESSFAILEDCOUNT = user.ACCESSFAILEDCOUNT;
-                userInDB.USERNAME = user.USERNAME;
-                userInDB.COUNTRY = user.COUNTRY;
-                userInDB.CITY = user.CITY;
-                userInDB.ADDRESS = user.ADDRESS;
+                userInDB.Email = user.Email;
+                userInDB.EmailConfirmed = user.EmailConfirmed;
+                userInDB.PhoneNumber = user.PhoneNumber;
+                userInDB.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+                userInDB.TwoFactorEnabled = user.TwoFactorEnabled;
+                userInDB.LockoutEndDateUtc = user.LockoutEndDateUtc;
+                userInDB.LockoutEnabled = user.LockoutEnabled;
+                userInDB.AccessFailedCount = user.AccessFailedCount;
+                userInDB.UserName = user.UserName;
+                userInDB.Country = user.Country;
+                userInDB.City = user.City;
+                userInDB.Address = user.Address;
             }
 
-            if (user.roleId != null)
-                _context.userRoles.Add(new AspNetUserRoles() { ROLEID = user.roleId, USERID = user.Id });
+            //if (user.Id != null)
+            //    _context.userRoles.Add(new IdentityRole() { role = user.roleId, USERID = user.Id });
 
             _context.SaveChanges();
 
@@ -133,8 +141,7 @@ namespace ASP.NET_PersonControl.Controllers
         // GET: Employees/Edit/5
         public ActionResult Edit(string id)
         {
-            var tempinfo = new  AspNetUsers();
-            var empl = _context.employeesDBContext.SingleOrDefault(c => c.Id == id);
+            var empl = _context.Users.SingleOrDefault(c => c.Id == id);
             //if (empl != null)
             //{
 
@@ -165,21 +172,57 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         // GET: Employees/Delete/5
-        public ActionResult Delete(string id)
+        [HttpGet, ActionName("Delete")]
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            var empl = _context.employeesDBContext.SingleOrDefault(c => c.Id == id);
-            if (empl != null)
+            if (ModelState.IsValid)
             {
-                _context.employeesDBContext.Remove(empl);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-                AspNetUserRoles userRoles = _context.userRoles.SingleOrDefault(c => c.USERID == empl.Id);
-                if (userRoles != null)
-                        _context.employeesDBContext.Remove(empl);
+                // Удаление пользователя
+                var _context = new ApplicationDbContext();
+                var store = new UserStore<ApplicationUser>(_context);
+                var _userManager = new ApplicationUserManager(store);
+
+                var user = await _userManager.FindByIdAsync(id);
+                var logins = user.Logins;
+                var rolesForUser = await _userManager.GetRolesAsync(id);
+
+                // Открытие транзакции для комплексного удаления
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    // Удалить логин пользователя
+                    foreach (var login in logins.ToList())
+                    {
+                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                    }
+
+                    // Удалить пользователя из ролей
+                    if (rolesForUser.Count() > 0)
+                    {
+                        foreach (var item in rolesForUser.ToList())
+                        {
+                            // item should be the name of the role
+                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
+                        }
+                    }
+
+                    // Удаление пользователя
+                    await _userManager.DeleteAsync(user);
+
+                    // Фиксация транзакции удаления
+                    transaction.Commit();
+                }
+
+                return RedirectToAction("Index");
             }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Employees");
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Employees/Delete/5
@@ -189,10 +232,10 @@ namespace ASP.NET_PersonControl.Controllers
             try
             {
                 // TODO: Add delete logic here
-                var bookInDB = _context.employeesDBContext.SingleOrDefault(c => c.Id == id);
+                var bookInDB = _context.Users.SingleOrDefault(c => c.Id == id);
                 if (bookInDB != null)
                 {
-                    _context.employeesDBContext.Remove(bookInDB);
+                    _context.Users.Remove(bookInDB);
                 }
 
                 _context.SaveChanges();

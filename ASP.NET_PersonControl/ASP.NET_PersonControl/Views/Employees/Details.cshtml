@@ -1,16 +1,16 @@
-﻿@model ASP.NET_PersonControl.Models.AspNetUsers
+﻿@model ASP.NET_PersonControl.Models.ApplicationUser
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>@Model.USERNAME details.</h2>
+<h2>@Model.UserName details.</h2>
 
 <table id="books" class="table table-hover">
     <tbody>
         <tr>
             <td style="width:150px;"><strong>Name:</strong></td>
-            <td>@Model.USERNAME</td>
+            <td>@Model.UserName</td>
         </tr>
         <tr>
             <td><strong>ID:</strong></td>
@@ -18,47 +18,47 @@
         </tr>
         <tr>
             <td><strong>Email:</strong></td>
-            <td>@Model.EMAIL</td>
+            <td>@Model.Email</td>
         </tr>
         <tr>
             <td><strong>Email confrimed</strong></td>
-            <td>@Model.EMAILCONFIRMED</td>
+            <td>@Model.EmailConfirmed</td>
         </tr>
         <tr>
             <td><strong>Phone</strong></td>
-            <td>@Model.PHONENUMBER</td>
+            <td>@Model.PhoneNumber</td>
         </tr>
         <tr>
             <td><strong>Phone confrimed</strong></td>
-            <td>@Model.PHONENUMBERCONFIRMED</td>
+            <td>@Model.PhoneNumberConfirmed</td>
         </tr>
         <tr>
             <td><strong>Two factor enabled</strong></td>
-            <td>@Model.TWOFACTORENABLED</td>
+            <td>@Model.TwoFactorEnabled</td>
         </tr>
         <tr>
             <td><strong>Lockout end date UTC</strong></td>
-            <td>@Model.LOCKOUTENDDATEUTC</td>
+            <td>@Model.LockoutEndDateUtc</td>
         </tr>
         <tr>
             <td><strong>Lockeout enabled</strong></td>
-            <td>@Model.LOCKOUTENABLED</td>
+            <td>@Model.LockoutEnabled</td>
         </tr>
         <tr>
             <td><strong>Access failed cout</strong></td>
-            <td>@Model.ACCESSFAILEDCOUNT</td>
+            <td>@Model.AccessFailedCount</td>
         </tr>
         <tr>
             <td><strong>Country</strong></td>
-            <td>@Model.COUNTRY</td>
+            <td>@Model.Country</td>
         </tr>
         <tr>
             <td><strong>City</strong></td>
-            <td>@Model.CITY</td>
+            <td>@Model.City</td>
         </tr>
         <tr>
             <td><strong>Address</strong></td>
-            <td>@Model.ADDRESS</td>
+            <td>@Model.Address</td>
         </tr>
     </tbody>
 </table>
