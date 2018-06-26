@@ -15,7 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ASP.NET_PersonControl.Controllers
 {
-   
+    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     { 
         public ApplicationDbContext _context { get; set; } // cennect to data base;
@@ -187,7 +187,9 @@ namespace ASP.NET_PersonControl.Controllers
             }
 
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
-            UserManager.Create(user, user.Email);
+
+            if(_context.Users.SingleOrDefault(u => u.Id == user.Id) == null)
+                UserManager.Create(user, user.Email);
 
             if (user.Id != null && employeeForm.RoleId != null)
             {
@@ -204,6 +206,8 @@ namespace ASP.NET_PersonControl.Controllers
                 //add role
                 UserManager.AddToRole(user.Id, _context.Roles.SingleOrDefault(r => r.Id == employeeForm.RoleId).Name);
             }
+
+            _context.SaveChanges();
 
             return RedirectToAction("Index", "Employees");
         }
