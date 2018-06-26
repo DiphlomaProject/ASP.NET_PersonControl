@@ -186,21 +186,24 @@ namespace ASP.NET_PersonControl.Controllers
                 userInDB.Address = user.Address;
             }
 
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+            UserManager.Create(user, user.Email);
+
             if (user.Id != null && employeeForm.RoleId != null)
             {
-                //RoleProvider p = Roles.Provider;
-                //p.AddUsersToRoles(new string[] { "jon" }, new string[] { "admin" });
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+                _context = new ApplicationDbContext();
+                // Создать хранилище ролей
+                var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                // Создать менеджер ролей
+                roleManager = new RoleManager<IdentityRole>(roleStore);
 
+               
                 //remove from old roles 
                 var roles = UserManager.GetRoles(user.Id);
                 UserManager.RemoveFromRoles(user.Id, roles.ToArray());
-
                 //add role
                 UserManager.AddToRole(user.Id, _context.Roles.SingleOrDefault(r => r.Id == employeeForm.RoleId).Name);
             }
-
-            _context.SaveChanges();
 
             return RedirectToAction("Index", "Employees");
         }
