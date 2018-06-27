@@ -22,3 +22,22 @@ update AspNetUsers set  UserName = '80500451040j@gmail.com' where Id = 'd072c6f4
  drop table AspNetUsers;
  drop table __MigrationHistory;
  select * from [dbo].[__MigrationHistory];
+
+ -- notifications 
+ drop table Notifications;
+ create table Notifications (
+	Id int identity not null primary key,
+	isReaded bit not null,
+	notifName nvarchar(128) not null,
+	notifDescription nvarchar(256) not null,
+	notifData DateTime not null  
+ );
+
+ -- enable broker
+ alter database [ASP.NET_PersonsControl] set Enable_Broker with rollback immediate;
+
+<<<<<<< HEAD
+ insert into Notifications ( isReaded, notifName, notifDescription, notifData) values ( 0, 'Title2', 'Desc2!!!', GETDATE());
+=======
+ insert into Notifications ( isReaded, notifName, notifDescription, notifData) values ( 0, 'Title', 'Desc!!!', GETDATE());
+>>>>>>> ed0a23d8c2fcb416b735a5b387cfac2be1d5435f
