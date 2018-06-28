@@ -203,7 +203,11 @@ namespace ASP.NET_PersonControl.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
+<<<<<<< HEAD
                 //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+=======
+                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) отправка писма только на подтвержденную почту
+>>>>>>> 180e75150674eeba1e8484b16d1bf1f425525ed7
                 if (user == null)
                 {
                     // Не показывать, что пользователь не существует или не подтвержден

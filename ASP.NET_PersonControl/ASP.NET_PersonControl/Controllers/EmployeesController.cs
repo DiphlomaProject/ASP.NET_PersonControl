@@ -169,6 +169,7 @@ namespace ASP.NET_PersonControl.Controllers
             if (user.Id == null)
             {
                 user.Id = (_context.Users.Count() + 1).ToString();
+                //user.PasswordHash = 
                 _context.Users.Add(user);
             }
             else
