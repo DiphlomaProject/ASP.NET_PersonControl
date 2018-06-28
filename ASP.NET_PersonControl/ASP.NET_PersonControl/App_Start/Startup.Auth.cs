@@ -46,9 +46,9 @@ namespace ASP.NET_PersonControl
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "a4b7974c-4a7c-475e-91b8-a82d67b0d9a8",
+                clientSecret: "rzzVQR1?oyhkLYHQ7498)[}");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
