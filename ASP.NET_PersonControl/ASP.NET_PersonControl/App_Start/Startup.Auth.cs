@@ -58,11 +58,11 @@ namespace ASP.NET_PersonControl
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "623194516401-2669qp3vmm6ifqrif551ei60e586vgqc.apps.googleusercontent.com",
+                ClientSecret = "XcjUS3SJw-c8HgTStnjvtRww"
+            });
         }
     }
 }

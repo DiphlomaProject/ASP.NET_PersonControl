@@ -16,13 +16,17 @@
     else {
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Войти с помощью учетной записи @p.Caption">@p.AuthenticationType</button>
-                    }
-                </p>
-            </div>
+           <div class="social-auth-links text-center">
+               <p>-OR-</p>
+               <p>
+                   @foreach(AuthenticationDescription p in loginProviders)
+                   {
+                       <button type="submit" class="btn btn-block btn-social btn-google btn-flat"style=" font-size:large; color:white; background-color:brown;"  id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType">
+                           <i class="fa fa-google-plus"  >Google+</i> 
+                       </button>
+                   }
+               </p>
+           </div>
         }
     }
 }
