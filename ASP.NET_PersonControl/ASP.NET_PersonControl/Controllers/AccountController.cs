@@ -203,7 +203,8 @@ namespace ASP.NET_PersonControl.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) отправка писма только на подтвержденную почту
+                if (user == null)
                 {
                     // Не показывать, что пользователь не существует или не подтвержден
                     return View("ForgotPasswordConfirmation");
