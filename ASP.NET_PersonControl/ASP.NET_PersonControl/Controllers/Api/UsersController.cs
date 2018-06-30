@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,7 +15,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
     public class UsersController : ApiController
     {
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db { get; set; }
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -22,20 +23,101 @@ namespace ASP.NET_PersonControl.Controllers.Api
         }
         
         // GET api/<controller>
+        [HttpPost]
+        [AcceptVerbs("Post")]
         public HttpResponseMessage GetUsers()
         {
-
-            var jsonSerialiser = new JavaScriptSerializer();
-            var jsonData = JsonConvert.SerializeObject(db.Users.ToList());
-
-            var resp = new HttpResponseMessage()
+            try
             {
-                Content = new StringContent(jsonData),
-                StatusCode = HttpStatusCode.Accepted,
-                Version = new Version()
-            };
-            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return resp;
+                db = new ApplicationDbContext();
+
+                List<ApplicationUser> users = db.Users.ToList();    //get all users 
+                var Roles = db.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
+                foreach (ApplicationUser user in users)
+                    user.RoleNames = (from r in Roles
+                                      from u in r.Users
+                                      where u.UserId == user.Id
+                                      select r.Name).ToList();  // get roles, select role from Roles where Roles.userId == user.Id (in asp.net Roles have array-property "Users",
+                                                                // 1 item of "Users" = Dictionary<UserId, RoleId>. It's like table AspNetUserRoles.)
+
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("users", users);
+
+                var jsonSerialiser = new JavaScriptSerializer();
+                var jsonData = JsonConvert.SerializeObject(result);
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(jsonData),
+                    StatusCode = HttpStatusCode.Accepted,
+                    Version = new Version()
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return resp;
+            }catch(Exception ex) {
+
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("exception", ex);
+
+                var jsonSerialiser = new JavaScriptSerializer();
+                var jsonData = JsonConvert.SerializeObject(result);
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(jsonData),
+                    StatusCode = HttpStatusCode.Accepted,
+                    Version = new Version()
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return resp;
+            }//catch
+        }
+
+        [HttpPost]
+        [AcceptVerbs("Post")]
+        public HttpResponseMessage GetRoles()
+        {
+            try
+            {
+                db = new ApplicationDbContext();
+
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("roles", db.Roles.ToList());
+
+                var jsonSerialiser = new JavaScriptSerializer();
+                var jsonData = JsonConvert.SerializeObject(result);
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(jsonData),
+                    StatusCode = HttpStatusCode.Accepted,
+                    Version = new Version()
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return resp;
+            }
+            catch (Exception ex)
+            {
+
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("exception", ex);
+
+                var jsonSerialiser = new JavaScriptSerializer();
+                var jsonData = JsonConvert.SerializeObject(result);
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(jsonData),
+                    StatusCode = HttpStatusCode.Accepted,
+                    Version = new Version()
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return resp;
+            }//catch
         }
 
         [HttpGet]
