@@ -1,4 +1,5 @@
 ﻿using ASP.NET_PersonControl.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Script.Serialization;
 
 namespace ASP.NET_PersonControl.Controllers.Api
@@ -21,68 +23,47 @@ namespace ASP.NET_PersonControl.Controllers.Api
         {
             return new string[] { "value1", "value2" };
         }
-        
+
         // GET api/<controller>
         [HttpPost]
         [AcceptVerbs("Post")]
-        public HttpResponseMessage GetUsers()
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult GetUsers()
         {
-            try
-            {
-                db = new ApplicationDbContext();
+            db = new ApplicationDbContext();
+            List<ApplicationUser> users = db.Users.ToList();
 
-                List<ApplicationUser> users = db.Users.ToList();    //get all users 
-                var Roles = db.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
-                foreach (ApplicationUser user in users)
-                    user.RoleNames = (from r in Roles
-                                      from u in r.Users
-                                      where u.UserId == user.Id
-                                      select r.Name).ToList();  // get roles, select role from Roles where Roles.userId == user.Id (in asp.net Roles have array-property "Users",
-                                                                // 1 item of "Users" = Dictionary<UserId, RoleId>. It's like table AspNetUserRoles.)
+            if (users == null) return NotFound(); //Ok(new Dictionary<string, object>() { { "code", HttpStatusCode.NoContent } });
 
-                Dictionary<string, object> result = new Dictionary<string, object>();
-                result.Add("code", HttpStatusCode.Accepted);
-                result.Add("users", users);
+            var Roles = db.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
+            foreach (ApplicationUser user in users)
+                user.RoleNames = (from r in Roles
+                                  from u in r.Users
+                                  where u.UserId == user.Id
+                                  select r.Name).ToList();  // get roles, select role from Roles where Roles.userId == user.Id (in asp.net Roles have array-property "Users",
+                                                            // 1 item of "Users" = Dictionary<UserId, RoleId>. It's like table AspNetUserRoles.)
 
-                var jsonSerialiser = new JavaScriptSerializer();
-                var jsonData = JsonConvert.SerializeObject(result);
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            result.Add("code", HttpStatusCode.Accepted);
+            result.Add("users", users);
 
-                var resp = new HttpResponseMessage()
-                {
-                    Content = new StringContent(jsonData),
-                    StatusCode = HttpStatusCode.Accepted,
-                    Version = new Version()
-                };
-                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                return resp;
-            }catch(Exception ex) {
+            return Ok(users);
+        }
 
-                Dictionary<string, object> result = new Dictionary<string, object>();
-                result.Add("code", HttpStatusCode.ExpectationFailed);
-                result.Add("exception", ex);
-
-                var jsonSerialiser = new JavaScriptSerializer();
-                var jsonData = JsonConvert.SerializeObject(result);
-
-                var resp = new HttpResponseMessage()
-                {
-                    Content = new StringContent(jsonData),
-                    StatusCode = HttpStatusCode.Accepted,
-                    Version = new Version()
-                };
-                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                return resp;
-            }//catch
+        [HttpPost]
+        public bool isUserExist([FromBody]string email)
+        {
+            db = new ApplicationDbContext();
+            return db.Users.Select(u => u.Email == email).Count() == 1;
         }
 
         [HttpPost]
         [AcceptVerbs("Post")]
         public HttpResponseMessage GetRoles()
         {
+            db = new ApplicationDbContext();
             try
             {
-                db = new ApplicationDbContext();
-
                 Dictionary<string, object> result = new Dictionary<string, object>();
                 result.Add("code", HttpStatusCode.Accepted);
                 result.Add("roles", db.Roles.ToList());
@@ -120,9 +101,27 @@ namespace ASP.NET_PersonControl.Controllers.Api
             }//catch
         }
 
+        // DELETE api/<controller>/<deleterole>/
+        //[HttpPost]
+        [ResponseType(typeof(void))]
+        //public IHttpActionResult DeleteRole([FromBody]string id)
+        public IHttpActionResult DeleteRole(string id)
+        {
+            db = new ApplicationDbContext();
+            IdentityRole role = db.Roles.Find(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            db.Roles.Remove(role);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
         [HttpGet]
         [AcceptVerbs("Get", "Post")]
-
         // GET api/<controller>/5
         public string Get(int id)
         {
@@ -140,7 +139,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public void Delete([FromBody]string id)
         {
         }
     }

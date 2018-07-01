@@ -22,11 +22,11 @@ namespace ASP.NET_PersonControl
                  defaults: new { id = RouteParameter.Optional }
              );
 
-            config.Routes.MapHttpRoute(
+            /*config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+            );*/
 
         }
     }
