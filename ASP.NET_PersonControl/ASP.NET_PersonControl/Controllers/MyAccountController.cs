@@ -76,9 +76,19 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         // GET: MyAccount/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+            if (employee != null)
+            {
+                employee.RoleNames = (from r in roleManager.Roles.ToList()
+                                      from u in r.Users
+                                      where u.UserId == employee.Id
+                                      select r.Name).ToList();
+                return View(employee);
+            }
+            else
+                return RedirectToAction("Edit", "Manage");
         }
 
         // POST: MyAccount/Edit/5
@@ -117,6 +127,43 @@ namespace ASP.NET_PersonControl.Controllers
             {
                 return View();
             }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Save(ApplicationUser user, ApplicationUser employeeForm)
+        {
+            if (user.Id == null)
+            {
+                user.Id = (_context.Users.Count() + 1).ToString();
+                //user.PasswordHash = 
+                _context.Users.Add(user);
+            }
+            else
+            {
+                var userInDB = _context.Users.SingleOrDefault(c => c.Id == user.Id);
+
+                if (userInDB == null)
+                    userInDB = new ApplicationUser();
+
+                userInDB.Email = user.Email;
+                userInDB.EmailConfirmed = user.EmailConfirmed;
+                userInDB.PhoneNumber = user.PhoneNumber;
+                userInDB.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+                userInDB.TwoFactorEnabled = user.TwoFactorEnabled;
+                userInDB.LockoutEndDateUtc = user.LockoutEndDateUtc;
+                userInDB.LockoutEnabled = user.LockoutEnabled;
+                userInDB.AccessFailedCount = user.AccessFailedCount;
+                userInDB.UserName = user.UserName;
+                userInDB.Country = user.Country;
+                userInDB.City = user.City;
+                userInDB.Address = user.Address;
+            }
+
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "MyAccount");
         }
     }
 }
