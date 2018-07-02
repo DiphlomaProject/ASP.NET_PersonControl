@@ -1,22 +1,21 @@
 ﻿@model ASP.NET_PersonControl.Models.ApplicationUser
 @{
+    /**/
+
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
 <h2>@Model.Email</h2>
-@using (Html.BeginForm("Index",
-                        "Home",
-                        FormMethod.Post,
-                        new { enctype = "multipart/form-data" }))
+<tr>
+    <td><img src="images/<%= %>" height="100" width="100" /></td>
+</tr>
+<br><br>
+@using (Html.BeginForm("Upload", "MyAccount", FormMethod.Post, new { id = "formid", enctype = "multipart/form-data" }))
 {
-    <label for="file">Upload Image:</label>
-    <input type="file" name="file" id="file" /><br><br>
-    <input type="submit" value="Upload Image" />
-    <br><br>
-    @ViewBag.Message
+    <input type="file" name="file" /><br><br>
+    <input type="submit" value="Upload" class="save" id="btnid" /><br><br>
 }
-
 @using (Html.BeginForm("Save", "Employees"))
 {
     @Html.AntiForgeryToken()
@@ -142,4 +141,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/uploadfile")
 }
