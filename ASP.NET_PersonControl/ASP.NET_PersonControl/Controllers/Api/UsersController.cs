@@ -14,9 +14,9 @@ using System.Web.Script.Serialization;
 
 namespace ASP.NET_PersonControl.Controllers.Api
 {
+    [Authorize]
     public class UsersController : ApiController
     {
-
         private ApplicationDbContext db { get; set; }
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -56,69 +56,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             db = new ApplicationDbContext();
             return db.Users.Select(u => u.Email == email).Count() == 1;
         }
-
-        [HttpPost]
-        [AcceptVerbs("Post")]
-        public HttpResponseMessage GetRoles()
-        {
-            db = new ApplicationDbContext();
-            try
-            {
-                Dictionary<string, object> result = new Dictionary<string, object>();
-                result.Add("code", HttpStatusCode.Accepted);
-                result.Add("roles", db.Roles.ToList());
-
-                var jsonSerialiser = new JavaScriptSerializer();
-                var jsonData = JsonConvert.SerializeObject(result);
-
-                var resp = new HttpResponseMessage()
-                {
-                    Content = new StringContent(jsonData),
-                    StatusCode = HttpStatusCode.Accepted,
-                    Version = new Version()
-                };
-                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                return resp;
-            }
-            catch (Exception ex)
-            {
-
-                Dictionary<string, object> result = new Dictionary<string, object>();
-                result.Add("code", HttpStatusCode.ExpectationFailed);
-                result.Add("exception", ex);
-
-                var jsonSerialiser = new JavaScriptSerializer();
-                var jsonData = JsonConvert.SerializeObject(result);
-
-                var resp = new HttpResponseMessage()
-                {
-                    Content = new StringContent(jsonData),
-                    StatusCode = HttpStatusCode.Accepted,
-                    Version = new Version()
-                };
-                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                return resp;
-            }//catch
-        }
-
-        // DELETE api/<controller>/<deleterole>/
-        //[HttpPost]
-        [ResponseType(typeof(void))]
-        //public IHttpActionResult DeleteRole([FromBody]string id)
-        public IHttpActionResult DeleteRole(string id)
-        {
-            db = new ApplicationDbContext();
-            IdentityRole role = db.Roles.Find(id);
-            if (role == null)
-            {
-                return NotFound();
-            }
-
-            db.Roles.Remove(role);
-            db.SaveChanges();
-
-            return Ok();
-        }
+       
 
         [HttpGet]
         [AcceptVerbs("Get", "Post")]
