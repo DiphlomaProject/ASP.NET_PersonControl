@@ -1,4 +1,6 @@
 ﻿@model ASP.NET_PersonControl.Models.ApplicationUser
+
+
 @{
     /**/
 
@@ -13,10 +15,13 @@
 <br><br>
 @using (Html.BeginForm("Upload", "MyAccount", FormMethod.Post, new { id = "formid", enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     <input type="file" name="file" /><br><br>
-    <input type="submit" value="Upload" class="save" id="btnid" /><br><br>
+    <input type="submit" value="Upload" class="save" id="btnid" />
 }
-@using (Html.BeginForm("Save", "Employees"))
+<br><br>
+
+@using (Html.BeginForm("Save", "MyAccount"))
 {
     @Html.AntiForgeryToken()
 

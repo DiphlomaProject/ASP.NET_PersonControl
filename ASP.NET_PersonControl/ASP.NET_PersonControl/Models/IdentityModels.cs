@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -15,6 +16,7 @@ namespace ASP.NET_PersonControl.Models
         public string Country { get; set; }
         public string City { get; set; }
         public List<string> RoleNames;
+        public Bitmap img;
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

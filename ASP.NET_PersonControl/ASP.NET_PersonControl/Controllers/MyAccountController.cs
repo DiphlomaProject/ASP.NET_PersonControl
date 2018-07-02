@@ -8,8 +8,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Auth;
+using System.Threading.Tasks;
+
 namespace ASP.NET_PersonControl.Controllers
 {
+    [Authorize]
     public class MyAccountController : Controller
     {
         
@@ -132,7 +138,7 @@ namespace ASP.NET_PersonControl.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Save(ApplicationUser user, ApplicationUser employeeForm)
+        public ActionResult Save(ApplicationUser user)
         {
             if (user.Id == null)
             {
@@ -168,16 +174,30 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        [ValidateAntiForgeryToken]
+        public async Task Upload(HttpPostedFileBase file)
         {
-            /*if (file != null && file.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
-                file.SaveAs(path);
-            }
-            */
-            return RedirectToAction("Edit", "MyAccount");
+            string storageAccountName = "aspnetpersoncontrol";
+            string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
+            string nameOfStorage = "storage";
+            StorageCredentials storageCredentials = new StorageCredentials(storageAccountName, keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            //get users folder
+           
+            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
+            await cloudBlobContainer.CreateIfNotExistsAsync();
+
+            //get users folder
+            _context = new ApplicationDbContext();
+            string id = User.Identity.GetUserId();
+            string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
+            //create sub dir
+            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder + "/folder");
+            //add file to sub dir
+            CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage2.jpg");
+            await cloudBlockBlob.UploadFromStreamAsync(file.InputStream);
         }
     }
 }
