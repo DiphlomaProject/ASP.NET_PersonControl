@@ -16,7 +16,7 @@ namespace ASP.NET_PersonControl.Models
         public string Country { get; set; }
         public string City { get; set; }
         public List<string> RoleNames;
-        public Bitmap img;
+        public byte[] img;
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

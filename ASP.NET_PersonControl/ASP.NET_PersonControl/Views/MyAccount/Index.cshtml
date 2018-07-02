@@ -9,7 +9,7 @@
 <table id="books" class="table table-hover">
     <tbody>
         <tr>
-            <td><img src="images/<%= %>" height="100" width="100" /></td>
+            <td><img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" height="100" width="100" /></td>
         </tr>
         <tr>
             <td style="width:150px;"><strong>Name:</strong></td>

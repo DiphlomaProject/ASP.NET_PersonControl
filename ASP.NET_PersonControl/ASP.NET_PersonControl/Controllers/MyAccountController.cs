@@ -12,6 +12,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Auth;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace ASP.NET_PersonControl.Controllers
 {
@@ -48,6 +49,38 @@ namespace ASP.NET_PersonControl.Controllers
                                       from u in r.Users
                                       where u.UserId == employee.Id
                                       select r.Name).ToList();
+
+                //get user image
+                string storageAccountName = "aspnetpersoncontrol";
+                string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
+                string nameOfStorage = "storage";
+                StorageCredentials storageCredentials = new StorageCredentials(storageAccountName, keyOne);
+                CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+                //get users folder
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
+                //get users folder
+                string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
+                CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder);
+                //add file to sub dir
+                CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage.jpg");
+                try
+                {
+                    cloudBlockBlob.FetchAttributes();
+                    long fileByteLength = cloudBlockBlob.Properties.Length;
+                    employee.img = new byte[fileByteLength];
+                    for (int i = 0; i < fileByteLength; i++)
+                    {
+                        employee.img[i] = 0x20;
+                    }
+                    cloudBlockBlob.DownloadToByteArray(employee.img, 0);
+                }
+                catch
+                {
+                    employee.img = new byte[8];
+                }
+
                 return View(employee);
             }
             else
@@ -92,6 +125,38 @@ namespace ASP.NET_PersonControl.Controllers
                                       from u in r.Users
                                       where u.UserId == employee.Id
                                       select r.Name).ToList();
+
+                //get user image
+                string storageAccountName = "aspnetpersoncontrol";
+                string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
+                string nameOfStorage = "storage";
+                StorageCredentials storageCredentials = new StorageCredentials(storageAccountName, keyOne);
+                CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+                //get users folder
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
+                //get users folder
+                string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
+                CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder);
+                //add file to sub dir
+                CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage.jpg");
+                try
+                {
+                    cloudBlockBlob.FetchAttributes();
+                    long fileByteLength = cloudBlockBlob.Properties.Length;
+                    employee.img = new byte[fileByteLength];
+                    for (int i = 0; i < fileByteLength; i++)
+                    {
+                        employee.img[i] = 0x20;
+                    }
+                    cloudBlockBlob.DownloadToByteArray(employee.img, 0);
+                }
+                catch
+                {
+                    employee.img = new byte[8];
+                }
+
                 return View(employee);
             }
             else
@@ -175,7 +240,7 @@ namespace ASP.NET_PersonControl.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task Upload(HttpPostedFileBase file)
+        public async Task<ActionResult> Upload(HttpPostedFileBase file)
         {
             string storageAccountName = "aspnetpersoncontrol";
             string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
@@ -193,11 +258,12 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
             string id = User.Identity.GetUserId();
             string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
-            //create sub dir
-            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder + "/folder");
+            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder);
             //add file to sub dir
-            CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage2.jpg");
+            CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage.jpg");
             await cloudBlockBlob.UploadFromStreamAsync(file.InputStream);
+
+            return RedirectToAction("Index", "MyAccount");
         }
     }
 }

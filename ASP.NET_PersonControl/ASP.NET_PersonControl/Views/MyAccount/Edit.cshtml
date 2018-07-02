@@ -10,7 +10,7 @@
 <h2>Edit</h2>
 <h2>@Model.Email</h2>
 <tr>
-    <td><img src="images/<%= %>" height="100" width="100" /></td>
+    <td><img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" height="100" width="100" /></td>
 </tr>
 <br><br>
 @using (Html.BeginForm("Upload", "MyAccount", FormMethod.Post, new { id = "formid", enctype = "multipart/form-data" }))
