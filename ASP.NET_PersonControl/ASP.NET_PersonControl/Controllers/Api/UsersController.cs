@@ -14,7 +14,7 @@ using System.Web.Script.Serialization;
 
 namespace ASP.NET_PersonControl.Controllers.Api
 {
-    [Authorize]
+    //[Authorize]
     public class UsersController : ApiController
     {
         private ApplicationDbContext db { get; set; }
@@ -49,14 +49,14 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
             return Ok(users);
         }
-
-        [HttpPost]
-        public bool isUserExist([FromBody]string email)
+        
+        public bool isUserExist(string email)
         {
             db = new ApplicationDbContext();
-            return db.Users.Select(u => u.Email == email).Count() == 1;
+            bool res = db.Users.Where(e => e.Email == email).Count() >= 1;
+            return res;
         }
-       
+
 
         [HttpGet]
         [AcceptVerbs("Get", "Post")]
