@@ -47,7 +47,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             result.Add("code", HttpStatusCode.Accepted);
             result.Add("users", users);
 
-            return Ok(users);
+            return Ok(result);
         }
         
         public bool isUserExist(string email)
@@ -55,6 +55,27 @@ namespace ASP.NET_PersonControl.Controllers.Api
             db = new ApplicationDbContext();
             bool res = db.Users.Where(e => e.Email == email).Count() >= 1;
             return res;
+        }
+
+        [HttpPost]
+        public IHttpActionResult DeleteUser([FromBody]string Id)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            // TODO: Add delete logic here
+            db = new ApplicationDbContext();
+            var employee = db.Users.SingleOrDefault(c => c.Id == Id);
+            if (employee != null)
+            {
+                db.Users.Remove(employee);
+                db.SaveChanges();
+                result.Add("code", HttpStatusCode.Accepted);
+            }
+            else
+            {
+                result.Add("code", HttpStatusCode.NotFound);
+            }
+           
+            return Ok(result);
         }
 
 
