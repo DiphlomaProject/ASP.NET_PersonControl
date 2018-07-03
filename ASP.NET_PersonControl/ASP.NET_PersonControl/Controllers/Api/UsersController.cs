@@ -56,14 +56,15 @@ namespace ASP.NET_PersonControl.Controllers.Api
             bool res = db.Users.Where(e => e.Email == email).Count() >= 1;
             return res;
         }
-
-        [HttpPost]
-        public IHttpActionResult DeleteUser([FromBody]string Id)
+        
+        [HttpDelete]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult DeleteUser([FromBody]string id)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
             // TODO: Add delete logic here
             db = new ApplicationDbContext();
-            var employee = db.Users.SingleOrDefault(c => c.Id == Id);
+            var employee = db.Users.SingleOrDefault(c => c.Id == id);
             if (employee != null)
             {
                 db.Users.Remove(employee);
@@ -73,6 +74,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             else
             {
                 result.Add("code", HttpStatusCode.NotFound);
+                result.Add("message", "User not found");
             }
            
             return Ok(result);
