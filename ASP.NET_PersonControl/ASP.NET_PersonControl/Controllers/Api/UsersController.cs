@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -17,6 +18,15 @@ namespace ASP.NET_PersonControl.Controllers.Api
     //[Authorize]
     public class UsersController : ApiController
     {
+        //from body dosen't work 
+        //use struct like from body for post request's
+        public struct Email {
+            [Required]
+            [MaxLength(140)]
+            public string email { get; set; }
+            public DateTime date { get; set; }
+        }
+
         private ApplicationDbContext db { get; set; }
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -25,7 +35,6 @@ namespace ASP.NET_PersonControl.Controllers.Api
         }
 
         // GET api/<controller>
-        [HttpPost]
         [AcceptVerbs("Post")]
         [ResponseType(typeof(Dictionary<string, object>))]
         public IHttpActionResult GetUsers()
@@ -49,12 +58,24 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
             return Ok(result);
         }
-        
-        public bool isUserExist(string email)
+
+        [HttpPost]
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult isUserExist(Email email)
         {
             db = new ApplicationDbContext();
-            bool res = db.Users.Where(e => e.Email == email).Count() >= 1;
-            return res;
+            bool isExist = db.Users.Where(e => e.Email == email.email).Count() >= 1;
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            if (isExist)
+            {
+                result.Add("code", HttpStatusCode.Accepted);
+            }
+            else
+            {
+                result.Add("code", HttpStatusCode.NotFound);
+                result.Add("message", "User is not exist in db.");
+            }
+            return Ok(result);
         }
         
         [HttpDelete]
