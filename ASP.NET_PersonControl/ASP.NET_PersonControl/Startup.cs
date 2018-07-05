@@ -8,6 +8,7 @@ namespace ASP.NET_PersonControl
     {
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
             ConfigureAuth(app);
         }
     }
