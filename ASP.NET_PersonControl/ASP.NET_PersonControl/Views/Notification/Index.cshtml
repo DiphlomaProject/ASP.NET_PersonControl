@@ -1,14 +1,32 @@
 ﻿@{
     ViewBag.Title = "SignalR Notifications";
 }
-<div id="messages"></div>
 
-<br/>
+<h2>Notifications</h2>
 
+<input id="chatId" type="hidden" value="chatInput" />
+<div id="messages"></div> <br/>
+
+<input id="chatMessage" class="form-control" placeholder="Write message here..." style="width : 200px;"/> <br/>
+
+<input type="button" class="btn btn-primary" id="send-message" value="Send"/>
 
 @section scripts{
     <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.3.0.js"></script>
     <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/SignalR.js"></script>
+
+    <script type="text/javascript">
+        $("#send-message").click(function () {
+            $.connection.hub.start()
+                .done(function () {
+                    var chatId = $("#chatId").val();
+                    var chatMessage = $("#chatMessage").val();
+                    if (chatId !== "" && chatMessage !== "")
+                        $.connection.hubSignalR.server.sendMessage(chatId, chatMessage);
+                })
+                .fail(function () { alert("ItFail!") });
+        });
+    </script>
 }
