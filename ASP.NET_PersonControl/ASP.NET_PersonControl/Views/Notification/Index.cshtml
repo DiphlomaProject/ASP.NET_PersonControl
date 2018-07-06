@@ -1,15 +1,13 @@
-﻿@{
-    ViewBag.Title = "SignalR Notifications";
-}
+﻿@model ASP.NET_PersonControl.Models.ApplicationUser
 
 <h2>Notifications</h2>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<input id="chatId" type="hidden" value="@Model.Email" />
+<input id="img_src" type="hidden" value="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" />
+<table id="messages" class="w3-table-all w3-card-2" ></table><br /><br />
+<input id="chatMessage" class="form-control" placeholder="Write message here..." style="width : 200px; " /> <br />
 
-<input id="chatId" type="hidden" value="chatInput" />
-<div id="messages"></div> <br/>
-
-<input id="chatMessage" class="form-control" placeholder="Write message here..." style="width : 200px;"/> <br/>
-
-<input type="button" class="btn btn-primary" id="send-message" value="Send"/>
+<input type="button" class="btn btn-primary" id="send-message" value="Send" />
 
 @section scripts{
     <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
