@@ -226,10 +226,11 @@ namespace ASP.NET_PersonControl.Controllers
                 userInDB.LockoutEndDateUtc = user.LockoutEndDateUtc;
                 userInDB.LockoutEnabled = user.LockoutEnabled;
                 userInDB.AccessFailedCount = user.AccessFailedCount;
-                userInDB.UserName = user.UserName;
+                userInDB.UserName = user.Email;
                 userInDB.Country = user.Country;
                 userInDB.City = user.City;
                 userInDB.Address = user.Address;
+                userInDB.DisplayName = user.DisplayName;
             }
 
 

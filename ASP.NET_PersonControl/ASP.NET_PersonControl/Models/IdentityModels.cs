@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Drawing;
 using System.Security.Claims;
@@ -15,6 +16,8 @@ namespace ASP.NET_PersonControl.Models
         public string Address { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
+        [StringLength(256)]
+        public string DisplayName { get; set; }
         public List<string> RoleNames;
         public byte[] img;
 

@@ -239,9 +239,9 @@
     <Compile Include="Migrations\201806260039402_InitialCreate.Designer.cs">
       <DependentUpon>201806260039402_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806260041302_InitialCreateSecond.cs" />
-    <Compile Include="Migrations\201806260041302_InitialCreateSecond.Designer.cs">
-      <DependentUpon>201806260041302_InitialCreateSecond.cs</DependentUpon>
+    <Compile Include="Migrations\201807091528370_UpdateAspNetUsers.cs" />
+    <Compile Include="Migrations\201807091528370_UpdateAspNetUsers.Designer.cs">
+      <DependentUpon>201807091528370_UpdateAspNetUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -350,8 +350,8 @@
     <EmbeddedResource Include="Migrations\201806260039402_InitialCreate.resx">
       <DependentUpon>201806260039402_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806260041302_InitialCreateSecond.resx">
-      <DependentUpon>201806260041302_InitialCreateSecond.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807091528370_UpdateAspNetUsers.resx">
+      <DependentUpon>201807091528370_UpdateAspNetUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
