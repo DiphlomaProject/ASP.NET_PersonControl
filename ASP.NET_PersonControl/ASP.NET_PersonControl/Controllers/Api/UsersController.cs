@@ -27,6 +27,19 @@ namespace ASP.NET_PersonControl.Controllers.Api
             public DateTime date { get; set; }
         }
 
+        public struct User{
+             [Required]
+            public string email { get; set; }
+            public string displayName { get; set; }
+            public string address { get; set; }
+            public string city { get; set; }
+            public string country { get; set; }
+            public string phone { get; set; }
+            public bool twoFactorEnabled { get; set; }
+            public bool emailConfirmed { get; set; }
+            public bool phoneConfirmed { get; set; }
+        }
+
         private ApplicationDbContext db { get; set; }
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -68,12 +81,13 @@ namespace ASP.NET_PersonControl.Controllers.Api
             Dictionary<string, object> result = new Dictionary<string, object>();
             if (isExist)
             {
-                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("code", HttpStatusCode.Found);
+                result.Add("message", "User exists in db.");
             }
             else
             {
                 result.Add("code", HttpStatusCode.NotFound);
-                result.Add("message", "User is not exist in db.");
+                result.Add("message", "User dose not exist in db.");
             }
             return Ok(result);
         }
@@ -101,6 +115,49 @@ namespace ASP.NET_PersonControl.Controllers.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult AddUser(User user)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+
+            if(user.email == null)
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Incorrect data.");
+                return Ok(result);
+            }
+
+            db = new ApplicationDbContext();
+
+            var employee = db.Users.SingleOrDefault(c => c.Email == user.email);
+            if (employee == null) //add
+            {
+                ApplicationUser newUser = new ApplicationUser();
+                newUser.Email = user.email;
+                newUser.UserName = user.email;
+                newUser.DisplayName = user.displayName;
+                newUser.Address = user.address;
+                newUser.City = user.city;
+                newUser.Country = user.country;
+                newUser.PhoneNumber = user.phone;
+                newUser.PhoneNumberConfirmed = user.phoneConfirmed;
+                newUser.EmailConfirmed = user.emailConfirmed;
+                newUser.TwoFactorEnabled = user.twoFactorEnabled;
+                //user.UserName = user.email;
+                db.Users.Add(newUser);
+                db.SaveChanges();
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("message", "User was add");
+            }
+            else 
+            {
+                result.Add("code", HttpStatusCode.Found);
+                result.Add("message", "User exists in db.");
+            }
+
+            return Ok(result);
+        }
 
         [HttpGet]
         [AcceptVerbs("Get", "Post")]
