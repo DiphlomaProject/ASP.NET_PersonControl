@@ -10,13 +10,13 @@
 <h2>Edit</h2>
 <h2>@Model.Email</h2>
 <tr>
-    <td><img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" height="100" width="100" /></td>
+    <td><img id="javaImage" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" height="100" width="100" /></td>
 </tr>
 <br><br>
 @using (Html.BeginForm("Upload", "MyAccount", FormMethod.Post, new { id = "formid", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <input type="file" name="file" /><br><br>
+    <input id="fileID" type="file" name="file" onchange="readURL()"/><br><br>
     <input type="submit" value="Upload" class="save" id="btnid" />
 }
 <br><br>
@@ -147,4 +147,22 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/uploadfile")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    <script>
+        function readURL() {
+            var input = ($("#fileID"))[0];
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#javaImage')
+                        .attr('src', e.target.result)
+                        .width(200)
+                        .height(200);
+                    document.getElementById('dataID').value = e.target.result;
+                    alert(e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 }

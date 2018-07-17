@@ -266,5 +266,12 @@ namespace ASP.NET_PersonControl.Controllers
 
             return RedirectToAction("Index", "MyAccount");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SavePhotoAjax()
+        {
+            return null;
+        }
     }
 }
