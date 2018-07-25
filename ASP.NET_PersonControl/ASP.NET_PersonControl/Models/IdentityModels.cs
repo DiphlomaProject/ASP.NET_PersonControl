@@ -33,6 +33,11 @@ namespace ASP.NET_PersonControl.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Customers> Customers { get; set; }
+        public DbSet<UsersGroups> UsersGroups { get; set; }
+        public DbSet<Groups> Groups { get; set; }
+        public DbSet<ProjectsGroups> ProjectsGroups { get; set; }
+        public DbSet<Projects> Projects { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

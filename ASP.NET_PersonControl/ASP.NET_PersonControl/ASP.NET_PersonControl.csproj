@@ -243,12 +243,21 @@
     <Compile Include="Migrations\201807091528370_UpdateAspNetUsers.Designer.cs">
       <DependentUpon>201807091528370_UpdateAspNetUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807252353146_GroupsProjectsCustomers.cs" />
+    <Compile Include="Migrations\201807252353146_GroupsProjectsCustomers.Designer.cs">
+      <DependentUpon>201807252353146_GroupsProjectsCustomers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Customers.cs" />
+    <Compile Include="Models\Groups.cs" />
     <Compile Include="Models\HubSignalR.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Projects.cs" />
+    <Compile Include="Models\ProjectsGroups.cs" />
+    <Compile Include="Models\UsersGroups.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdministrationFormViewModel.cs" />
@@ -353,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807091528370_UpdateAspNetUsers.resx">
       <DependentUpon>201807091528370_UpdateAspNetUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807252353146_GroupsProjectsCustomers.resx">
+      <DependentUpon>201807252353146_GroupsProjectsCustomers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
