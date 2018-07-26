@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     <div>
         <div class="form-group">
-            @Html.Label("Role name")
+            @Html.Label("Role name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.RoleNeme, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RoleNeme, "", new { @class = "text-danger" })

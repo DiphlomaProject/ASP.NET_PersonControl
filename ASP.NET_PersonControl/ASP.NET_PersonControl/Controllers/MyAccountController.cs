@@ -23,6 +23,7 @@ namespace ASP.NET_PersonControl.Controllers
         public ApplicationDbContext _context { get; set; } // cennect to data base;
         public RoleManager<IdentityRole> roleManager { get; set; }
 
+
         public MyAccountController()
         {
             _context = new ApplicationDbContext();
