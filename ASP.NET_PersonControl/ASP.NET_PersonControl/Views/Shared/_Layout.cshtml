@@ -37,7 +37,7 @@
                                 <li>@Html.ActionLink("My groups", "Index", "Home")</li>
                                 @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
                                 {
-                                    <li>@Html.ActionLink("Grops managment", "Index", "Home")</li>
+                                    <li>@Html.ActionLink("Grops managment", "Index", "Group")</li>
                                 }
                             </ul>
                         </li>

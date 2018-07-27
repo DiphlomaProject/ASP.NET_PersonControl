@@ -228,6 +228,7 @@
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\BitmapImage.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MyAccountController.cs" />
@@ -246,6 +247,10 @@
     <Compile Include="Migrations\201807252353146_GroupsProjectsCustomers.cs" />
     <Compile Include="Migrations\201807252353146_GroupsProjectsCustomers.Designer.cs">
       <DependentUpon>201807252353146_GroupsProjectsCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807262346445_UpdateBase.cs" />
+    <Compile Include="Migrations\201807262346445_UpdateBase.Designer.cs">
+      <DependentUpon>201807262346445_UpdateBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -340,6 +345,7 @@
     <Content Include="Views\MyAccount\Index.cshtml" />
     <Content Include="Views\MyAccount\Edit.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807252353146_GroupsProjectsCustomers.resx">
       <DependentUpon>201807252353146_GroupsProjectsCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807262346445_UpdateBase.resx">
+      <DependentUpon>201807262346445_UpdateBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

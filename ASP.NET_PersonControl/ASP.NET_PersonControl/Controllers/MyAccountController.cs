@@ -13,7 +13,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Auth;
 using System.Threading.Tasks;
 using System.Drawing;
-
+using ASP.NET_PersonControl.ViewModels;
 namespace ASP.NET_PersonControl.Controllers
 {
     [Authorize]
@@ -22,7 +22,7 @@ namespace ASP.NET_PersonControl.Controllers
         
         public ApplicationDbContext _context { get; set; } // cennect to data base;
         public RoleManager<IdentityRole> roleManager { get; set; }
-
+        ProfileVMRequired profileVM = new ProfileVMRequired();
 
         public MyAccountController()
         {
@@ -44,6 +44,8 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
 
             ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+
+            employee.DisplayName = profileVM.DisplayName;
             if (employee != null)
             {
                 employee.RoleNames = (from r in roleManager.Roles.ToList()
