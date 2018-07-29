@@ -54,9 +54,9 @@ namespace ASP.NET_PersonControl
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "2135281353354184",
-               appSecret: "e8f8ad600440a44de3e21553d55a1214");
+            //app.UseFacebookAuthentication(
+            //   appId: "2135281353354184",
+            //   appSecret: "e8f8ad600440a44de3e21553d55a1214");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {

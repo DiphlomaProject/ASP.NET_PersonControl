@@ -18,7 +18,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.user.Email, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
             @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -122,7 +122,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select user role", new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select role user", new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.RoleId)
         </div>
     </div>

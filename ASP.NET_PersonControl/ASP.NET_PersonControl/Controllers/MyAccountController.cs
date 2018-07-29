@@ -208,7 +208,11 @@ namespace ASP.NET_PersonControl.Controllers
         [HttpPost]
         public ActionResult Save(ApplicationUser user)
         {
-            if (user.Id == null)
+            if (!ModelState.IsValid)
+            {
+                return Content("!ModelState.IsValid");
+            }
+                if (user.Id == null)
             {
                 user.Id = (_context.Users.Count() + 1).ToString();
                 //user.PasswordHash = 

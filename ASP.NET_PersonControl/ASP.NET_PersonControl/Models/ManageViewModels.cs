@@ -8,7 +8,11 @@ namespace ASP.NET_PersonControl.Models
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
+        [Required(ErrorMessage = "Please enter valid phone number.")]
+        [EmailAddress]
         public IList<UserLoginInfo> Logins { get; set; }
+        [Required(ErrorMessage = "Please enter valid phone number.")]
+        [Phone]
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
@@ -72,7 +76,7 @@ namespace ASP.NET_PersonControl.Models
         [Display(Name = "Код")]
         public string Code { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter valid phone number.")]
         [Phone]
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }

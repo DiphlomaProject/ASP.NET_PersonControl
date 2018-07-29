@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201807262346445_UpdateBase.Designer.cs">
       <DependentUpon>201807262346445_UpdateBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807292223153_Validations.cs" />
+    <Compile Include="Migrations\201807292223153_Validations.Designer.cs">
+      <DependentUpon>201807292223153_Validations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customers.cs" />
@@ -375,6 +379,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807262346445_UpdateBase.resx">
       <DependentUpon>201807262346445_UpdateBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807292223153_Validations.resx">
+      <DependentUpon>201807292223153_Validations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

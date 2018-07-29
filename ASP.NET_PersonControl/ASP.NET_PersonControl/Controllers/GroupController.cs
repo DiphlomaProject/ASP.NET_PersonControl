@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 namespace ASP.NET_PersonControl.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -20,10 +19,13 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
             string id = User.Identity.GetUserId();
             ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
-            ApplicationDbContext dbContext = new ApplicationDbContext();
-           
 
-         
+
+            var viewModel = new Groups
+            {
+               
+            };
+
             return View();
         }
     }
