@@ -4,6 +4,16 @@
 }
 
 <h2>Group Manager</h2>
+
+@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
+{
+    <h4>You can create new group. </h4>
+    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Create group</button>
+}
+<br />
+<br />
+<h4>Current groups.</h4>
+
 <table id="group" class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -15,14 +25,13 @@
     <tbody>
         @foreach (var group in Model.groups)
         {
-            <tr>
-                <td>@group.Title</td>
-                <td>@group.Owner</td>
-                <td>@group.Description</td>
-            </tr>
+        <tr>
+            <td>@group.Title</td>
+            <td>@group.Owner</td>
+            <td>@group.Description</td>
+        </tr>
         }
 
     </tbody>
 </table>
-<br />
 <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
