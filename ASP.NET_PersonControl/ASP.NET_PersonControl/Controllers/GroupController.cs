@@ -1,4 +1,5 @@
 ﻿using ASP.NET_PersonControl.Models;
+using ASP.NET_PersonControl.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -18,15 +19,13 @@ namespace ASP.NET_PersonControl.Controllers
         {
             _context = new ApplicationDbContext();
             string id = User.Identity.GetUserId();
-            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id); // id of current user
+            List<int> usersGroupsId = _context.UsersGroups.Where(ug => ug.UserId == id).Select(u => u.GroupId).ToList<int>(); // groups id's
+            List<Groups> groupsList = _context.Groups.Select(g => g).ToList<Groups>();
 
+            var viewModel = new GroupsViewModel{ groups = groupsList, user = employee };
 
-            var viewModel = new Groups
-            {
-               
-            };
-
-            return View();
+            return View(viewModel);
         }
     }
 }

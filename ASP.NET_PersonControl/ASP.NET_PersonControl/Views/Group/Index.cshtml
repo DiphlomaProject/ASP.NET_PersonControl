@@ -1,4 +1,4 @@
-﻿@model ASP.NET_PersonControl.Models.Groups
+﻿@model ASP.NET_PersonControl.ViewModels.GroupsViewModel
 @{
     ViewBag.Title = "GroupManager";
 }
@@ -7,19 +7,21 @@
 <table id="group" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Owner</th>
             <th>Description</th>
         </tr>
     </thead>
     <tbody>
-                <td>@Model.Id</td>
-                <td>@Model.Title</td>
-                <td>@Model.Owner</td>
-                <td>@Model.Description</td>
-        </tr>
-   
+        @foreach (var group in Model.groups)
+        {
+            <tr>
+                <td>@group.Title</td>
+                <td>@group.Owner</td>
+                <td>@group.Description</td>
+            </tr>
+        }
+
     </tbody>
 </table>
 <br />
