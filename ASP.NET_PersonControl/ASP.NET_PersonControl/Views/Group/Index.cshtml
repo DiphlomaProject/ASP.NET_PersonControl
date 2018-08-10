@@ -8,7 +8,7 @@
 @if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
 {
     <h4>You can create new group. </h4>
-    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Create group</button>
+    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Group") + "'");">Create group</button>
 }
 <br />
 <br />

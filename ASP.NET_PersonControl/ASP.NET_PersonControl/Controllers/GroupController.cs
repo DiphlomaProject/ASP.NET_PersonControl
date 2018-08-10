@@ -27,5 +27,48 @@ namespace ASP.NET_PersonControl.Controllers
 
             return View(viewModel);
         }
-    }
+
+        public ActionResult Create()
+        {
+            
+            var viewModel = new CreateNewGroup {
+            };
+
+            return View("Create", viewModel);
+        }
+
+        // POST: Employees/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Save( CreateNewGroup groupController)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new GroupController
+                {
+                   //grou = _context.Roles.ToList()
+                };
+
+                return View("Create", viewModel);
+            }
+
+            return RedirectToAction("Index", "Group");
+        }
+        }
 }
