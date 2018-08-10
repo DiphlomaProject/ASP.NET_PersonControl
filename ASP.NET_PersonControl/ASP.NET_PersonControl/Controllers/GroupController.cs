@@ -18,14 +18,28 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Index()
         {
             _context = new ApplicationDbContext();
-            string id = User.Identity.GetUserId();
-            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id); // id of current user
-            List<int> usersGroupsId = _context.UsersGroups.Where(ug => ug.UserId == id).Select(u => u.GroupId).ToList<int>(); // groups id's
+            //string id = User.Identity.GetUserId();
+            //ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id); // id of current user
+            //List<int> usersGroupsId = _context.UsersGroups.Where(ug => ug.UserId == id).Select(u => u.GroupId).ToList<int>(); // groups id's
             List<Groups> groupsList = _context.Groups.Select(g => g).ToList<Groups>();
+            List<ApplicationUser> ownersList = new List<ApplicationUser>();
+            foreach(String owner_id in groupsList.Select(g => g.Owner).ToList())
+                ownersList.Add(_context.Users.FirstOrDefault(o => o.Id == owner_id) ?? new ApplicationUser());
 
-            var viewModel = new GroupsViewModel{ groups = groupsList, user = employee };
+            var viewModel = new GroupsViewModel{ groups = groupsList, owners = ownersList };
 
             return View(viewModel);
+        }
+
+        public ActionResult groupEdit(int id)
+        {
+            _context = new ApplicationDbContext();
+            List<Groups> groupsList = _context.Groups.Select(g => g).Where(i => i.Id == id).ToList<Groups>();
+            List<ApplicationUser> ownersList = new List<ApplicationUser>();
+            foreach (String owner_id in groupsList.Select(g => g.Owner).ToList())
+                ownersList.Add(_context.Users.FirstOrDefault(o => o.Id == owner_id) ?? new ApplicationUser());
+
+            return View( new GroupsViewModel { groups = groupsList, owners = ownersList } );
         }
 
         public ActionResult Create()

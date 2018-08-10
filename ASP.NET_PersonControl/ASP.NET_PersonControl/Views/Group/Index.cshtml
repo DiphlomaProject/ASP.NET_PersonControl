@@ -23,12 +23,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var group in Model.groups)
+        @for(int i = 0; i < Model.groups.Count(); i++)
         {
         <tr>
-            <td>@group.Title</td>
-            <td>@group.Owner</td>
-            <td>@group.Description</td>
+            <td>@Model.groups.ElementAt(i).Title</td>
+            <td>@Model.owners.ElementAt(i).DisplayName</td>
+            <td>@Model.groups.ElementAt(i).Description</td>
         </tr>
         }
 

@@ -8,7 +8,7 @@ namespace ASP.NET_PersonControl.ViewModels
 {
     public class GroupsViewModel
     {
-        public ApplicationUser user { get; set; }
+        public IEnumerable<ApplicationUser> owners { get; set; } // owner
         //public IEnumerable<UsersGroups> usersOfCurrentGroups { get; set; }
         public IEnumerable<Groups> groups { get; set; }
         //public IEnumerable<Projects> projectsOfCurrentGroups { get; set; }
