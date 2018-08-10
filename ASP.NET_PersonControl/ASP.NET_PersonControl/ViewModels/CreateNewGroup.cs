@@ -8,10 +8,10 @@ namespace ASP.NET_PersonControl.ViewModels
 {
     public class CreateNewGroup
     {
-        public string Title { get; set; }
+        
+        public Groups group { get; set; }
 
-        public string Owner { get; set; }
-        public string Description { get; set; }
-       // public IEnumerable<Groups> groups { get; set; }
+        public IEnumerable<ApplicationUser> users { get; set; }
+
     }
 }

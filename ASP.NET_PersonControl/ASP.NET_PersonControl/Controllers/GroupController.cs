@@ -44,11 +44,12 @@ namespace ASP.NET_PersonControl.Controllers
 
         public ActionResult Create()
         {
-            
+            _context = new ApplicationDbContext();
             var viewModel = new CreateNewGroup {
+                group = new Groups(), users = _context.Users.Select(c => c).ToList()
             };
 
-            return View("Create", viewModel);
+            return View(viewModel);
         }
 
         // POST: Employees/Create
@@ -69,18 +70,18 @@ namespace ASP.NET_PersonControl.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Save( CreateNewGroup groupController)
+        public ActionResult Save( CreateNewGroup groupController, ApplicationUser user)
         {
-
-            if (!ModelState.IsValid)
+            _context = new ApplicationDbContext();
+            if(_context.Groups.Select(g => g.Id == groupController.group.Id).Count() > 0)
             {
-                var viewModel = new GroupController
-                {
-                   //grou = _context.Roles.ToList()
-                };
-
-                return View("Create", viewModel);
+                Groups groups =_context.Groups.FirstOrDefault(g => g.Id == groupController.group.Id);
+                groups.Title = groupController.group.Title;
+                groups.Owner = user.Id;
+                groups.Description = groupController.group.Description;
             }
+            _context.SaveChanges();
+
 
             return RedirectToAction("Index", "Group");
         }
