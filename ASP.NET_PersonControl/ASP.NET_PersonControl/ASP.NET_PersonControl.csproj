@@ -353,6 +353,7 @@
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\groupEdit.cshtml" />
+    <Content Include="Views\Employees\DeteilsInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
