@@ -228,7 +228,6 @@
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\BitmapImage.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
-    <Compile Include="Controllers\GlobalViewsController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -355,7 +354,6 @@
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\groupEdit.cshtml" />
-    <Content Include="Views\GlobalViews\GlobalUserViewInfo.cshtml" />
     <Content Include="Views\Employees\DeteilsInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
