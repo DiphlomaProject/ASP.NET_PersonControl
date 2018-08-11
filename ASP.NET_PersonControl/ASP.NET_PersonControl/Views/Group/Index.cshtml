@@ -30,9 +30,9 @@
 
             @if (!Model.owners.ElementAt(i).DisplayName.IsEmpty())
             {
-                <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "Details", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+                <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
             } else { 
-                <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "Details", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+                <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
             }
 
             <td>@Model.groups.ElementAt(i).Description</td>
