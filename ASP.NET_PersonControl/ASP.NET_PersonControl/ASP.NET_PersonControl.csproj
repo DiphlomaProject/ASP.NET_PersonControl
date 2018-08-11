@@ -270,7 +270,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdministrationFormViewModel.cs" />
-    <Compile Include="ViewModels\CreateNewGroup.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeFormViewModel.cs" />
     <Compile Include="ViewModels\GroupsViewModel.cs" />

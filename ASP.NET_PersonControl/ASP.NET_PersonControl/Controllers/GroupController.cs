@@ -24,7 +24,8 @@ namespace ASP.NET_PersonControl.Controllers
             List<Groups> groupsList = _context.Groups.Select(g => g).ToList<Groups>();
             List<ApplicationUser> ownersList = new List<ApplicationUser>();
             foreach(String owner_id in groupsList.Select(g => g.Owner).ToList())
-                ownersList.Add(_context.Users.FirstOrDefault(o => o.Id == owner_id) ?? new ApplicationUser());
+                if(_context.Users.FirstOrDefault(o => o.Id == owner_id) != null)
+                    ownersList.Add(_context.Users.FirstOrDefault(o => o.Id == owner_id));
 
             var viewModel = new GroupsViewModel{ groups = groupsList, owners = ownersList };
 
@@ -34,19 +35,21 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult groupEdit(int id)
         {
             _context = new ApplicationDbContext();
-            List<Groups> groupsList = _context.Groups.Select(g => g).Where(i => i.Id == id).ToList<Groups>();
-            List<ApplicationUser> ownersList = new List<ApplicationUser>();
-            foreach (String owner_id in groupsList.Select(g => g.Owner).ToList())
-                ownersList.Add(_context.Users.FirstOrDefault(o => o.Id == owner_id) ?? new ApplicationUser());
-
-            return View( new GroupsViewModel { groups = groupsList, owners = ownersList } );
+            Groups group = _context.Groups.FirstOrDefault(gr => gr.Id == id);
+            if (group == null)
+                return RedirectToAction("Index", "Group");
+            
+            ApplicationUser curOwner = _context.Users.FirstOrDefault(o => o.Id == group.Owner);
+            List<ApplicationUser> users = _context.Users.Select(u => u).ToList();
+           
+            return View( new GroupsViewModel { group = group, owners = users, curOwner = curOwner } );
         }
 
         public ActionResult Create()
         {
             _context = new ApplicationDbContext();
-            var viewModel = new CreateNewGroup {
-                group = new Groups(), users = _context.Users.Select(c => c).ToList()
+            var viewModel = new GroupsViewModel {
+                group = new Groups(), owners = _context.Users.Select(c => c).ToList()
             };
 
             return View(viewModel);
@@ -67,23 +70,68 @@ namespace ASP.NET_PersonControl.Controllers
                 return View();
             }
         }
-
+       
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Save( CreateNewGroup groupController, ApplicationUser user)
+        public ActionResult Save(GroupsViewModel groupController)
         {
             _context = new ApplicationDbContext();
-            if(_context.Groups.Select(g => g.Id == groupController.group.Id).Count() > 0)
+
+            if (groupController.curOwner.Id == null || groupController.group.Title == null || groupController.group.Description == null)
             {
-                Groups groups =_context.Groups.FirstOrDefault(g => g.Id == groupController.group.Id);
+                var viewModel = new GroupsViewModel
+                {
+                    group = groupController.group,
+                    owners = _context.Users.Select(c => c).ToList()
+                };
+
+                return View("Create", viewModel);
+            }
+
+
+            if (_context.Groups.FirstOrDefault(g => g.Id == groupController.group.Id) == null)
+            {
+                groupController.group.Owner = groupController.curOwner.Id;
+                _context.Groups.Add(groupController.group);
+            }
+            else
+            {
+                Groups groups = _context.Groups.FirstOrDefault(g => g.Id == groupController.group.Id);
                 groups.Title = groupController.group.Title;
-                groups.Owner = user.Id;
+                groups.Owner = groupController.curOwner.Id;
                 groups.Description = groupController.group.Description;
             }
             _context.SaveChanges();
 
+            return RedirectToAction("Index", "Group");
+        }
+
+        [HttpGet, ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            _context = new ApplicationDbContext();
+            if(_context.Groups.FirstOrDefault(g => g.Id == id) == null)
+                return RedirectToAction("Index", "Group");
+
+            //Groups groups = _context.Groups.FirstOrDefault(g => g.Id == id);
+
+            var projectGroups = from details in _context.ProjectsGroups
+                                  where details.GroupId == id
+                                  select details;
+            if (projectGroups != null)
+                _context.ProjectsGroups.RemoveRange(projectGroups);
+
+            var usersGroup = from user in _context.UsersGroups
+                             where user.GroupId == id
+                             select user;
+            if(usersGroup != null)
+                _context.UsersGroups.RemoveRange(usersGroup);
+
+            _context.Groups.Remove(_context.Groups.FirstOrDefault(g => g.Id == id));
+
+            _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Group");
         }
-        }
+    }
 }

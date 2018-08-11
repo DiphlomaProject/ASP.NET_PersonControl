@@ -28,11 +28,17 @@
         <tr>
             <td>@Html.ActionLink(Model.groups.ElementAt(i).Title, "groupEdit", "Group", new { @id = Model.groups.ElementAt(i).Id }, null)</td>
 
-            @if (!Model.owners.ElementAt(i).DisplayName.IsEmpty())
+            @if (Model.owners.ElementAt(i) != null && !Model.owners.ElementAt(i).DisplayName.IsEmpty())
             {
                 <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "Details", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
-            } else { 
+            }
+            else if (Model.owners.ElementAt(i) != null)
+            {
                 <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "Details", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+            }
+            else
+            {
+                <td>User not found</td>
             }
 
             <td>@Model.groups.ElementAt(i).Description</td>

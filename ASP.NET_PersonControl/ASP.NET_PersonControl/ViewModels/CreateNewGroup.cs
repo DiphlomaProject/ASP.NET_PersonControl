@@ -10,7 +10,7 @@ namespace ASP.NET_PersonControl.ViewModels
     {
         
         public Groups group { get; set; }
-
+        public ApplicationUser newOwner { get; set; }
         public IEnumerable<ApplicationUser> users { get; set; }
 
     }

@@ -293,11 +293,20 @@ namespace ASP.NET_PersonControl.Controllers
                         }
                     }
 
+                    // delete reference user - group
+                    var usersGroup = from userForDel in _context.UsersGroups
+                                     where userForDel.UserId == id
+                                     select userForDel;
+                    if (usersGroup != null)
+                        _context.UsersGroups.RemoveRange(usersGroup);
+
                     // Удаление пользователя
                     await _userManager.DeleteAsync(user);
 
                     // Фиксация транзакции удаления
                     transaction.Commit();
+
+                    await _context.SaveChangesAsync();
                 }
 
                 return RedirectToAction("Index");

@@ -1,4 +1,4 @@
-﻿@model ASP.NET_PersonControl.ViewModels.CreateNewGroup
+﻿@model ASP.NET_PersonControl.ViewModels.GroupsViewModel
 @{
 
 
@@ -24,12 +24,11 @@
         </div>
     </div>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @*@Html.LabelFor(m => m.users.Select(), htmlAttributes: new { @class = "control-label col-md-2" })*@
+        @Html.Label("Owner", htmlAttributes: new { @class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.users, new SelectList(Model.users, "Id", "DisplayName"), "Select user role", new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.users)
+            @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), "Select user role", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.curOwner.Id, "", new { @class = "text-danger" })
         </div>
     </div>
 
