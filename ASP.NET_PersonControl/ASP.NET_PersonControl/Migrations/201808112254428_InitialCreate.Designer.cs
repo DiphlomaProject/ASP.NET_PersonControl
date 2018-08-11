@@ -7,13 +7,13 @@ namespace ASP.NET_PersonControl.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Validations : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Validations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201807292223153_Validations"; }
+            get { return "201808112254428_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

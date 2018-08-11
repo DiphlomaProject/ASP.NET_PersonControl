@@ -236,25 +236,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806260039402_InitialCreate.cs" />
-    <Compile Include="Migrations\201806260039402_InitialCreate.Designer.cs">
-      <DependentUpon>201806260039402_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807091528370_UpdateAspNetUsers.cs" />
-    <Compile Include="Migrations\201807091528370_UpdateAspNetUsers.Designer.cs">
-      <DependentUpon>201807091528370_UpdateAspNetUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807252353146_GroupsProjectsCustomers.cs" />
-    <Compile Include="Migrations\201807252353146_GroupsProjectsCustomers.Designer.cs">
-      <DependentUpon>201807252353146_GroupsProjectsCustomers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807262346445_UpdateBase.cs" />
-    <Compile Include="Migrations\201807262346445_UpdateBase.Designer.cs">
-      <DependentUpon>201807262346445_UpdateBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807292223153_Validations.cs" />
-    <Compile Include="Migrations\201807292223153_Validations.Designer.cs">
-      <DependentUpon>201807292223153_Validations.cs</DependentUpon>
+    <Compile Include="Migrations\201808112254428_InitialCreate.cs" />
+    <Compile Include="Migrations\201808112254428_InitialCreate.Designer.cs">
+      <DependentUpon>201808112254428_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -372,20 +356,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806260039402_InitialCreate.resx">
-      <DependentUpon>201806260039402_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807091528370_UpdateAspNetUsers.resx">
-      <DependentUpon>201807091528370_UpdateAspNetUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807252353146_GroupsProjectsCustomers.resx">
-      <DependentUpon>201807252353146_GroupsProjectsCustomers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807262346445_UpdateBase.resx">
-      <DependentUpon>201807262346445_UpdateBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807292223153_Validations.resx">
-      <DependentUpon>201807292223153_Validations.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808112254428_InitialCreate.resx">
+      <DependentUpon>201808112254428_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
