@@ -22,7 +22,7 @@ namespace ASP.NET_PersonControl.Models
         [StringLength(256)]
         //[Required(ErrorMessage = "Please enter your Name.")]
         public string DisplayName { get; set; }
-        [Required(ErrorMessage = "Please enter Role Empl")]
+        //[Required(ErrorMessage = "Please enter Role Empl")]
         public List<string> RoleNames;
         public byte[] img;
 

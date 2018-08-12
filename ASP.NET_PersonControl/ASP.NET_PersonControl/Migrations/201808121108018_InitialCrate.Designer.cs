@@ -13,7 +13,7 @@ namespace ASP.NET_PersonControl.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201808121034399_InitialCrate"; }
+            get { return "201808121108018_InitialCrate"; }
         }
         
         string IMigrationMetadata.Source

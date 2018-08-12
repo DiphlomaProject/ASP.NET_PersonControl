@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -186,10 +188,15 @@ namespace ASP.NET_PersonControl.Controllers
                 return View("Create", viewModel);
             }
 
-            if (user.Id == null)
+            _context = new ApplicationDbContext();
+
+            if (user.Id == null || _context.Users.SingleOrDefault(u => u.Id == user.Id) == null)
             {
                 user.Id = (_context.Users.Count() + 1).ToString();
+                user.UserName = user.Email;
                 //user.PasswordHash = 
+                //_context.Users.Add(user);
+                //UserManager.Create(user, user.Email);
                 _context.Users.Add(user);
             }
             else
@@ -214,10 +221,24 @@ namespace ASP.NET_PersonControl.Controllers
                 userInDB.DisplayName = user.DisplayName;
             }
 
+
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
 
-            if(_context.Users.SingleOrDefault(u => u.Id == user.Id) == null)
-                UserManager.Create(user, user.Email);
+
+            if (_context.Users.SingleOrDefault(u => u.Id == user.Id) == null)
+            {
+                var result = UserManager.Create(user, user.Email);
+                if (!result.Succeeded)
+                {
+                    var viewModel = new EmployeeFormViewModel
+                    {
+                        user = user,
+                        Roles = _context.Roles.ToList()
+                    };
+
+                    return View("Create", viewModel);
+                }
+            }
 
             if (user.Id != null && employeeForm.RoleId != null)
             {
@@ -235,7 +256,20 @@ namespace ASP.NET_PersonControl.Controllers
                 UserManager.AddToRole(user.Id, _context.Roles.SingleOrDefault(r => r.Id == employeeForm.RoleId).Name);
             }
 
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }//catch
 
             return RedirectToAction("Index", "Employees");
         }
