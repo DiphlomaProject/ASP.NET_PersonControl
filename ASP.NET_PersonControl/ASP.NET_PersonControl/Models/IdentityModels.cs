@@ -13,14 +13,14 @@ namespace ASP.NET_PersonControl.Models
     public class ApplicationUser : IdentityUser
     {
         //Extended Properties
-        [Required(ErrorMessage = "Please enter Address.")]
+        //[Required(ErrorMessage = "Please enter Address.")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "Please enter Country.")]
+        //[Required(ErrorMessage = "Please enter Country.")]
         public string Country { get; set; }
-        [Required(ErrorMessage = "Please enter City.")]
+        //[Required(ErrorMessage = "Please enter City.")]
         public string City { get; set; }
         [StringLength(256)]
-        [Required(ErrorMessage = "Please enter your Name.")]
+        //[Required(ErrorMessage = "Please enter your Name.")]
         public string DisplayName { get; set; }
         [Required(ErrorMessage = "Please enter Role Empl")]
         public List<string> RoleNames;

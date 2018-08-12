@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ASP.NET_PersonControl.Models;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace ASP.NET_PersonControl.Controllers
 {
@@ -151,21 +153,41 @@ namespace ASP.NET_PersonControl.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                try
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    //user.Address = "templAddress 120";
+                    //user.Country = "templCountry";
+                    //user.City = "templCity";
+                    //user.DisplayName = "templDisplayName";
+                    var result = await UserManager.CreateAsync(user, model.Password);
+               
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
-                    // Отправка сообщения электронной почты с этой ссылкой
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+                        // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
+                        // Отправка сообщения электронной почты с этой ссылкой
+                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
 
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+
+                }// try
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }//catch
+
             }
 
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
