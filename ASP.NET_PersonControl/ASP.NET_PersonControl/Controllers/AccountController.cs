@@ -364,9 +364,21 @@ namespace ASP.NET_PersonControl.Controllers
                 case SignInStatus.Failure:
                 default:
                     // Если у пользователя нет учетной записи, то ему предлагается создать ее
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    ApplicationDbContext dbContext = new ApplicationDbContext();
+
+
+
+                    if (dbContext.Users.FirstOrDefault(c => c.Email == loginInfo.Email) != null)
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ViewBag.ReturnUrl = returnUrl;
+                        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                        return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    }
+                   
             }
         }
 
@@ -391,6 +403,7 @@ namespace ASP.NET_PersonControl.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+               
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
