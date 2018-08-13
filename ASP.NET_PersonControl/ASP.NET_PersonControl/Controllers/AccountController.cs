@@ -368,18 +368,29 @@ namespace ASP.NET_PersonControl.Controllers
 
 
 
-                    if (dbContext.Users.FirstOrDefault(c => c.Email == loginInfo.Email) != null)
+                    /* if (dbContext.Users.FirstOrDefault(c => c.Email == loginInfo.Email) != null)
+                     {
+                         return RedirectToLocal(returnUrl);
+                     }*/
+
+                    ApplicationUser user = await UserManager.FindByNameAsync(loginInfo.Email);
+                    if (user != null)
                     {
-                        return RedirectToLocal(returnUrl);
+                        var addLoginResult = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                        if (addLoginResult.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
                     else
-                    {
-                        ViewBag.ReturnUrl = returnUrl;
-                        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                        return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-                    }
-                   
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    
+
             }
+           
         }
 
         //
