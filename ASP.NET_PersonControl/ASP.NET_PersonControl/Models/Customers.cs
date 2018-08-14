@@ -9,7 +9,7 @@ namespace ASP.NET_PersonControl.Models
     {
         public int Id { get; set; }
         public string Company { get; set; }
-        public string ContactPerson { get; set; }
+        public string ContactPerson { get; set; }   // name
         public string Position { get; set; }
         public string Phone { get; set; }
         public string Description { get; set; }

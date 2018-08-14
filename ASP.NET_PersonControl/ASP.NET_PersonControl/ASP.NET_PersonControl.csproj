@@ -254,11 +254,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdministrationFormViewModel.cs" />
+    <Compile Include="ViewModels\CustomersFormViewModel.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeFormViewModel.cs" />
     <Compile Include="ViewModels\GroupsViewModel.cs" />
     <Compile Include="ViewModels\NewRoleFormModel.cs" />
     <Compile Include="ViewModels\ProfileVMRequired.cs" />
+    <Compile Include="ViewModels\ProjectsFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
