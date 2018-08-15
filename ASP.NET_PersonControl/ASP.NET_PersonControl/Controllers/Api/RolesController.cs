@@ -27,6 +27,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 Dictionary<string, object> result = new Dictionary<string, object>();
                 result.Add("code", HttpStatusCode.Accepted);
                 result.Add("roles", db.Roles.ToList());
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
 
                 var jsonSerialiser = new JavaScriptSerializer();
                 var jsonData = JsonConvert.SerializeObject(result);
@@ -45,7 +46,8 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
                 Dictionary<string, object> result = new Dictionary<string, object>();
                 result.Add("code", HttpStatusCode.ExpectationFailed);
-                result.Add("exception", ex);
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+                result.Add("exception", ex.ToString());
 
                 var jsonSerialiser = new JavaScriptSerializer();
                 var jsonData = JsonConvert.SerializeObject(result);

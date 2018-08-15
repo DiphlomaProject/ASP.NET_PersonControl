@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace ASP.NET_PersonControl
 {
@@ -21,6 +22,12 @@ namespace ASP.NET_PersonControl
                  name: "ActionApi",
                  routeTemplate: "api/{controller}/{action}/{id}",
                  defaults: new { id = RouteParameter.Optional }
+             );
+
+            config.Routes.MapHttpRoute(
+                 name: "ActionApiTwo",
+                 routeTemplate: "api/{controller}/{action}/",
+                 defaults: new { action = UrlParameter.Optional }
              );
 
             /*config.Routes.MapHttpRoute(

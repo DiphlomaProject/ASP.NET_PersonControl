@@ -68,6 +68,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             Dictionary<string, object> result = new Dictionary<string, object>();
             result.Add("code", HttpStatusCode.Accepted);
             result.Add("users", users);
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
 
             return Ok(result);
         }
@@ -89,6 +90,8 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 result.Add("code", HttpStatusCode.NotFound);
                 result.Add("message", "User dose not exist in db.");
             }
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
             return Ok(result);
         }
         
@@ -111,7 +114,8 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 result.Add("code", HttpStatusCode.NotFound);
                 result.Add("message", "User not found");
             }
-           
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
             return Ok(result);
         }
 
@@ -155,6 +159,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 result.Add("code", HttpStatusCode.Found);
                 result.Add("message", "User exists in db.");
             }
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
 
             return Ok(result);
         }
