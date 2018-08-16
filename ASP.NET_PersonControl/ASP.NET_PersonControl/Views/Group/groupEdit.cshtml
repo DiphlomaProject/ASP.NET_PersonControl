@@ -24,14 +24,14 @@
                 @Html.ValidationMessageFor(model => model.group.Title, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
 
         <div class="form-group">
             @Html.Label("Owner", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @if (!Model.curOwner.DisplayName.IsEmpty())
                 {
-                    @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), Model.curOwner.DisplayName, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown", @class = "form-control" })
                 }
                 else
                 {
@@ -51,7 +51,34 @@
         </div>
     </div>
 
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            @Html.HiddenFor(model => Model.curOwner.Id)
+            <div class="form-group">
+                <label class="control-label col-md-2">Select Employee</label>
+                @Html.DropDownListFor(m => m.curOwner.Id, new MultiSelectList(Model.owners, "Id", "DisplayName"), new {  id = "normalDropDown3", multiple = "multiple", @class = "form-control" })
+            </div>
+        </div>
+    }
     <input type="submit" value="Save" class="btn btn-primary" />
     <a class="btn btn-primary" href="@Url.Action("Delete", "Group", new { @id = @Model.group.Id })" data-form-method="get">Delete</a>
 </div>
 }
+
+
+@section scripts{
+   <script>
+       $(function () {
+           $("#normalDropDown").chosen();
+       });
+
+       $(function () {
+           $("#normalDropDown2").chosen();
+       });
+
+       $(function () {
+           $("#normalDropDown3").chosen();
+       });
+    </script>
+    }
