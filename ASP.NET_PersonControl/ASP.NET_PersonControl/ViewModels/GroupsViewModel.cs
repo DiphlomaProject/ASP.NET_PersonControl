@@ -17,5 +17,7 @@ namespace ASP.NET_PersonControl.ViewModels
                                                             //public IEnumerable<Projects> projectsOfCurrentGroups { get; set; }
                                                             //public IEnumerable<FilesGroups> filesOfGroups { get; set; }
                                                             //pulic IEnumerable<Files> files { get; set; }
+
+        public string [] SelectedIDArray { get; set; }
     }
 }
