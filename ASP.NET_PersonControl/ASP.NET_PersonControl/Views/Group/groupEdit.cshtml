@@ -20,7 +20,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.group.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.group.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.EditorFor(model => model.group.Title, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextAreaFor(model => model.group.Title,2, 55, null)
                 @Html.ValidationMessageFor(model => model.group.Title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -78,7 +79,8 @@
        });
 
        $(function () {
-           $("#normalDropDown3").chosen();
+           $("#normalDropDown3").chosen({
+           disable_search : false });
        });
     </script>
     }
