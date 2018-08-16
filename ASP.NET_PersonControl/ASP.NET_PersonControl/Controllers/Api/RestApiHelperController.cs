@@ -17,6 +17,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             //MethodInfo[] methodInfos = Type.GetType(selectedObjcClass).GetMethods(BindingFlags.Public | BindingFlags.Instance);
             try
             {
+                result.Add("helper_methods", Type.GetType("RestApiHelperController").GetMethods(BindingFlags.Public | BindingFlags.Instance));
                 result.Add("roles_methods", Type.GetType("RolesController").GetMethods(BindingFlags.Public | BindingFlags.Instance));
                 result.Add("users_methods", Type.GetType("UsersController").GetMethods(BindingFlags.Public | BindingFlags.Instance));
             }
