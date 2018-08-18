@@ -1,8 +1,10 @@
 ﻿using ASP.NET_PersonControl.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ASP.NET_PersonControl.ViewModels
 {
@@ -19,7 +21,9 @@ namespace ASP.NET_PersonControl.ViewModels
         //pulic IEnumerable<Files> files { get; set; }
 
        // public IEnumerable<ApplicationUser> SelectedIDArray { get; set; }
-
+      public string SelectedIDs { get; set; }
+       // public IEnumerable<MultiSelectList> people { get; set; }
+        [NotMapped]
         public string[] SelectedIDArray { get; set; }
     }
 }
