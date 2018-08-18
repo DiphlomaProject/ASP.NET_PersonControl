@@ -41,8 +41,27 @@ namespace ASP.NET_PersonControl.Controllers
             
             ApplicationUser curOwner = _context.Users.FirstOrDefault(o => o.Id == group.Owner);
             List<ApplicationUser> users = _context.Users.Select(u => u).ToList();
-           
-            return View( new GroupsViewModel { group = group, owners = users, curOwner = curOwner } );
+            //List<ApplicationUser> usersGroup = _context.Users.Select(u => u).ToList();
+            //for ( in )
+            var usersGroup = (from u in _context.Users.ToList()
+                             from gu in _context.UsersGroups.ToList()
+                             where gu.GroupId == @group.Id && gu.UserId == u.Id select u).ToList();
+
+
+            var groupsView = new GroupsViewModel
+            {
+                group = group,
+                owners = users,
+                curOwner = curOwner,
+                usersOfCurrentGroups = usersGroup
+                
+
+            };
+            groupsView.SelectedIDArray = groupsView.usersOfCurrentGroups.Select(u=>u.DisplayName).ToArray();
+            SelectList list = new SelectList(groupsView.SelectedIDArray);
+            ViewBag.myList = list;
+
+            return View(groupsView );
         }
 
         public ActionResult Create()
@@ -102,7 +121,19 @@ namespace ASP.NET_PersonControl.Controllers
                 groups.Description = groupController.group.Description;
             }
             _context.SaveChanges();
+            if(groupController.SelectedIDArray !=null && groupController.SelectedIDArray.Count() > 0)
+            {
 
+                _context = new ApplicationDbContext();
+                if (_context.Groups.FirstOrDefault(g => g.Id == groupController.group.Id) != null)
+                {
+                    foreach (string id in groupController.SelectedIDArray)
+                        if (_context.Users.FirstOrDefault(u => u.Id == id) != null && _context.UsersGroups.Select(ug => ug).Where(g => g.UserId == id && g.GroupId == groupController.group.Id).Count() == 0)
+                            _context.UsersGroups.Add(new UsersGroups() { UserId = id, GroupId = groupController.group.Id });
+                    _context.SaveChangesAsync();
+
+                }
+            }
             return RedirectToAction("Index", "Group");
         }
 
@@ -129,7 +160,7 @@ namespace ASP.NET_PersonControl.Controllers
 
             _context.Groups.Remove(_context.Groups.FirstOrDefault(g => g.Id == id));
 
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return RedirectToAction("Index", "Group");
         }

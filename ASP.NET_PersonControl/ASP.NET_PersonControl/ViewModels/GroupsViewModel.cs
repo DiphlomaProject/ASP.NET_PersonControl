@@ -13,11 +13,13 @@ namespace ASP.NET_PersonControl.ViewModels
         public IEnumerable<ApplicationUser> owners { get; set; } // need for edit & create group
 
         public IEnumerable<Groups> groups { get; set; }     // need for show all groups
-                                                            //public IEnumerable<UsersGroups> usersOfCurrentGroups { get; set; }
-                                                            //public IEnumerable<Projects> projectsOfCurrentGroups { get; set; }
-                                                            //public IEnumerable<FilesGroups> filesOfGroups { get; set; }
-                                                            //pulic IEnumerable<Files> files { get; set; }
+        public IEnumerable<ApplicationUser> usersOfCurrentGroups { get; set; }
+        //public IEnumerable<Projects> projectsOfCurrentGroups { get; set; }
+        //public IEnumerable<FilesGroups> filesOfGroups { get; set; }
+        //pulic IEnumerable<Files> files { get; set; }
 
-        public string [] SelectedIDArray { get; set; }
+       // public IEnumerable<ApplicationUser> SelectedIDArray { get; set; }
+
+        public string[] SelectedIDArray { get; set; }
     }
 }
