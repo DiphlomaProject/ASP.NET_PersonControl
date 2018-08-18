@@ -58,8 +58,8 @@
             @Html.HiddenFor(model => Model.curOwner.Id)
             <div class="form-group">
                 <label class="control-label col-md-2">Select Employee</label>
-                @*@Html.DropDownListFor(m => m.SelectedIDArray, new MultiSelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control" })*@
-                @Html.DropDownList("myList", ViewBag.myList as SelectList, new { id = "normalDropDown3", multiple = "multiple", @class = "form-control" })
+                @Html.DropDownListFor(m => m.SelectedIDArray, new MultiSelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control" })
+                @Html.DropDownList("myList", ViewBag.myList as SelectList)
             </div>
         </div>
     }

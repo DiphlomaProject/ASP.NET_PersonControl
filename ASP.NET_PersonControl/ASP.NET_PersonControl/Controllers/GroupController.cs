@@ -58,6 +58,7 @@ namespace ASP.NET_PersonControl.Controllers
 
             };
             groupsView.SelectedIDArray = groupsView.usersOfCurrentGroups.Select(u=>u.DisplayName).ToArray();
+            
             SelectList list = new SelectList(groupsView.SelectedIDArray);
             ViewBag.myList = list;
 
