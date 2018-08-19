@@ -15,7 +15,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
     {
         // 302 - already exist, 200/202 - accept, 417 - fail, 500 - server error
 
-        [AcceptVerbs("Get")]
+        [AcceptVerbs("Get", "Post")]
         public IHttpActionResult HelpInfo()
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
@@ -25,6 +25,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             codeOfResponse.Add(202, "Action accept.");
             codeOfResponse.Add(302, "Data already exist.");
             codeOfResponse.Add(404, "Page not found.");
+            codeOfResponse.Add(405, "Method not allowed.");
             codeOfResponse.Add(417, "Action fail.");
             codeOfResponse.Add(500, "Server internal error."); 
             codeOfResponse.Add(504, "Gateway Timeout");
