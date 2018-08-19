@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ASP.NET_PersonControl.Models;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,15 +14,29 @@ namespace ASP.NET_PersonControl.Controllers.Api
     public class RestApiHelperController : ApiController
     {
         // 302 - already exist, 200/202 - accept, 417 - fail, 500 - server error
+
+        [AcceptVerbs("Get")]
         public IHttpActionResult HelpInfo()
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
             //MethodInfo[] methodInfos = Type.GetType(selectedObjcClass).GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            Dictionary<int, string> codeOfResponse = new Dictionary<int, string>();
+            codeOfResponse.Add(200, "Action accept.");
+            codeOfResponse.Add(202, "Action accept.");
+            codeOfResponse.Add(302, "Data already exist.");
+            codeOfResponse.Add(404, "Page not found.");
+            codeOfResponse.Add(417, "Action fail.");
+            codeOfResponse.Add(500, "Server internal error."); 
+            codeOfResponse.Add(504, "Gateway Timeout");
+
+
             try
             {
-                result.Add("helper_methods", Type.GetType("RestApiHelperController").GetMethods(BindingFlags.Public | BindingFlags.Instance));
-                result.Add("roles_methods", Type.GetType("RolesController").GetMethods(BindingFlags.Public | BindingFlags.Instance));
-                result.Add("users_methods", Type.GetType("UsersController").GetMethods(BindingFlags.Public | BindingFlags.Instance));
+                //MethodInfo[] methodInfos = typeof(RestApiHelperController).GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+                result.Add("responses_code", codeOfResponse);
+                result.Add("helper_methods", typeof(RestApiHelperController).GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).ToList());
+                result.Add("roles_methods", typeof(RolesController).GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).ToList());
+                result.Add("users_methods", typeof(UsersController).GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).ToList());
             }
             catch (Exception ex)
             {
@@ -34,31 +51,24 @@ namespace ASP.NET_PersonControl.Controllers.Api
             return Ok(result);
         }
 
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        [AcceptVerbs("Get")]
+        public IHttpActionResult GenerateTokens()
         {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
+            byte[] key = Guid.NewGuid().ToByteArray();
+            string token = Convert.ToBase64String(time.Concat(key).ToArray());
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
+            // To decode the token to get the creation time:
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+            byte[] data = Convert.FromBase64String(token);
+            DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
+            if (when < DateTime.UtcNow.AddHours(-24))
+            {
+                // too old
+            }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return Ok(token);
         }
     }
 }

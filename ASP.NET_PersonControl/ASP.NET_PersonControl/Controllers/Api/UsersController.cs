@@ -41,11 +41,6 @@ namespace ASP.NET_PersonControl.Controllers.Api
         }
 
         private ApplicationDbContext db { get; set; }
-        // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<controller>
         [AcceptVerbs("Post")]

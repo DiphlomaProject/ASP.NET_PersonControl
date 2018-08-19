@@ -47,7 +47,17 @@
         @foreach (var employee in Model.Users)
         {
             <tr>
-                <td>@Html.ActionLink(employee.UserName, "Details", "Employees", new { @id = employee.Id }, null)</td>
+
+                <td>
+                    @if (employee.DisplayName.IsEmpty() == true)
+                    {
+                        @Html.ActionLink(employee.UserName, "Details", "Employees", new { @id = employee.Id }, null)
+                    }
+                    else
+                    {
+                        @Html.ActionLink(employee.DisplayName, "Details", "Employees", new { @id = employee.Id }, null)
+                    }
+                </td>
                 <td>@employee.Email</td>
                 <td>@employee.EmailConfirmed</td>
                 <td>@employee.PhoneNumber</td>

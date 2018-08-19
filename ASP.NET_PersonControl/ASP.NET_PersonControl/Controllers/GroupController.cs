@@ -41,8 +41,6 @@ namespace ASP.NET_PersonControl.Controllers
             
             ApplicationUser curOwner = _context.Users.FirstOrDefault(o => o.Id == group.Owner);
             List<ApplicationUser> users = _context.Users.Select(u => u).ToList();
-            //List<ApplicationUser> usersGroup = _context.Users.Select(u => u).ToList();
-            //for ( in )
             var usersGroup = (from u in _context.Users.ToList()
                              from gu in _context.UsersGroups.ToList()
                              where gu.GroupId == @group.Id && gu.UserId == u.Id select u).ToList();
@@ -56,19 +54,8 @@ namespace ASP.NET_PersonControl.Controllers
                 usersOfCurrentGroups = usersGroup,
                
 
-            };
-            //groupsView.SelectedIDs = groupsView.usersOfCurrentGroups.Select(u=>u.DisplayName).ToString();
-            //groupsView.SelectedIDArray = groupsView.SelectedIDs.Split(',').ToArray();
+            };       
             groupsView.SelectedIDArray = groupsView.usersOfCurrentGroups.Select(u => u.Id).ToArray();
-            // groupsView.SelectedIDArray = groupsView.SelectedIDArray.ToString().Split(',').ToArray();
-
-            //groupsView.people = groupsView.usersOfCurrentGroups.Select(people => new MultiSelectList(people.Id));
-           // viewmodel.Vegetables = vegetables.Select(d => new MultiSelectList(d.VegName));
-
-            MultiSelectList list = new MultiSelectList(groupsView.SelectedIDArray);
-            
-            ViewBag.myList = list;
-
             return View(groupsView );
         }
 
@@ -128,11 +115,11 @@ namespace ASP.NET_PersonControl.Controllers
                 groups.Owner = groupController.curOwner.Id;
                 groups.Description = groupController.group.Description;
             }
+
             _context.UsersGroups.RemoveRange(_context.UsersGroups.Select(ug => ug).Where(ug => ug.GroupId == groupController.group.Id).ToList());
             _context.SaveChanges();
             if(groupController.SelectedIDArray !=null && groupController.SelectedIDArray.Count() > 0)
             {
-
                 _context = new ApplicationDbContext();
                 if (_context.Groups.FirstOrDefault(g => g.Id == groupController.group.Id) != null)
                 {
