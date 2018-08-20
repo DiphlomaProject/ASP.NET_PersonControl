@@ -53,7 +53,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
         }
 
         [AcceptVerbs("Get")]
-        public IHttpActionResult GenerateTokens()
+        private IHttpActionResult GenerateTokens()
         {
 
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());

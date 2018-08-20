@@ -241,6 +241,10 @@
     <Compile Include="Migrations\201808121108018_InitialCrate.Designer.cs">
       <DependentUpon>201808121108018_InitialCrate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808201742455_Token_Create.cs" />
+    <Compile Include="Migrations\201808201742455_Token_Create.Designer.cs">
+      <DependentUpon>201808201742455_Token_Create.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customers.cs" />
@@ -251,6 +255,7 @@
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Projects.cs" />
     <Compile Include="Models\ProjectsGroups.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Models\UsersGroups.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -364,6 +369,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201808121108018_InitialCrate.resx">
       <DependentUpon>201808121108018_InitialCrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808201742455_Token_Create.resx">
+      <DependentUpon>201808201742455_Token_Create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

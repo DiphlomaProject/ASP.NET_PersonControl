@@ -43,6 +43,7 @@ namespace ASP.NET_PersonControl.Models
         public DbSet<Groups> Groups { get; set; }
         public DbSet<ProjectsGroups> ProjectsGroups { get; set; }
         public DbSet<Projects> Projects { get; set; }
+        public DbSet<Token> Tokens { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
