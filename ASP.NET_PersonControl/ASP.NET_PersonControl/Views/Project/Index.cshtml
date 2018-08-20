@@ -1,0 +1,70 @@
+﻿@model ASP.NET_PersonControl.ViewModels.ProjectsFormViewModel
+
+@{
+    ViewBag.Title = "Project";
+}
+
+<h2>Index</h2>
+
+<h2>Project Manager</h2>
+
+@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
+{
+<h4>You can add new Project. </h4>
+    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Project") + "'");">Add Project</button>
+}
+<br />
+<br />
+<h4>Current Project.</h4>
+
+<table id="group" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>isComplite</th>
+            <th>BeginTime</th>
+            <th>UntilTime</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.projects.Count(); i++)
+        {
+        <tr>
+
+            <td>
+            @Model.projects.ElementAt(i).Customer
+            </td>
+
+            <td>
+            @Html.ActionLink(Model.projects.ElementAt(i).Title, "Edit", "Project", new { @id = Model.projects.ElementAt(i).Id }, null)
+            </td>
+           
+
+            <td>
+                @Model.projects.ElementAt(i).Description
+            </td>
+
+            <td>
+                @Model.projects.ElementAt(i).PriceInDollars
+            </td>
+
+            <td>
+                @Model.projects.ElementAt(i).isComplite
+            </td>
+            <td>
+                @Model.projects.ElementAt(i).BeginTime
+            </td>
+            <td>
+                @Model.projects.ElementAt(i).UntilTime
+            </td>
+
+        </tr>
+        }
+
+
+    </tbody>
+</table>
+<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");">Back</button>

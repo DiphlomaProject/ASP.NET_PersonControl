@@ -44,6 +44,17 @@
                         </li>
                         <li>@Html.ActionLink("Notification", "Index", "Notification")</li>
                         <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"> Projects <span class="caret" style="color:gray"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("My projects", "Index", "Home")</li>
+                                @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
+                                {
+                                    <li>@Html.ActionLink("Project manager", "Index", "Project")</li>
+                                }
+                            </ul>
+                        </li>
+                        @*<li>@Html.ActionLink("Project", "Index", "Project")</li>*@
                     }
 
 

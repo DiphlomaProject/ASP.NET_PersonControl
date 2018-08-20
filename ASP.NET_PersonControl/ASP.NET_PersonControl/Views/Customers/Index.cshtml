@@ -50,27 +50,7 @@
 
             </tr >
          }
-            @*@for (int i = 0; i < Model.groups.Count(); i++)
-    {
-        <tr>
-            <td>@Html.ActionLink(Model.groups.ElementAt(i).Title, "groupEdit", "Group", new { @id = Model.groups.ElementAt(i).Id }, null)</td>
-
-            @if (Model.owners.ElementAt(i) != null && !Model.owners.ElementAt(i).DisplayName.IsEmpty())
-            {
-                <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
-            }
-            else if (Model.owners.ElementAt(i) != null)
-            {
-                <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
-            }
-            else
-            {
-                <td>User not found</td>
-            }
-
-            <td>@Model.groups.ElementAt(i).Description</td>
-        </tr>
-    }*@
+   
 
 </tbody>
 </table>

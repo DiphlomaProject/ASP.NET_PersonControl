@@ -1,3 +1,4 @@
+﻿
 ﻿using ASP.NET_PersonControl.Models;
 using ASP.NET_PersonControl.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -22,7 +23,7 @@ namespace ASP.NET_PersonControl.Controllers
             var viewModel = new CustomersFormViewModel()
             {
                 customers = customersList
-               
+
             };
             return View(viewModel);
         }
@@ -30,7 +31,7 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Edit(int id)
         {
             _context = new ApplicationDbContext();
-            Customers customer = _context.Customers.FirstOrDefault(gr => gr.Id ==  id);
+            Customers customer = _context.Customers.FirstOrDefault(gr => gr.Id == id);
             if (customer == null)
                 return RedirectToAction("Index", "Customers");
 
@@ -74,7 +75,7 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Save(CustomersFormViewModel customerController)
         {
             _context = new ApplicationDbContext();
-            if(customerController.customer.ContactPerson== null || customerController.customer.Phone == null || customerController.customer.Description == null)
+            if (customerController.customer.ContactPerson == null || customerController.customer.Phone == null || customerController.customer.Description == null)
             {
                 var viewModel = new CustomersFormViewModel
                 {
@@ -83,11 +84,11 @@ namespace ASP.NET_PersonControl.Controllers
                 };
                 return View("Create", viewModel);
             }
-           if(_context.Customers.FirstOrDefault(c=>c.Id == customerController.customer.Id) == null)
+            if (_context.Customers.FirstOrDefault(c => c.Id == customerController.customer.Id) == null)
             {
                 _context.Customers.Add(customerController.customer);
             }
-           else
+            else
             {
                 Customers customers = _context.Customers.FirstOrDefault(c => c.Id == customerController.customer.Id);
                 customers.Company = customerController.customer.Company;
