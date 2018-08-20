@@ -1,0 +1,77 @@
+﻿@model ASP.NET_PersonControl.ViewModels.CustomersFormViewModel
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>Group Manager</h2>
+
+@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
+{
+    <h4>You can create new group. </h4>
+    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Customers") + "'");">Add Customer</button>
+}
+<br />
+<br />
+<h4>Current Customers.</h4>
+
+<table id="group" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>ContactPerson</th>
+            <th>Position</th>
+            <th>Phone</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(int i = 0; i < Model.customers.Count(); i++)
+        {
+        <tr>
+            <td> @Html.ActionLink(Model.customers.ElementAt(i).Company, "Edit", "Customers", new { @id = Model.customers.ElementAt(i).Id }, null)</td>
+              
+
+                <td>
+                    @Model.customers.ElementAt(i).ContactPerson
+                </td>
+
+                <td >
+                    @Model.customers.ElementAt(i).Position
+                </td >
+
+                <td >
+                    @Model.customers.ElementAt(i).Phone
+                </td >
+
+                <td >
+                    @Model.customers.ElementAt(i).Description
+                </td >
+
+
+            </tr >
+         }
+            @*@for (int i = 0; i < Model.groups.Count(); i++)
+    {
+        <tr>
+            <td>@Html.ActionLink(Model.groups.ElementAt(i).Title, "groupEdit", "Group", new { @id = Model.groups.ElementAt(i).Id }, null)</td>
+
+            @if (Model.owners.ElementAt(i) != null && !Model.owners.ElementAt(i).DisplayName.IsEmpty())
+            {
+                <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+            }
+            else if (Model.owners.ElementAt(i) != null)
+            {
+                <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+            }
+            else
+            {
+                <td>User not found</td>
+            }
+
+            <td>@Model.groups.ElementAt(i).Description</td>
+        </tr>
+    }*@
+
+</tbody>
+</table>
+<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>

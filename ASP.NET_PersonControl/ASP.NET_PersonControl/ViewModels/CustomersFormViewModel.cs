@@ -14,5 +14,6 @@ namespace ASP.NET_PersonControl.ViewModels
 
         // info about all projects
         public IEnumerable<Customers> customersList { get; set; }
+        public IEnumerable<Customers> customers { get; set; }
     }
 }
