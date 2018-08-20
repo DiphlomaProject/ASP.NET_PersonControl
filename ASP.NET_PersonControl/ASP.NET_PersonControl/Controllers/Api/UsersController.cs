@@ -218,7 +218,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             if (user.email == null)
             {
                 result.Add("code", HttpStatusCode.ExpectationFailed);
-                result.Add("message", "Incorrect data. Email, password, name & phone can't be empty.");
+                result.Add("message", "Incorrect data. GoogleSignIn Email can't be empty.");
                 return Ok(result);
             }
 
