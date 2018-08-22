@@ -17,7 +17,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ASP.NET_PersonControl.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class EmployeesController : Controller
     { 
         public ApplicationDbContext _context { get; set; } // cennect to data base;

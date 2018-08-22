@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 namespace ASP.NET_PersonControl.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class GroupController : Controller
     {
         public ApplicationDbContext _context { get; set; } // cennect to data base;
