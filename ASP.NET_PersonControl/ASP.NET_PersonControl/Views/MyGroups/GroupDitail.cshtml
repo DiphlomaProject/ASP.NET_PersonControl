@@ -1,0 +1,65 @@
+﻿@model ASP.NET_PersonControl.ViewModels.GroupsViewModel
+
+@{
+    ViewBag.Title = "GroupDitail";
+}
+
+<h2>GroupDitail</h2>
+
+<div>
+    <h4>GroupsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            @Html.HiddenFor(m => m.group.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.group.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.group.Title, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Model.group.Title
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Owner", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @for (int i = 0; i < Model.usersOfCurrentGroups.Count(); i++)
+                    {
+                        if (!Model.usersOfCurrentGroups.ElementAt(i).DisplayName.IsEmpty())
+                        {
+                            @Model.usersOfCurrentGroups.ElementAt(i).DisplayName
+                        }
+                        else
+                        {
+                            @Model.usersOfCurrentGroups.ElementAt(i).Email
+                        }
+                        if (Model.usersOfCurrentGroups.Count() != (i + 1))
+                        {
+                            @String.Format(", ")
+                        }
+                        else
+                        {
+                            @String.Format(" ")
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.groups.ElementAt(0).Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.group.Description, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Model.group.Description
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>

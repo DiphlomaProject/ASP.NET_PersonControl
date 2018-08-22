@@ -490,10 +490,11 @@
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\DeteilCustomer.cshtml" />
+    <Content Include="Views\MyGroups\Index.cshtml" />
+    <Content Include="Views\MyGroups\GroupDitail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MyGroups\" />
     <Folder Include="Views\MyProjects\" />
   </ItemGroup>
   <ItemGroup>
