@@ -81,7 +81,7 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Save(ProjectsFormViewModel projectController)
         {
             _context = new ApplicationDbContext();
-            if (projectController.project.Description == null && projectController.project.BeginTime == null && projectController.project.UntilTime ==  null)
+            if (projectController.project.Description == null || projectController.project.BeginTime == null || projectController.project.UntilTime ==  null || projectController.project.Title == null)
             {
                 var viewModel = new ProjectsFormViewModel
                 {
