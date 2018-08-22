@@ -35,7 +35,7 @@
         <tr>
 
             <td>
-            @Model.customers.ElementAt(i).Company
+            @Html.ActionLink(Model.customers.ElementAt(i).Company, "DeteilCustomer", "Project", new { @id = Model.customers.ElementAt(i).Id }, null)
             </td>
 
             <td>

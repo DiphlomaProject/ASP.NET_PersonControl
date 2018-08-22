@@ -137,6 +137,21 @@ namespace ASP.NET_PersonControl.Controllers
 
             return RedirectToAction("Index", "Project");
         }
+
+        public ActionResult DeteilCustomer(int id)
+        {
+            _context = new ApplicationDbContext();
+            Customers customer = _context.Customers.FirstOrDefault(gr => gr.Id == id);
+            if (customer == null)
+                return RedirectToAction("Index", "Customers");
+
+            var viewModel = new CustomersFormViewModel
+            {
+                customer = customer
+            };
+
+            return View(viewModel);
+        }
     }
 }
     
