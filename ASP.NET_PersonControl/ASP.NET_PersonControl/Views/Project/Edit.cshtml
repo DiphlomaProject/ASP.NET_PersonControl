@@ -71,8 +71,12 @@
                     @Html.ValidationMessageFor(model => Model.project.UntilTime, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-
+            <div class="form-group">
+                @Html.Label(" Groups", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.ListBoxFor(m => m.SelectedIDArray, new MultiSelectList(Model.groups, "Id", "Title"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control" })
+                </div>
+            </div>
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
                 <a class="btn btn-primary" href="@Url.Action("Delete", "Project", new { @id = @Model.project.Id })" data-form-method="get">Delete</a>
@@ -90,7 +94,7 @@
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
     <script>
         $(function () {
-            $("#normalDropDown").chosen();
+            $("#normalDropDown3").chosen();
         });
     </script>
 

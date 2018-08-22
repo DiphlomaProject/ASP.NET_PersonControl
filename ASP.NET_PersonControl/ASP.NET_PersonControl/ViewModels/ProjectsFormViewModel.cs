@@ -1,6 +1,7 @@
 ﻿using ASP.NET_PersonControl.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -19,10 +20,13 @@ namespace ASP.NET_PersonControl.ViewModels
         public IEnumerable<Customers> customersList { get; set; }
         public IEnumerable<Customers> customers { get; set; }
 
-        public Customers curCustomers {get;set;}
-      //  public DateTime dateTime { get; set; }
+        public Groups group { get; set; }
+        public IEnumerable<Groups> groups { get; set; }
 
-      //  public IEnumerable<Projects> dataTimeList { get; set; }
-        
+        [NotMapped]
+        public string[] SelectedIDArray { get; set; }
+
+        public IEnumerable<Groups> groupsInProject {get;set;}
+
     }
 }

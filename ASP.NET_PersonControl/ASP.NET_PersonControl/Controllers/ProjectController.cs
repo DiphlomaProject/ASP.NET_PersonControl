@@ -24,17 +24,17 @@ namespace ASP.NET_PersonControl.Controllers
                                              from pj in _context.Projects.ToList()
                                              where c.Id == pj.Customer
                                              select c).ToList();
+           
 
             var viewModel = new ProjectsFormViewModel()
             {
                 projects = projectsList,
                 customers = customersList
+               
 
             };
-            var curCustomer = viewModel.projects.Select(p => p.Customer);
-            var nameCustomer = viewModel.customers.Select(c => c.Company);
-            
           
+            
             return View(viewModel);
             
         }
@@ -44,15 +44,25 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
             Projects project = _context.Projects.FirstOrDefault(gr => gr.Id == id);
             if (project == null)
-                return RedirectToAction("Index", "Customers");
+                return RedirectToAction("Index", "Project");
 
             Customers customer = _context.Customers.FirstOrDefault(c => c.Id == project.Customer);
             List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
+            List<Groups> groupList = _context.Groups.Select(g => g).ToList<Groups>();
+            var projectGroup = (from u in _context.Groups.ToList()
+                              from gu in _context.ProjectsGroups.ToList()
+                              where gu.ProjId == @project.Id && gu.GroupId == u.Id
+                              select u).ToList();
             var viewModel = new ProjectsFormViewModel
             {
                 project = project,customer = customer,
-                customers = customersList
+                customers = customersList,
+                groups = groupList,
+                groupsInProject = projectGroup
+
+
             };
+            viewModel.SelectedIDArray = viewModel.groupsInProject.Select(u => u.Id.ToString()).ToArray();
             return View(viewModel);
         }
 
@@ -60,10 +70,12 @@ namespace ASP.NET_PersonControl.Controllers
         {
             _context = new ApplicationDbContext();
             List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
+            List<Groups> groupList = _context.Groups.Select(g => g).ToList<Groups>();
             var viewModel = new ProjectsFormViewModel
             {
                 project = new Projects(),
-                customers = customersList
+                customers = customersList,
+                groups = groupList
             };
 
             return View(viewModel);
@@ -119,7 +131,20 @@ namespace ASP.NET_PersonControl.Controllers
                 projects.UntilTime = projectController.project.UntilTime;
             }
 
+
+            _context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
+            if (projectController.SelectedIDArray != null && projectController.SelectedIDArray.Count() > 0)
+            {
+                _context = new ApplicationDbContext();
+                if (_context.Projects.FirstOrDefault(g => g.Id == projectController.project.Id) != null)
+                {
+                    foreach (string id in projectController.SelectedIDArray)
+                        if (_context.Groups.FirstOrDefault(u => u.Id.ToString() == id) != null && _context.ProjectsGroups.Select(ug => ug).Where(g => g.GroupId.ToString() == id && g.ProjId == projectController.project.Id).Count() == 0)
+                            _context.ProjectsGroups.Add(new ProjectsGroups() { ProjId = projectController.project.Id, GroupId =  Convert.ToInt32(id) });
+                    _context.SaveChanges();
+                }
+            }
             return RedirectToAction("Index", "Project");
         }
 

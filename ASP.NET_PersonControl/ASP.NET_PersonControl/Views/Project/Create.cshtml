@@ -62,15 +62,18 @@
             <div class="form-group">
                 @Html.Label("Until Time", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2"  } })
+                    @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
                 </div>
             </div>
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                <input class="btn" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");" />
+
+           
+               
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input class="btn" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");" />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 }
 
 <div>
@@ -79,38 +82,34 @@
 @section scripts{
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-    <script>
-        $(function () {
-            $("#normalDropDown").chosen();
-        });
-    </script>
 
     @*<script>
-        $("#datepicker1").datetimepicker({
+            $("#datepicker1").datetimepicker({
 
-           
 
-        }).on('dp.change', function (e) {
-            $(this).data("DateTimePicker").hide();
-        });
-    </script>*@
+
+            }).on('dp.change', function (e) {
+                $(this).data("DateTimePicker").hide();
+            });
+        </script>*@
     <script>
-            $("#datepicker1").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-M-yy',
-                changeYear: true,
-                yearRange: "2018:2038",
-                showButtonPanel: true
-            });
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
 
-            $("#datepicker2").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-M-yy',
-                changeYear: true,
-                yearRange: "2018:2038",
-                showButtonPanel: true
-            });
-        </script>
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+      
+    </script>
 }
