@@ -21,13 +21,17 @@ namespace ASP.NET_PersonControl.Controllers
 
             List<Projects> projectsList = _context.Projects.Select(p => p).ToList<Projects>();
             List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
+           
             var viewModel = new ProjectsFormViewModel()
             {
                 projects = projectsList,
-                customers = customersList,
+                customers = customersList
 
             };
-            viewModel.customers.Select(p => p.Company).ToList();
+            var curCustomer = viewModel.projects.Select(p => p.Customer);
+            var nameCustomer = viewModel.customers.Select(c => c.Company);
+            
+          
             return View(viewModel);
             
         }
@@ -39,11 +43,13 @@ namespace ASP.NET_PersonControl.Controllers
             if (project == null)
                 return RedirectToAction("Index", "Customers");
 
+            Customers customer = _context.Customers.FirstOrDefault(c => c.Id == project.Customer);
+            List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
             var viewModel = new ProjectsFormViewModel
             {
-                project = project
+                project = project,customer = customer,
+                customers = customersList
             };
-
             return View(viewModel);
         }
 
