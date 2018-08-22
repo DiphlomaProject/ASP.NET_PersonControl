@@ -20,8 +20,11 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
 
             List<Projects> projectsList = _context.Projects.Select(p => p).ToList<Projects>();
-            List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
-           
+            List<Customers> customersList = (from c in _context.Customers.ToList()
+                                             from pj in _context.Projects.ToList()
+                                             where c.Id == pj.Customer
+                                             select c).ToList();
+
             var viewModel = new ProjectsFormViewModel()
             {
                 projects = projectsList,
