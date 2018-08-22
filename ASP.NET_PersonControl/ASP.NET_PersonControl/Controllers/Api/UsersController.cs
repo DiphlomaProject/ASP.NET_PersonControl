@@ -125,7 +125,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
 
-            if (user.email == null)
+            if (user.email == null || user.password == null || user.password.Length < 6)
             {
                 result.Add("code", HttpStatusCode.ExpectationFailed);
                 result.Add("message", "Incorrect data. Email, password, name & phone can't be empty.");
