@@ -5,7 +5,7 @@
 }
 
 <h2>Create</h2>
-
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 
 @using (Html.BeginForm("Save", "Project"))
 {
@@ -19,7 +19,7 @@
             <div class="form-group">
                 @Html.LabelFor(Model => Model.project.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.project.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DropDownListFor(m => m.customer.Id, new SelectList(Model.customers, "Id", "Company"), new { id = "normalDropDown", @class = "form-control" })
                     @Html.ValidationMessageFor(model => Model.project.Customer, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -48,24 +48,21 @@
             <div class="form-group">
                 @Html.LabelFor(Model => Model.project.isComplite, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @*@Html.EditorFor(model => Model.project.PriceInDollars, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.CheckBoxFor(Model => Model.project.isComplite, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => Model.project.isComplite, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(Model => Model.project.BeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Begin time", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.project.BeginTime, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => Model.project.BeginTime, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => Model.project.BeginTime, new { htmlAttributes = new { @class = "datapicker",id = "datepicker1" } })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(Model => Model.project.UntilTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Until Time", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => Model.project.UntilTime, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "datapicker",id= "datepicker2" } })
                 </div>
             </div>
             <div class="col-md-offset-2 col-md-10">
@@ -79,3 +76,31 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@section scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#normalDropDown").chosen();
+        });
+    </script>
+
+    <script>
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+    </script>
+}

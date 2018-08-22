@@ -19,13 +19,15 @@ namespace ASP.NET_PersonControl.Controllers
         {
             _context = new ApplicationDbContext();
 
-            //List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
             List<Projects> projectsList = _context.Projects.Select(p => p).ToList<Projects>();
+            List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
             var viewModel = new ProjectsFormViewModel()
             {
-               /* customers = customersList,*/ projects = projectsList
+                projects = projectsList,
+                customers = customersList,
 
             };
+            viewModel.customers.Select(p => p.Company).ToList();
             return View(viewModel);
             
         }
@@ -48,9 +50,11 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Create()
         {
             _context = new ApplicationDbContext();
+            List<Customers> customersList = _context.Customers.Select(c => c).ToList<Customers>();
             var viewModel = new ProjectsFormViewModel
             {
-                project = new Projects()
+                project = new Projects(),
+                customers = customersList
             };
 
             return View(viewModel);
@@ -77,23 +81,27 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Save(ProjectsFormViewModel projectController)
         {
             _context = new ApplicationDbContext();
-            if (projectController.project.Description == null)
+            if (projectController.project.Description == null && projectController.project.BeginTime == null && projectController.project.UntilTime ==  null)
             {
                 var viewModel = new ProjectsFormViewModel
                 {
-                    project = projectController.project
+                    project = projectController.project,customer = projectController.customer
 
                 };
                 return View("Create", viewModel);
             }
             if (_context.Projects.FirstOrDefault(c => c.Id == projectController.project.Id) == null)
             {
-                _context.Projects.Add(projectController.project);
+                projectController.project.Customer = projectController.customer.Id;
+                var result = projectController.project;
+                
+                _context.Projects.Add(result);
             }
             else
             {
                 Projects projects = _context.Projects.FirstOrDefault(c => c.Id == projectController.project.Id);
-                projects.Customer = projectController.project.Customer;
+                
+                projects.Customer = projectController.customer.Id;
                 projects.Title = projectController.project.Title;
                 projects.Description = projectController.project.Description;
                 projects.PriceInDollars = projectController.project.PriceInDollars;
