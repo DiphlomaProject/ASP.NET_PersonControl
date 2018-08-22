@@ -25,7 +25,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(Model => Model.project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Project name", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => Model.project.Title, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => Model.project.Title, "", new { @class = "text-danger" })
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(Model => Model.project.PriceInDollars, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label(" Price", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => Model.project.PriceInDollars, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => Model.project.PriceInDollars, "", new { @class = "text-danger" })
@@ -65,9 +65,6 @@
                     @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
                 </div>
             </div>
-
-           
-               
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Create" class="btn btn-default" />
                         <input class="btn" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");" />
