@@ -143,7 +143,7 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
             Customers customer = _context.Customers.FirstOrDefault(gr => gr.Id == id);
             if (customer == null)
-                return RedirectToAction("Index", "Customers");
+                return RedirectToAction("Index", "Project");
 
             var viewModel = new CustomersFormViewModel
             {
