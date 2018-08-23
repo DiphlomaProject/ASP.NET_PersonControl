@@ -43,6 +43,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             public bool twoFactorEnabled { get; set; }
             public bool emailConfirmed { get; set; }
             public bool phoneConfirmed { get; set; }
+            public string token { get; set; }
         }
 
         private ApplicationDbContext db { get; set; }
@@ -50,22 +51,32 @@ namespace ASP.NET_PersonControl.Controllers.Api
         // GET api/<controller>
         [AcceptVerbs("Post")]
         [ResponseType(typeof(Dictionary<string, object>))]
-        public IHttpActionResult GetUsers()
+        public IHttpActionResult GetUsers(User user)
         {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            if (!isTokenValid(user.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+                return Ok(result);
+            }
+
             db = new ApplicationDbContext();
             List<ApplicationUser> users = db.Users.ToList();
 
             if (users == null) return NotFound(); //Ok(new Dictionary<string, object>() { { "code", HttpStatusCode.NoContent } });
 
             var Roles = db.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
-            foreach (ApplicationUser user in users)
-                user.RoleNames = (from r in Roles
+            foreach (ApplicationUser us in users)
+                us.RoleNames = (from r in Roles
                                   from u in r.Users
-                                  where u.UserId == user.Id
+                                  where u.UserId == us.Id
                                   select r.Name).ToList();  // get roles, select role from Roles where Roles.userId == user.Id (in asp.net Roles have array-property "Users",
                                                             // 1 item of "Users" = Dictionary<UserId, RoleId>. It's like table AspNetUserRoles.)
 
-            Dictionary<string, object> result = new Dictionary<string, object>();
+            
             result.Add("code", HttpStatusCode.Accepted);
             result.Add("users", users);
             result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
@@ -97,12 +108,21 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
         [HttpDelete]
         [ResponseType(typeof(Dictionary<string, object>))]
-        public IHttpActionResult DeleteUser([FromBody]string id)
+        public IHttpActionResult DeleteUser(User user, string deleteID)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
+            if (!isTokenValid(user.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+                return Ok(result);
+            }
+
             // TODO: Add delete logic here
             db = new ApplicationDbContext();
-            var employee = db.Users.SingleOrDefault(c => c.Id == id);
+            var employee = db.Users.SingleOrDefault(c => c.Id == deleteID);
             if (employee != null)
             {
                 db.Users.Remove(employee);
@@ -121,7 +141,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
         [HttpPost]
         [ResponseType(typeof(Dictionary<string, object>))]
-        public IHttpActionResult AddUser(User user)
+        public IHttpActionResult SignUp(User user)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
 
@@ -153,6 +173,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 db.SaveChanges();
                 result.Add("code", HttpStatusCode.Accepted);
                 result.Add("message", "User was add");
+                result.Add("user", newUser);
             }
             else
             {
@@ -193,20 +214,27 @@ namespace ASP.NET_PersonControl.Controllers.Api
                     result.Add("code", HttpStatusCode.Accepted);
                     result.Add("message", "You can login");
                     result.Add("token", token);
+                    result.Add("user", usertempl);
+                    result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+                    return Ok(result);
+                } else
+                {
+                    result.Add("code", HttpStatusCode.NotAcceptable);
+                    result.Add("message", "Email or password is not correct.");
                     result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
                     return Ok(result);
                 }
             } else {
-                result.Add("code", HttpStatusCode.NotFound);
+                result.Add("code", HttpStatusCode.NotAcceptable);
                 result.Add("message", "User not found.");
                 result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
                 return Ok(result);
             }
 
-            result.Add("code", HttpStatusCode.InternalServerError);
-            result.Add("message", "Server internal error.");
-            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
-            return Ok(result);
+            //result.Add("code", HttpStatusCode.InternalServerError);
+            //result.Add("message", "Server internal error.");
+            //result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+            //return Ok(result);
         }
 
         [HttpPost]
@@ -243,6 +271,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 db.SaveChanges();
 
                 result.Add("code", HttpStatusCode.Accepted);
+                result.Add("data", user);
                 result.Add("message", "User was add by Google Account. You can login with Google.");
                 
                 string token;
@@ -279,6 +308,15 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
                 return Ok(result);
             }
+        }
+
+        private bool isTokenValid(string token) {
+            db = new ApplicationDbContext();
+
+            if (db.Tokens.FirstOrDefault(t => t.token == token) != null)
+                return true;
+            else
+                return false;
         }
 
         private bool Check(String token)

@@ -26,6 +26,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             codeOfResponse.Add(302, "Data already exist.");
             codeOfResponse.Add(404, "Page not found.");
             codeOfResponse.Add(405, "Method not allowed.");
+            codeOfResponse.Add(406, "Users didn't register.");
             codeOfResponse.Add(417, "Action fail.");
             codeOfResponse.Add(500, "Server internal error."); 
             codeOfResponse.Add(504, "Gateway Timeout");
