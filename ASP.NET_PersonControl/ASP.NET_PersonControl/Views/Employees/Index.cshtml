@@ -60,9 +60,6 @@
                                 @if (employee.DisplayName.IsEmpty() == true)
                                 {
                                     @Html.ActionLink(employee.UserName, "Details", "Employees", new { @id = employee.Id }, null)
-
-
-                                    //badge badge-success
                                 }
                                 else
                                 {
@@ -97,7 +94,7 @@
                 </table>
             </div>
             <br />
-            <button type="button" class="btn btn-success btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Create", "Employees") + "'");">Create</button>
+            <button type="button" class="btn btn-success btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Create", "Employees") + "'");">New User</button>
         </div>
         </div>
     </div>

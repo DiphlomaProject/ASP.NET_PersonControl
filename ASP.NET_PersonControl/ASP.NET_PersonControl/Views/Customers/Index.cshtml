@@ -3,55 +3,65 @@
     ViewBag.Title = "Customers";
 }
 
-<h2>Group Manager</h2>
-
-@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
-{
-    <h4>You can create new group. </h4>
-    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Customers") + "'");">Add Customer</button>
-}
-<br />
-<br />
-<h4>Current Customers.</h4>
-
-<table id="group" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Company</th>
-            <th>ContactPerson</th>
-            <th>Position</th>
-            <th>Phone</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for(int i = 0; i < Model.customers.Count(); i++)
-        {
-        <tr>
-            <td> @Html.ActionLink(Model.customers.ElementAt(i).Company, "Edit", "Customers", new { @id = Model.customers.ElementAt(i).Id }, null)</td>
-              
-
-                <td>
-                    @Model.customers.ElementAt(i).ContactPerson
-                </td>
-
-                <td >
-                    @Model.customers.ElementAt(i).Position
-                </td >
-
-                <td >
-                    @Model.customers.ElementAt(i).Phone
-                </td >
-
-                <td >
-                    @Model.customers.ElementAt(i).Description
-                </td >
 
 
-            </tr >
-         }
-   
 
-</tbody>
-</table>
-<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
+
+
+
+<div class="col-lg-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2>Customer Manager</h2>
+            <h4 class="card-title">Current Customers.</h4>
+            <div class="table-responsive">
+                <table id="group" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="table-info">Company</th>
+                            <th class="table-warning">ContactPerson</th>
+                            <th class="table-danger">Position</th>
+                            <th class="table-success">Phone</th>
+                            <th class="table-primary">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.customers.Count(); i++)
+                        {
+                            <tr>
+                                <td class="table-info"> @Html.ActionLink(Model.customers.ElementAt(i).Company, "Edit", "Customers", new { @id = Model.customers.ElementAt(i).Id }, null)</td>
+
+
+                                <td class="table-warning">
+                                    @Model.customers.ElementAt(i).ContactPerson
+                                </td>
+
+                                <td class="table-danger">
+                                    @Model.customers.ElementAt(i).Position
+                                </td>
+
+                                <td class="table-success">
+                                    @Model.customers.ElementAt(i).Phone
+                                </td>
+
+                                <td class="table-primary">
+                                    @Model.customers.ElementAt(i).Description
+                                </td>
+
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <button class="btn btn-inverse-link btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">
+                <i class="mdi mdi-refresh"></i>Back
+            </button>
+        </div>
+    </div>
+</div>
+
+
