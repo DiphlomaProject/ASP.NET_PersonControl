@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -43,7 +44,6 @@
 
         .logo_text {
             padding-left: 14px;
-            
         }
 
         .big_logo_text {
@@ -68,21 +68,23 @@
             font-family: 'Roboto', sans-serif;
             font-weight: 300;
             margin-top: -11px;
-
         }
 
         .logo_link:hover .logo_square {
             background: #14cfd6;
             transition: 400ms ease;
         }
+
         .navbar.default-layout .navbar-menu-wrapper {
-            background: #3e92ea!important;
+            background: #3e92ea !important;
         }
+
         .navbar.default-layout {
-            background: none!important;
+            background: none !important;
         }
+
         .nav > li > a:hover, .nav > li > a:focus {
-            background-color: #3e92ea!important;
+            background-color: #3e92ea !important;
         }
     </style>
 </head>
@@ -90,7 +92,7 @@
     <div class="container-scroller">
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                
+
                 <a href="@Url.Action("Index","Home")" class="logo_link">
                     <div class="for_logo">
                         <div class="logo_square"></div>
@@ -251,6 +253,7 @@
                                 <div class="user-wrapper">
                                     <div class="profile-image">
                                         <img src="images/faces/face1.jpg" alt="profile image">
+
                                     </div>
                                     <div class="text-wrapper">
                                         <p class="profile-name">@Context.User.Identity.Name</p>
@@ -291,7 +294,7 @@
                                         New Task
                                         <i class="mdi mdi-plus"></i>
                                     </button>
-                                    <button class="btn btn-success btn-block" onclick="@("window.location.href='" + @Url.Action("Create", "Customers") + "'");">
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
                                         New Customer
                                         <i class="mdi mdi-plus"></i>
                                     </button>

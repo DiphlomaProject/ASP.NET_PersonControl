@@ -1,58 +1,59 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    @if (Request.IsAuthenticated)
     {
-        @Html.AntiForgeryToken()
-        <li class="nav-item dropdown d-none d-xl-inline-block">
-            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <span class="profile-text">Hello, @Context.User.Identity.Name !</span>
-                <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                <a class="dropdown-item p-0">
-                    <div class="d-flex border-bottom">
-                        <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                            <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+            <li class="nav-item dropdown d-none d-xl-inline-block">
+                <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                    <span class="profile-text">Hello, @Context.User.Identity.Name !</span>
+                    <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
+                    @*<input class="img-xs rounded-circle" id="img_src" type="hidden" alt="Profile image" value="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" />*@
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                    <a class="dropdown-item p-0">
+                        <div class="d-flex border-bottom">
+                            <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                                <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+                            </div>
+                            <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+                                <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+                            </div>
+                            <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                                <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
+                            </div>
                         </div>
-                        <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
-                            <i class="mdi mdi-account-outline mr-0 text-gray"></i>
-                        </div>
-                        <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                            <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
-                        </div>
-                    </div>
-                </a>
-                <a href="@Url.Action("Index", "Manage")" class="dropdown-item mt-2">
-                    Manage Accounts
-                </a>
-                <a href="@Url.Action("ChangePassword", "Manage")" class="dropdown-item">
-                    Change Password
-                </a>
-                <a class="dropdown-item">
-                    Check Inbox
-                </a>
-                <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
-                    Sign Out
-                </a>
-            </div>
-        </li>
+                    </a>
+                    <a href="@Url.Action("Index", "Manage")" class="dropdown-item mt-2">
+                        Manage Accounts
+                    </a>
+                    <a href="@Url.Action("ChangePassword", "Manage")" class="dropdown-item">
+                        Change Password
+                    </a>
+                    <a class="dropdown-item">
+                        Check Inbox
+                    </a>
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
+                        Sign Out
+                    </a>
+                </div>
+            </li>
+        }
     }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-            <a href="@Url.Action("Register", "Account")" class="nav-link">
-                Sign up
-            </a>
-        <li />
-        <li class="nav-item">
-            <a href="@Url.Action("Login", "Account")" class="nav-link">
-                Sign in
-            </a>
-        </li>
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a href="@Url.Action("Register", "Account")" class="nav-link">
+                    Sign up
+                </a>
+            <li />
+            <li class="nav-item">
+                <a href="@Url.Action("Login", "Account")" class="nav-link">
+                    Sign in
+                </a>
+            </li>
 
-    </ul>
-}
+        </ul>
+    }
 
