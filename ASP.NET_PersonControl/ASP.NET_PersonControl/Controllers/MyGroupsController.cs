@@ -19,7 +19,20 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Index()
         {
             _context = new ApplicationDbContext();
-            List<Groups> groupsList = _context.Groups.Select(g => g).ToList<Groups>();
+
+            //UsersGroups curUser = _context.Users User.Identity.GetUserId
+            string curUserID = User.Identity.GetUserId();
+
+            List<Groups> groupsList = (from gr in _context.Groups.ToList()
+                                       from ug in _context.UsersGroups.ToList()
+                                       where gr.Id == ug.GroupId && ug.UserId == User.Identity.GetUserId()
+                                       select gr).ToList();
+            List<Groups> gWhereUserOwner = (from gr in _context.Groups.ToList()
+                                            where gr.Owner == User.Identity.GetUserId() select gr).ToList();
+            groupsList.AddRange(gWhereUserOwner);
+                //_context.Groups.Select(g => g).ToList<Groups>();
+
+
             List<ApplicationUser> ownersList = new List<ApplicationUser>();
             foreach (String owner_id in groupsList.Select(g => g.Owner).ToList())
                 if (_context.Users.FirstOrDefault(o => o.Id == owner_id) != null)
