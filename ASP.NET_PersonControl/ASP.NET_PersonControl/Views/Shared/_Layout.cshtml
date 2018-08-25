@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:600,700|Roboto:300,400&amp;subset=cyrillic-ext" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -19,17 +20,85 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
 
+        .for_logo {
+            display: inline-block;
+            position: relative;
+            color: #000;
+            margin-top: 5px;
+        }
+
+        .logo_square {
+            background: #3E92EA;
+            width: 70px;
+            height: 54px;
+            position: absolute;
+            transition: 400ms ease;
+        }
+
+        .logo_text {
+            padding-left: 14px;
+            
+        }
+
+        .big_logo_text {
+            font-size: 30px;
+            position: relative;
+            z-index: 2;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+            .big_logo_text span {
+                color: #fff;
+                padding-right: 14px;
+            }
+
+        .small_logo_text {
+            font-size: 14px;
+            color: #fff;
+            position: absolute;
+            z-index: 2;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            margin-top: -11px;
+
+        }
+
+        .logo_link:hover .logo_square {
+            background: #14cfd6;
+            transition: 400ms ease;
+        }
+        .navbar.default-layout .navbar-menu-wrapper {
+            background: #3e92ea!important;
+        }
+        .navbar.default-layout {
+            background: none!important;
+        }
+        .nav > li > a:hover, .nav > li > a:focus {
+            background-color: #3e92ea!important;
+        }
+    </style>
 </head>
 <body>
     <div class="container-scroller">
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                <a class="navbar-brand brand-logo" href="@Url.Action("Index", "Home")">
-                    <img src="images/logo.svg" alt="logo" />
-                </a>
-                <a class="navbar-brand brand-logo-mini" href="@Url.Action("Index", "Home")">
-                    <img src="images/logo-mini.svg" alt="logo" />
+                
+                <a href="@Url.Action("Index","Home")" class="logo_link">
+                    <div class="for_logo">
+                        <div class="logo_square"></div>
+                        <div class="logo_text">
+                            <div class="big_logo_text"><span>Per</span>sonControl</div>
+                            <div class="small_logo_text">Diploma</div>
+                        </div>
+                    </div>
                 </a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center">

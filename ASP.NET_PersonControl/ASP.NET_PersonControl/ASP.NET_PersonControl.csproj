@@ -2474,6 +2474,7 @@
     <Content Include="vendors\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="vendors\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="vendors\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Views\Account\MyLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
