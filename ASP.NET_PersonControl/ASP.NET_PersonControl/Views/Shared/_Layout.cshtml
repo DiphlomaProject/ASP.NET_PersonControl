@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
     <link rel=" stylesheet" href="~/images/" />
+    <link href="~/Content/Chosen/chosen.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:600,700|Roboto:300,400&amp;subset=cyrillic-ext" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -18,6 +19,7 @@
     @Scripts.Render("~/css/")
     @Scripts.Render("~/ventors/")
     @Scripts.Render("~/scss/")
+    @Scripts.Render("~/Content/Chosen/chosen.min.css")
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -256,9 +258,9 @@
                             {
                                 <div class="user-wrapper">
                                     @*<div class="profile-image">
-                                        <img src="images/faces/face1.jpg" alt="profile image">
+                                            <img src="images/faces/face1.jpg" alt="profile image">
 
-                                    </div>*@
+                                        </div>*@
                                     <div class="text-wrapper">
                                         <p class="profile-name">@Context.User.Identity.Name</p>
                                         @if (Context.User.IsInRole("Admin"))
@@ -382,7 +384,9 @@
     @Scripts.Render("~/css/")
     @Scripts.Render("~/ventors/")
     @Scripts.Render("~/scss/")
-    @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")*
+    @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
+    @Scripts.Render("~/Content/Chosen/chosen.min.css")
+
     <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
     <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>

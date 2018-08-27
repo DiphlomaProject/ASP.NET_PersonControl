@@ -468,6 +468,7 @@
     <Content Include="images\logo.svg" />
     <Content Include="images\samples\weather.svg" />
     <Content Include="js\chart.js" />
+    <Content Include="js\chosen.jquery.min.js" />
     <Content Include="js\dashboard.js" />
     <Content Include="js\maps.js" />
     <Content Include="js\misc.js" />
