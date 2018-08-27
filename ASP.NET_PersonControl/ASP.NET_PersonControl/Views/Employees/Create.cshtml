@@ -11,131 +11,158 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            @*<h2>Create new user</h2>*@
-            <div class="card-body">
-                <h2>Create new user</h2>
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create new user </h4>
+            <form class="form-sample">
                 <p class="card-description">
-                    @*Basic form elements*@
+                    @Model.user.Email
                 </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-9">
+                                @*<input value="@Model.DisplayName" class="form-control" placeholder="no info" />*@
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <form class="forms-sample">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.user.Email, htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
-                        @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
-
+                                @Html.EditorFor(model => model.user.DisplayName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
+                                @Html.ValidationMessageFor(model => model.user.DisplayName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Email Confirmed", htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.EmailConfirmed)
-                        @Html.ValidationMessageFor(model => model.user.EmailConfirmed, "", new { @class = "text-danger" })
-
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Phone</label>
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.user.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "123-456-789" } })
+                                @Html.ValidationMessageFor(model => model.user.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Phone Number", htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "123-456-789", @type = "number" } })
-                        @Html.ValidationMessageFor(model => model.user.PhoneNumber, "", new { @class = "text-danger" })
-
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">E-mail</label>
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
+                                @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Name", htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.DisplayName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Display Name" } })
-                        @Html.ValidationMessageFor(model => model.user.DisplayName, "", new { @class = "text-danger" })
-
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Country</label>
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.user.Country, new { htmlAttributes = new { @class = "form-control", @placeholder = "Country" } })
+                                @Html.ValidationMessageFor(model => model.user.Country, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Email Confirmed</label>
+                            <div class="col-sm-9">
+                                <div class="checkbox;&nbsp;">
+                                    @if (Model.user.EmailConfirmed.ToString() == "True")
+                                    {
+                                        <label class="badge badge-success">Completed</label>
+                                    }
+                                    else
+                                    {
+                                        @Html.EditorFor(model => model.user.EmailConfirmed)
+                                        @Html.ValidationMessageFor(model => model.user.EmailConfirmed, "", new { @class = "text-danger" })
+                                    }
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.user.Country, htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.Country, new { htmlAttributes = new { @class = "form-control", @placeholder = "Country" } })
-                        @Html.ValidationMessageFor(model => model.user.Country, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.user.City, htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.City, new { htmlAttributes = new { @class = "form-control", @placeholder = "City" } })
-                        @Html.ValidationMessageFor(model => model.user.City, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.user.Address, htmlAttributes: new { })
-                        <br />
-                        @Html.EditorFor(model => model.user.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address" } })
-                        @Html.ValidationMessageFor(model => model.user.Address, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Roles, htmlAttributes: new { })
-                        <br />
-                        @*@Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select user role", new { @class = "form-control" })*@
-                        @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select user role", new { id = "normalDropDown", @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.RoleId)
-
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">City</label>
+                            <div class="col-sm-9">
 
-                    @Html.HiddenFor(m => m.user.Id)
-                </form>
-                <button class="btn btn-primary">Save</button>
-                <input class="btn btn-light" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Employees") + "'");" />
+                                @Html.EditorFor(model => model.user.City, new { htmlAttributes = new { @class = "form-control", @placeholder = "City" } })
+                                @Html.ValidationMessageFor(model => model.user.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Role</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select user role", new { id = "normalDropDown", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.RoleId)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Address</label>
+                            <div class="col-sm-9">
 
-            </div>
+                                @Html.EditorFor(model => model.user.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address" } })
+                                @Html.ValidationMessageFor(model => model.user.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+            </form>
+
+            @Html.HiddenFor(m => m.user.Id)
+
+            <button class="btn btn-inverse-outline-success">Save</button>&nbsp;
+            <input class="btn btn-inverse-outline-danger" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Employees") + "'");" />
         </div>
-        </div>
-        
-                   
-                    }
+    </div>
+</div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 
-                    @section Scripts {
-                        @Scripts.Render("~/bundles/jqueryval")
-                        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-                        <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-                        <script src="~/Scripts/chosen.jquery.min.js"></script>
-                        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-
-                        @*<script>
-                                $("#datepicker1").datetimepicker({
+    @*<script>
+            $("#datepicker1").datetimepicker({
 
 
 
-                                }).on('dp.change', function (e) {
-                                    $(this).data("DateTimePicker").hide();
-                                });
-                            </script>*@
+            }).on('dp.change', function (e) {
+                $(this).data("DateTimePicker").hide();
+            });
+        </script>*@
 
-                        <script>
-                            $("#datepicker1").datepicker({
-                                changeMonth: true,
-                                changeYear: true,
-                                dateFormat: 'dd-M-yy',
-                                changeYear: true,
-                                yearRange: "2018:2038",
-                                showButtonPanel: true
-                            });
+    <script>
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
 
-                            $("#datepicker2").datepicker({
-                                changeMonth: true,
-                                changeYear: true,
-                                dateFormat: 'dd-M-yy',
-                                changeYear: true,
-                                yearRange: "2018:2038",
-                                showButtonPanel: true
-                            });
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
 
-                            $(function () {
-                                $("#normalDropDown").chosen();
-                            });
-                        </script>
-                    }
+        $(function () {
+            $("#normalDropDown").chosen();
+        });
+    </script>
+}
