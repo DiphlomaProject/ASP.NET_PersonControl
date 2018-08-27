@@ -2,94 +2,59 @@
 @{
     ViewBag.Title = "Управление";
 }
+<div class="col-12 grid-margin stretch-card">
+   
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"> Changing account settings</h4>
+                <p class="card-description">
+                    @ViewBag.StatusMessage
+                    Password:
+                </p>
+                <div class="form-group">
 
-<h2>@ViewBag.Title.</h2>
-
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Изменение параметров учетной записи</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Пароль:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Смена пароля", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Создать", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>Внешние имена входа:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Управление", "ManageLogins") ]
-        </dd>
-        @*
-            Номера телефонов можно использовать в качестве второго проверочного фактора для системы двухфакторной проверки подлинности.
-             
-             В <a href="https://go.microsoft.com/fwlink/?LinkId=403804">этой статье</a>
-                можно узнать, как настроить для этого приложения ASP.NET двухфакторную проверку подлинности с использованием SMS.
-             
-             Настроив двухфакторную проверку подлинности, раскомментируйте следующий блок
-        *@
-        @*  
-            <dt>Номер телефона:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Удалить" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        *@
-        <dt>Двухфакторная проверка подлинности:</dt>
-        <dd>
-            <p>
-                Поставщики двухфакторной проверки подлинности не настроены. В <a href="https://go.microsoft.com/fwlink/?LinkId=403804">этой статье</a>
-                можно узнать, как настроить двухфакторную проверку подлинности для этого приложения ASP.NET.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Включено
-                        <input type="submit" value="Отключить" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Отключено
-                        <input type="submit" value="Включить" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
-
-        <dt>Account of current user:</dt>
-        <dd>
-            <p>
-                [ @Html.ActionLink("Account info", "Index", "MyAccount") ]
-            </p>
-        </dd>
-       
-    </dl>
+                    <div class="input-group">
+                        <div class="input-group-prepend bg-info">
+                            <span class="input-group-text bg-transparent">
+                                <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                        </div>
+                        @if (Model.HasPassword)
+                        {
+                            <input type="button" class="form-control text-black"  value="Change Password" onclick="location.href='@Url.Action("ChangePassword", "Manage")'">
+                        }
+                        else
+                        {
+                            <input type="button" class="form-control text-black"  value="Set Password" onclick="location.href='@Url.Action("SetPassword", "Manage")'">
+                        }
+                    </div>
+                </div>
+                <p class="card-description">
+                    Social login names:
+                </p>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend bg-info">
+                            <span class="input-group-text bg-transparent">
+                                <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                        </div>
+                        <input type="button" class="form-control text-black" value="Control Google/Microsoft Account" aria-describedby="colored-addon1" onclick="location.href='@Url.Action("ManageLogins", "Manage")'">
+                    </div>
+                </div>
+                <p class="card-description">
+                    Account Manager of current user:
+                </p>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend bg-info">
+                            <span class="input-group-text bg-transparent">
+                                <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                        </div>
+                        <input type="button" class="form-control text-black" value="Account Manager" aria-describedby="colored-addon1" onclick="location.href='@Url.Action("Index", "MyAccount")'">
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
