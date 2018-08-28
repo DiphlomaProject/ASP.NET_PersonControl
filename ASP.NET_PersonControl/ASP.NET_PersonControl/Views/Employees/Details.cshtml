@@ -16,7 +16,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input value="@Model.DisplayName" class="form-control" placeholder="no info" disabled/>
+                                <input value="@Model.DisplayName" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">ID</label>
                             <div class="col-sm-9">
-                                <input value="@Model.Id" class="form-control" placeholder="no info" disabled/>
+                                <input value="@Model.Id" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">E-mail</label>
                             <div class="col-sm-9">
-                                <input value="@Model.Email" class="form-control" placeholder="no info" disabled/>
+                                <input value="@Model.Email" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Phone</label>
                             <div class="col-sm-9">
-                                <input class="form-control" value="@Model.PhoneNumber" placeholder="no info" disabled/>
+                                <input class="form-control" value="@Model.PhoneNumber" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Country</label>
                             <div class="col-sm-9">
-                                <input value="@Model.Country" class="form-control" placeholder="no info" disabled/>
+                                <input value="@Model.Country" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">City</label>
                             <div class="col-sm-9">
-                                <input value="@Model.City" class="form-control" placeholder="no info" disabled/>
+                                <input value="@Model.City" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Address</label>
                             <div class="col-sm-9">
-                                <input value="@Model.Address" class="form-control" placeholder="no info" disabled/>
+                                <input value="@Model.Address" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
@@ -100,14 +100,14 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Role</label>
                             <div class="col-sm-9">
-                                <input value="@foreach (string roleName in Model.RoleNames){@roleName;}" class="form-control" placeholder="no info" disabled/>
+                                <input value="@foreach (string roleName in Model.RoleNames){@roleName;}" class="form-control" placeholder="no info" disabled />
                             </div>
                         </div>
                     </div>
 
                 </div>
             </form>
-            <button class="btn btn-inverse-outline-success" onclick="@("window.location.href='" + @Url.Action("Edit", "Employees", new { @id = @Model.Id }) + "'");">Edit</button>
+            <button class="btn btn-inverse-outline-success" onclick="@("window.location.href='" + @Url.Action("Edit", "Employees", new { @id = @Model.Id }) + "'");">Edit</button>&nbsp;
             <button class="btn btn-inverse-outline-danger" onclick="@("window.location.href='" + @Url.Action("Delete", "Employees", new { @id = @Model.Id }) + "'");">Delete</button>
         </div>
     </div>
