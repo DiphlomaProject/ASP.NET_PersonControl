@@ -4,65 +4,82 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>@Model.customer.Company</h2>
+
 
 @using (Html.BeginForm("Save", "Customers"))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.HiddenFor(m => m.customer.Id)
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.customer.Company, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.customer.Company, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.customer.Company, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.customer.ContactPerson, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.customer.ContactPerson, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.customer.ContactPerson, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.customer.Position, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.customer.Position, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.customer.Position, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.customer.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.customer.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.customer.Phone, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.customer.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.customer.Description, 2, 55, null)
-                    @Html.ValidationMessageFor(model => model.customer.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Edit Customer</h4>
+                <p class="card-description">
+                    <h2>@Model.customer.Company</h2>
+                </p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form class="forms-sample">
+                    @Html.HiddenFor(m => m.customer.Id)
+                    <div class="form-group">
 
 
 
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-                <a class="btn btn-primary" href="@Url.Action("Delete", "Customers", new { @id = @Model.customer.Id })" data-form-method="get">Delete</a>
+                        @Html.LabelFor(model => model.customer.Company, htmlAttributes: new { })
+
+                        @Html.EditorFor(model => model.customer.Company, new { htmlAttributes = new { @class = "form-control", @placeholder = "no info" } })
+                        @Html.ValidationMessageFor(model => model.customer.Company, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Contact Person", htmlAttributes: new { })
+
+                        @Html.EditorFor(model => model.customer.ContactPerson, new { htmlAttributes = new { @class = "form-control", @placeholder = "no info" } })
+                        @Html.ValidationMessageFor(model => model.customer.ContactPerson, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customer.Position, htmlAttributes: new { })
+
+                        @Html.EditorFor(model => model.customer.Position, new { htmlAttributes = new { @class = "form-control", @placeholder = "no info" } })
+                        @Html.ValidationMessageFor(model => model.customer.Position, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customer.Phone, htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.customer.Phone, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}", @placeholder = "no info", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.customer.Phone, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customer.Description, htmlAttributes: new { })
+                        <br />
+                        @Html.TextAreaFor(Model => Model.customer.Description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "no info" })
+                        @Html.ValidationMessageFor(model => model.customer.Description, "", new { @class = "text-danger" })
+
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-dark btn-fw" value="Save">
+                    <i class="mdi mdi-cloud-download"></i>Edit
+                </button>
+                <a class="btn btn-inverse-outline-danger" href="@Url.Action("Delete", "Customers", new { @id = @Model.customer.Id })" data-form-method="get">Delete</a>
+                <br />
+                <br />   
+                <a  class="btn btn-light btn-fw" href="@Url.Action("Index", "Customers", new { @id = @Model.customer.Id })" data-form-method="get">
+                    <i class="mdi mdi-refresh"></i>Back to List
+                </a>
+               
             </div>
+           
         </div>
-    </div>
-}
+        </div>
+        
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+                       
+                          
+                   
+            }
+
+           
