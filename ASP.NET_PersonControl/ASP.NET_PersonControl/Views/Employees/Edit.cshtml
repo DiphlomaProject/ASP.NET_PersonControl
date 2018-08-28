@@ -3,7 +3,10 @@
     ViewBag.Title = "Edit";
 }
 @using (Html.BeginForm("Save", "Employees"))
-{<div class="col-12 grid-margin">
+
+{
+    @Html.AntiForgeryToken()
+    <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit page </h4>
@@ -90,7 +93,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Role</label>
                                 <div class="col-sm-9">
-                                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"),  new { id = "normalDropDown", @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"),"Select role", new { id = "normalDropDown", @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.RoleId)
                                 </div>
                             </div>
@@ -106,7 +109,7 @@
                             </div>
                         </div>
 
-                       </div>
+                    </div>
                 </form>
 
                 @Html.HiddenFor(m => m.user.Id)
@@ -120,42 +123,42 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-        <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-        <script src="~/Scripts/chosen.jquery.min.js"></script>
-        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 
-        @*<script>
-                $("#datepicker1").datetimepicker({
+    @*<script>
+            $("#datepicker1").datetimepicker({
 
 
 
-                }).on('dp.change', function (e) {
-                    $(this).data("DateTimePicker").hide();
-                });
-            </script>*@
-
-        <script>
-            $("#datepicker1").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-M-yy',
-                changeYear: true,
-                yearRange: "2018:2038",
-                showButtonPanel: true
+            }).on('dp.change', function (e) {
+                $(this).data("DateTimePicker").hide();
             });
+        </script>*@
 
-            $("#datepicker2").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-M-yy',
-                changeYear: true,
-                yearRange: "2018:2038",
-                showButtonPanel: true
-            });
+    <script>
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
 
-            $(function () {
-                $("#normalDropDown").chosen();
-            });
-        </script>
-    }
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+
+        $(function () {
+            $("#normalDropDown").chosen();
+        });
+    </script>
+}
