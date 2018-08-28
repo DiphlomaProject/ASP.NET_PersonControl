@@ -4,89 +4,106 @@
     ViewBag.Title = "groupEdit";
 }
 
-<h2>Edin group @Model.group.Title </h2>
 
 @using (Html.BeginForm("Save", "Group"))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Editor @Model.group.Title</h4>
+                <p class="card-description">
+                    @*<h2>@Model.customer.Company</h2>
+            @Html.HiddenFor(m => m.customer.Id)*@
+                </p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form class="forms-sample">
 
-        @Html.HiddenFor(m => m.group.Id)
+                    <div class="form-group">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.group.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.EditorFor(model => model.group.Title, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.TextAreaFor(model => model.group.Title,2, 55, null)
-                @Html.ValidationMessageFor(model => model.group.Title, "", new { @class = "text-danger" })
+
+                        @Html.HiddenFor(m => m.group.Id)
+
+
+                        @Html.LabelFor(model => model.group.Title, htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => model.group.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @*@Html.TextAreaFor(model => model.group.Title, 2, 55, null)*@
+                        @Html.ValidationMessageFor(model => model.group.Title, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.Label("Owner", htmlAttributes: new { })
+                        <br />
+                        @if (!Model.curOwner.DisplayName.IsEmpty())
+                        {
+                            @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown", @class = "form-control", @placeholder = "no info" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), Model.curOwner.Email, new { @class = "form-control", @placeholder = "no info" })
+                        }
+                        @Html.ValidationMessageFor(m => m.owners, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.groups.ElementAt(0).Description, htmlAttributes: new { })
+                        <br />
+                        @Html.TextAreaFor(Model => Model.group.Description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "no info" })
+                        @Html.ValidationMessageFor(model => model.group.Description, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            @Html.HiddenFor(model => Model.curOwner.Id)
+                            <label>Select Employee</label>
+                            <br />
+                            @Html.ListBoxFor(m => m.SelectedIDArray, new MultiSelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control", @placeholder = "no people" })
+
+                        </div>
+                    }
+                </form>
+                <button type="submit" class="btn btn-dark btn-fw" value="Save">
+                    <i class="mdi mdi-cloud-download"></i>Edit
+                </button>
+                <a class="btn btn-inverse-outline-danger" href="@Url.Action("Delete", "Group", new {  @id = @Model.group.Id })" data-form-method="get">Delete</a>
+                <br />
+                <br />
+                <a class="btn btn-light btn-fw" href="@Url.Action("Index", "Group", new { })" data-form-method="get">
+                    <i class="mdi mdi-refresh"></i>Back to List
+                </a>
+            </div>
             </div>
         </div>
-        
-
-        <div class="form-group">
-            @Html.Label("Owner", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @if (!Model.curOwner.DisplayName.IsEmpty())
-                {
-                    @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown", @class = "form-control" })
-                }
-                else
-                {
-                    @Html.DropDownListFor(m => m.curOwner.Id, new SelectList(Model.owners, "Id", "DisplayName"), Model.curOwner.Email, new { @class = "form-control" })
-                }
-                @Html.ValidationMessageFor(m => m.owners, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.groups.ElementAt(0).Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.EditorFor(model => model.group.Description, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.TextAreaFor(Model => Model.group.Description, 10, 55, null)
-                @Html.ValidationMessageFor(model => model.group.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    @using (Html.BeginForm())
-    {
-        <div class="form-horizontal">
-            @Html.HiddenFor(model => Model.curOwner.Id)
-            <div class="form-group">
-                <label class="control-label col-md-2">Select Employee</label>
-                @Html.ListBoxFor(m => m.SelectedIDArray, new MultiSelectList(Model.owners, "Id", "DisplayName"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control" })
-            </div>
-        </div>
-    }
-    <input type="submit" value="Save" class="btn btn-primary" />
-    <a class="btn btn-primary" href="@Url.Action("Delete", "Group", new { @id = @Model.group.Id })" data-form-method="get">Delete</a>
-</div>
 }
 
 
-@section scripts{
-   <script>
-       $(function () {
-           $("#normalDropDown").chosen();
-       });
+            @section scripts{
+                <script>
+                    $(function () {
+                        $("#normalDropDown").chosen();
+                    });
 
-       $(function () {
-           $("#normalDropDown2").chosen();
-       });
+                    $(function () {
+                        $("#normalDropDown2").chosen();
+                    });
 
-       $(function () {
-           $("#normalDropDown3").chosen({
-           disable_search : false });
-       });
+                    $(function () {
+                        $("#normalDropDown3").chosen({
+                            disable_search: false
+                        });
+                    });
 
-       $(function () {
-           $("#normalDropDown4").chosen({
-               disable_search: false
-           });
-       });
-    </script>
-    }
+                    $(function () {
+                        $("#normalDropDown4").chosen({
+                            disable_search: false
+                        });
+                    });
+                </script>
+            }

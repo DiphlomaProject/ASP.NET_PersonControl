@@ -48,7 +48,7 @@
                     <div class="form-group">
                         @Html.LabelFor(Model => Model.customer.Description, htmlAttributes: new { })
                         <br />
-                        @Html.TextAreaFor(Model => Model.customer.Description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "ect" })
+                        @Html.TextAreaFor(Model => Model.customer.Description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "no info" })
                         @Html.ValidationMessageFor(model => Model.customer.Description, "", new { @class = "text-danger" })
 
                     </div>
