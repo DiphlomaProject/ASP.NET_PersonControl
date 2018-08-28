@@ -1,60 +1,61 @@
 ﻿@model ASP.NET_PersonControl.Models.IndexViewModel
+@*@model ASP.NET_PersonControl.Models.ApplicationUser*@
 @{
     ViewBag.Title = "Управление";
 }
 <div class="col-12 grid-margin stretch-card">
-   
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title"> Changing account settings</h4>
-                <p class="card-description">
-                    @ViewBag.StatusMessage
-                    Password:
-                </p>
-                <div class="form-group">
 
-                    <div class="input-group">
-                        <div class="input-group-prepend bg-info">
-                            <span class="input-group-text bg-transparent">
-                                <i class="mdi mdi-shield-outline text-white"></i>
-                            </span>
-                        </div>
-                        @if (Model.HasPassword)
-                        {
-                            <input type="button" class="form-control text-black"  value="Change Password" onclick="location.href='@Url.Action("ChangePassword", "Manage")'">
-                        }
-                        else
-                        {
-                            <input type="button" class="form-control text-black"  value="Set Password" onclick="location.href='@Url.Action("SetPassword", "Manage")'">
-                        }
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title"> Changing account settings</h4>
+            <p class="card-description">
+                @ViewBag.StatusMessage
+                Password:
+            </p>
+            <div class="form-group">
+
+                <div class="input-group">
+                    <div class="input-group-prepend bg-info">
+                        <span class="input-group-text bg-transparent">
+                            <i class="mdi mdi-shield-outline text-white"></i>
+                        </span>
                     </div>
+                    @if (Model.HasPassword)
+                    {
+                        <input type="button" class="form-control text-black" value="Change Password" onclick="location.href='@Url.Action("ChangePassword", "Manage")'">
+                    }
+                    else
+                    {
+                        <input type="button" class="form-control text-black" value="Set Password" onclick="location.href='@Url.Action("SetPassword", "Manage")'">
+                    }
                 </div>
-                <p class="card-description">
-                    Social login names:
-                </p>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend bg-info">
-                            <span class="input-group-text bg-transparent">
-                                <i class="mdi mdi-shield-outline text-white"></i>
-                            </span>
-                        </div>
-                        <input type="button" class="form-control text-black" value="Control Google/Microsoft Account" aria-describedby="colored-addon1" onclick="location.href='@Url.Action("ManageLogins", "Manage")'">
+            </div>
+            <p class="card-description">
+                Social login names:
+            </p>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend bg-info">
+                        <span class="input-group-text bg-transparent">
+                            <i class="mdi mdi-shield-outline text-white"></i>
+                        </span>
                     </div>
+                    <input type="button" class="form-control text-black" value="Control Google/Microsoft Account" aria-describedby="colored-addon1" onclick="location.href='@Url.Action("ManageLogins", "Manage")'">
                 </div>
-                <p class="card-description">
-                    Account Manager of current user:
-                </p>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend bg-info">
-                            <span class="input-group-text bg-transparent">
-                                <i class="mdi mdi-shield-outline text-white"></i>
-                            </span>
-                        </div>
-                        <input type="button" class="form-control text-black" value="Account Manager" aria-describedby="colored-addon1" onclick="location.href='@Url.Action("Index", "MyAccount")'">
+            </div>
+            <p class="card-description">
+                Account Manager of current user:
+            </p>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend bg-info">
+                        <span class="input-group-text bg-transparent">
+                            <i class="mdi mdi-shield-outline text-white"></i>
+                        </span>
                     </div>
+                    <input type="button" class="form-control text-black" value="Account Manager" aria-describedby="colored-addon1" onclick="location.href='@Url.Action("Index", "MyAccount")'");>
                 </div>
             </div>
         </div>
+    </div>
 </div>

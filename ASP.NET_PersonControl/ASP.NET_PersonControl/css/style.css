@@ -7869,6 +7869,9 @@ pre {
   margin-right: auto;
   margin-left: auto; }
 
+.container-fuidProgile {
+    padding: 0 30px 25px 30px;
+}
 .row {
   display: flex;
   flex-wrap: wrap;

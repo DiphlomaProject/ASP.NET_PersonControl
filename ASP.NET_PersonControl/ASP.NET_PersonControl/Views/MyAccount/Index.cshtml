@@ -4,71 +4,159 @@
     ViewBag.Title = "Details";
 }
 
-<h2>@Model.Email</h2>
+@*<h2>@Model.Email</h2>
 
-<table id="books" class="table table-hover">
-    <tbody>
-        <tr>
-            <td><img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" height="100" width="100" /></td>
-        </tr>
-        <tr>
-            <td style="width:150px;"><strong>Name:</strong></td>
-            <td>@Model.DisplayName</td>
-        </tr>
-        <tr>
-            <td><strong>Email:</strong></td>
-            <td>@Model.Email</td>
-        </tr>
-        <tr>
-            <td><strong>Email confrimed</strong></td>
-            <td>@Model.EmailConfirmed</td>
-        </tr>
-        <tr>
-           <td><strong>Phone</strong></td>
-            <td>@Model.PhoneNumber</td>
-        </tr>
-        <tr>
-            <td ><strong>Phone confrimed</strong></td>
-            <td>@Model.PhoneNumberConfirmed</td>
-        </tr>
-         @*<tr>
-            <td><strong>Two factor enabled</strong></td>
-            <td>@Model.TwoFactorEnabled</td>
-        </tr>
-        <tr>
-            <td><strong>Lockout end date UTC</strong></td>
-            <td>@Model.LockoutEndDateUtc</td>
-        </tr>
-        <tr>
-            <td><strong>Lockeout enabled</strong></td>
-            <td>@Model.LockoutEnabled</td>
-        </tr>
-        <tr>
-            <td><strong>Access failed cout</strong></td>
-            <td>@Model.AccessFailedCount</td>
-        </tr>*@
-        <tr>
-            <td><strong>Country</strong></td>
-            <td>@Model.Country</td>
-        </tr>
-        <tr>
-            <td><strong>City</strong></td>
-            <td>@Model.City</td>
-        </tr>
-        <tr>
-            <td><strong>Address</strong></td>
-            <td>@Model.Address</td>
-        </tr>
-        <tr>
-            <td><strong>Role</strong></td>
-            <td>
-                @foreach (string roleName in Model.RoleNames)
-                {
-                    @roleName;
-                }
-            </td>
-        </tr>
-    </tbody>
-</table>
-<br />
-<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Edit", "MyAccount", new { @id = @Model.Id }) + "'");">Edit</button>
+    <table id="books" class="table table-hover">
+        <tbody>
+            <tr>
+                <td><img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" height="100" width="100" /></td>
+            </tr>
+            <tr>
+                <td style="width:150px;"><strong>Name:</strong></td>
+                <td>@Model.DisplayName</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td><strong>Email confrimed</strong></td>
+                <td>@Model.EmailConfirmed</td>
+            </tr>
+            <tr>
+               <td><strong>Phone</strong></td>
+                <td>@Model.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td ><strong>Phone confrimed</strong></td>
+                <td>@Model.PhoneNumberConfirmed</td>
+            </tr>
+            <tr>
+                <td><strong>Country</strong></td>
+                <td>@Model.Country</td>
+            </tr>
+            <tr>
+                <td><strong>City</strong></td>
+                <td>@Model.City</td>
+            </tr>
+            <tr>
+                <td><strong>Address</strong></td>
+                <td>@Model.Address</td>
+            </tr>
+            <tr>
+                <td><strong>Role</strong></td>
+                <td>
+                    @foreach (string roleName in Model.RoleNames)
+                    {
+                        @roleName;
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Edit", "MyAccount", new { @id = @Model.Id }) + "'");">Edit</button>*@
+        <br />
+                <div class="row" style="margin-left: 20px;">
+                    <div class="col-lg-4 col-xlg-3 col-md-5;margin-left: 20px">
+                        <div class="card" style="margin-left: 20px;">
+                            <div class="card-block">
+                                <center class="m-t-30">
+                                    <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" class="img-circle" width="150" />
+                                    <br />
+                                    <br />
+                                    <h4 class="card-title m-t-10">@Model.UserName</h4>
+                                    <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
+                                    <div class="row text-center justify-content-md-center">
+                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
+                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+
+                            <div class="card-block">
+
+                                <form class="form-horizontal form-material">
+                                    <div class="form-group">
+
+                                        <label class="col-md-12">Full Name</label>
+                                        <div class="col-sm-9">
+                                            <input value="@Model.DisplayName" placeholder="Full name" class="form-control form-control-line" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-email" class="col-md-12">Email</label>
+                                        <div class="col-sm-9">
+                                            <input value="@Model.Email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Email Confrimed</label>
+                                        <div class="col-sm-9">
+                                            @if (Model.EmailConfirmed.ToString() == "True")
+                                            {
+
+                                                <label class="badge badge-success">Completed</label>
+
+                                            }
+                                            else
+                                            {
+                                                @*<input value="@Model.EmailConfirmed.ToString()" class="form-control" disabled />*@
+                                                <label class="badge badge-warning">In progress</label>
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Phone No</label>
+                                        <div class="col-sm-9">
+                                            <input value="@Model.PhoneNumber" placeholder="no info" class="form-control form-control-line" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Country</label>
+                                        <div class="col-sm-9">
+                                            <input value="@Model.Country" placeholder="no info" class="form-control form-control-line" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">City</label>
+                                        <div class="col-sm-9">
+                                            <input value="@Model.City" placeholder="no info" class="form-control form-control-line" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Address</label>
+                                        <div class="col-sm-9">
+                                            <input value="@Model.Address" placeholder="no info" class="form-control form-control-line" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label style="margin-left: 20px;">Role</label>
+                                        <br />
+                                        <div class="col-sm-9">
+                                            <input value=" @foreach (string roleName in Model.RoleNames){@roleName;}" placeholder="no info" class="form-control form-control-line" readonly>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+
+                                        <button class="btn btn-success" onclick="@("window.location.href='" + @Url.Action("Edit", "MyAccount", new { @id = @Model.Id }) + "'");">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+        
+   
+
+
