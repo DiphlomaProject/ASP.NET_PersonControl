@@ -3,34 +3,43 @@
 @{
     ViewBag.Title = "Deteil";
 }
-
-<h2>Deteil</h2>
-
-<h2>@Model.customer.Company information.</h2>
-
-<table id="books" class="table table-hover">
-    <tbody>
-        <tr>
-            <td style="width:150px;"><strong>Name:</strong></td>
-            <td>@Model.customer.Company</td>
-        </tr>
-        <tr>
-            <td><strong>Contact Person:</strong></td>
-            <td>@Model.customer.ContactPerson</td>
-        </tr>
-        <tr>
-            <td><strong>Position:</strong></td>
-            <td>@Model.customer.Position</td>
-        </tr>
-        <tr>
-            <td><strong>Phone</strong></td>
-            <td>@Model.customer.Phone</td>
-        </tr>
-        <tr>
-            <td><strong>Description</strong></td>
-            <td>@Model.customer.Description</td>
-        </tr>
-    </tbody>
-</table>
-<br />
-<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");">Back to List</button>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2>Deteil</h2>
+                <h4 class="card-title">@Model.customer.Company information.</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="group">
+                        <tbody>
+                            <tr>
+                                <td style="width:150px;" class="table-info"><strong>Name:</strong></td>
+                                <td class="table-info">@Model.customer.Company</td>
+                            </tr>
+                            <tr>
+                                <td class="table-warning"><strong>Contact Person:</strong></td>
+                                <td class="table-warning">@Model.customer.ContactPerson</td>
+                            </tr>
+                            <tr>
+                                <td class="table-danger"><strong>Position:</strong></td>
+                                <td class="table-danger">@Model.customer.Position</td>
+                            </tr>
+                            <tr>
+                                <td class="table-success"><strong>Phone</strong></td>
+                                <td class="table-success">@Model.customer.Phone</td>
+                            </tr>
+                            <tr>
+                                <td class="table-primary"><strong>Description</strong></td>
+                                <td class="table-primary">@Model.customer.Description</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button class="btn btn-inverse-link btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");">
+                        <i class="mdi mdi-refresh"></i>Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+                
+             
