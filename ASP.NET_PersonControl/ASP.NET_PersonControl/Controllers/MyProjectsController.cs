@@ -39,13 +39,24 @@ namespace ASP.NET_PersonControl.Controllers
                                            select pj).ToList();
             //_context.Groups.Select(g => g).ToList<Groups>();
 
+            List<Customers> customersList = (from c in _context.Customers.ToList()
+                                             from pj in projectsList
+                                             where c.Id == pj.Customer
+                                             select c).ToList();
+
+            List<ApplicationUser> groupsOwners = (from u in _context.Users.ToList()
+                                            from pg in _context.ProjectsGroups.ToList()
+                                            from pj in projectsList
+                                             from gr in groupsList
+                                             where pj.Id == pg.ProjId && pg.GroupId == gr.Id && gr.Owner == u.Id
+                                             select u).ToList();
 
             /*List<ApplicationUser> ownersList = new List<ApplicationUser>();
             foreach (String owner_id in groupsList.Select(g => g.Owner).ToList())
                 if (_context.Users.FirstOrDefault(o => o.Id == owner_id) != null)
                     ownersList.Add(_context.Users.FirstOrDefault(o => o.Id == owner_id));*/
 
-            return View(new ProjectsFormViewModel(){ projects = projectsList, groups = groupsList });
+            return View(new ProjectsFormViewModel(){ projects = projectsList, groupsInProject = groupsList, customersList = customersList, groupsOwners = groupsOwners });
         }
     }
 }

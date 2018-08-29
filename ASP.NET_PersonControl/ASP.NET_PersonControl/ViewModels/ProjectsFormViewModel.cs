@@ -22,6 +22,7 @@ namespace ASP.NET_PersonControl.ViewModels
 
         public Groups group { get; set; }
         public IEnumerable<Groups> groups { get; set; }
+        public IEnumerable<ApplicationUser> groupsOwners { get; set; }
 
         [NotMapped]
         public string[] SelectedIDArray { get; set; }
