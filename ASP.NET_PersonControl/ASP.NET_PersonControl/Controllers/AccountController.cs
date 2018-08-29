@@ -215,6 +215,24 @@ namespace ASP.NET_PersonControl.Controllers
             return View();
         }
 
+        public async void ForgotPasswordForApi(string Email)
+        {
+            var user = await UserManager.FindByNameAsync(Email);
+            //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) отправка писма только на подтвержденную почту
+            if (user == null)
+            {
+                // Не показывать, что пользователь не существует или не подтвержден
+                return;
+            }
+
+            // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
+            // Отправка сообщения электронной почты с этой ссылкой
+            string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Сброс пароля", "Сбросьте ваш пароль, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+            return;
+        }
+
         //
         // POST: /Account/ForgotPassword
         [HttpPost]

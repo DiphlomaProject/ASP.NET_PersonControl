@@ -310,6 +310,30 @@ namespace ASP.NET_PersonControl.Controllers.Api
             }
         }
 
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult ResetPassword(User user)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+            var userFounded = db.Users.FirstOrDefault(u => u.Email == user.email);
+            //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) отправка писма только на подтвержденную почту
+            if (userFounded == null)
+            {
+                // Не показывать, что пользователь не существует или не подтвержден
+                result.Add("message", "Email is not valid.");
+                result.Add("code", HttpStatusCode.NotFound);
+                return Ok(result);
+            }
+
+            // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
+            // Отправка сообщения электронной почты с этой ссылкой
+            new AccountController().ForgotPasswordForApi(userFounded.Email);
+            result.Add("message", "Reset link was send on email.");
+            result.Add("code", HttpStatusCode.Accepted);
+            return Ok(result);
+        }
+
         private bool isTokenValid(string token) {
             db = new ApplicationDbContext();
 
