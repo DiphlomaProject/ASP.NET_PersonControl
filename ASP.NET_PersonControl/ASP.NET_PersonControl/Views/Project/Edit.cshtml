@@ -4,130 +4,114 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-<h2>@Model.project.Title</h2>
+
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 
 @using (Html.BeginForm("Save", "Project"))
 {
     @Html.AntiForgeryToken()
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Editor project: @Model.project.Title</h4>
+                <p class="card-description">
+                    @*Basic form elements*@
+                </p>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.project.Id)
+                        @Html.LabelFor(Model => Model.project.Customer, htmlAttributes: new { })
+                        @*<input type="text" class="form-control" id="exampleInputName1" placeholder="Name">*@
+                        <br />
+                        @Html.DropDownListFor(m => m.customer.Id, new SelectList(Model.customers, "Id", "Company"), "Enter Customer", new { id = "normalDropDown", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => Model.project.Customer, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Project Name", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Title" } })
+                        @Html.ValidationMessageFor(model => Model.project.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.project.Description, htmlAttributes: new { })
+                        <br />
+                        @Html.TextAreaFor(Model => Model.project.Description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "ect" })
+                        @Html.ValidationMessageFor(model => Model.project.Description, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.HiddenFor(m => m.project.Id)
+                    </div>
+                    <div class="form-group">
+                        @Html.Label(" Price", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.PriceInDollars, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price" } })
+                        @Html.ValidationMessageFor(model => Model.project.PriceInDollars, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.project.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.project.Customer, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.DropDownListFor(m => m.customer.Id, new SelectList(Model.customers, "Id", "Company"), new { id = "normalDropDown", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.project.Customer, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    </div>
+                    <div class="form-group">
 
-            <div class="form-group">
-                @Html.Label("Project name", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.project.Title, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.project.Description, 2, 55, null)
-                    @Html.ValidationMessageFor(model => model.project.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label(" Price", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.project.PriceInDollars, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => Model.project.PriceInDollars, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.project.isComplite, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => Model.project.PriceInDollars, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.CheckBoxFor(Model => Model.project.isComplite, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => Model.project.isComplite, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.project.BeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.project.BeginTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker1" } })
-                    @Html.ValidationMessageFor(model => Model.project.BeginTime, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.project.UntilTime, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(Model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
-                    @Html.ValidationMessageFor(model => Model.project.UntilTime, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label(" Groups", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.ListBoxFor(m => m.SelectedIDArray, new MultiSelectList(Model.groups, "Id", "Title"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control" })
-                </div>
-            </div>
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                        @Html.Label("Status", htmlAttributes: new { })
+                        <br />
+                        &nbsp;&nbsp;&nbsp;   @Html.CheckBoxFor(Model => Model.project.isComplite, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.project.isComplite, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Begin time", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.BeginTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker1", @placeholder = "Time Start" } })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Until Time", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
+                    </div>
+                </form>
+                <input type="submit" value="Save" class="btn btn-success mr-2" />
                 <a class="btn btn-primary" href="@Url.Action("Delete", "Project", new { @id = @Model.project.Id })" data-form-method="get">Delete</a>
+
+            </div>
             </div>
         </div>
-    </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section scripts{
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-    <script>
-        $(function () {
-            $("#normalDropDown3").chosen();
-        });
+            @section scripts{
+                <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+                <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+                <script>
+                    $(function () {
+                        $("#normalDropDown3").chosen();
+                    });
 
-        $(function () {
-            $("#normalDropDown").chosen();
-        });
-    </script>
+                    $(function () {
+                        $("#normalDropDown").chosen();
+                    });
+                </script>
 
-    @*<script>
-            $("#datepicker1").datetimepicker({
+                @*<script>
+                        $("#datepicker1").datetimepicker({
 
 
 
-            }).on('dp.change', function (e) {
-                $(this).data("DateTimePicker").hide();
-            });
-        </script>*@
-    <script>
-            $("#datepicker1").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-M-yy',
-                changeYear: true,
-                yearRange: "2018:2038",
-                showButtonPanel: true
-            });
+                        }).on('dp.change', function (e) {
+                            $(this).data("DateTimePicker").hide();
+                        });
+                    </script>*@
+                <script>
+                    $("#datepicker1").datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'dd-M-yy',
+                        changeYear: true,
+                        yearRange: "2018:2038",
+                        showButtonPanel: true
+                    });
 
-            $("#datepicker2").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'dd-M-yy',
-                changeYear: true,
-                yearRange: "2018:2038",
-                showButtonPanel: true
-            });
-    </script>
-}
+                    $("#datepicker2").datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'dd-M-yy',
+                        changeYear: true,
+                        yearRange: "2018:2038",
+                        showButtonPanel: true
+                    });
+                </script>
+            }

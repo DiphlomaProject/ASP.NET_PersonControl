@@ -2,48 +2,53 @@
 @{
     ViewBag.Title = "GroupManager";
 }
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2>Group Manager</h2>
+                <h4 class="card-title">Current Active Groups</h4>
+                <div class="table-responsive">
+                    <table id="group" class="table table-hover">
 
-<h2>Group Manager</h2>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Owner</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.groups.Count(); i++)
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink(Model.groups.ElementAt(i).Title, "groupEdit", "Group", new { @id = Model.groups.ElementAt(i).Id }, null)</td>
 
-@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
-{
-    <h4>You can create new group. </h4>
-    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Group") + "'");">Create group</button>
-}
-<br />
-<br />
-<h4>Current groups.</h4>
+                                    @if (Model.owners.ElementAt(i) != null && !Model.owners.ElementAt(i).DisplayName.IsEmpty())
+                                    {
+                                        <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+                                    }
+                                    else if (Model.owners.ElementAt(i) != null)
+                                    {
+                                        <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>User not found</td>
+                                    }
 
-<table id="group" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Owner</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for(int i = 0; i < Model.groups.Count(); i++)
-        {
-        <tr>
-            <td>@Html.ActionLink(Model.groups.ElementAt(i).Title, "groupEdit", "Group", new { @id = Model.groups.ElementAt(i).Id }, null)</td>
+                                    <td>@Model.groups.ElementAt(i).Description</td>
+                                </tr>
+                            }
 
-            @if (Model.owners.ElementAt(i) != null && !Model.owners.ElementAt(i).DisplayName.IsEmpty())
-            {
-                <td>@Html.ActionLink(Model.owners.ElementAt(i).DisplayName, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
-            }
-            else if (Model.owners.ElementAt(i) != null){ 
-                <td>@Html.ActionLink(Model.owners.ElementAt(i).Email, "DeteilsInfo", "Employees", new { @id = Model.owners.ElementAt(i).Id }, null)</td>
-            }
-            else
-            {
-                <td>User not found</td>
-            }
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <button class="btn btn-inverse-link btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">
+                    <i class="mdi mdi-refresh"></i>Back
+                </button>
+            </div>
+        </div>
+    </div>
 
-            <td>@Model.groups.ElementAt(i).Description</td>
-        </tr>
-        }
-
-    </tbody>
-</table>
-<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
+                       

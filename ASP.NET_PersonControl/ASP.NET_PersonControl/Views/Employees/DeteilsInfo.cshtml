@@ -4,56 +4,111 @@
     ViewBag.Title = "GlobalUserViewInfo";
 }
 
-<h2>@Model.DisplayName information.</h2>
 
-<table id="books" class="table table-hover">
-    <tbody>
-        <tr>
-            <td style="width:150px;"><strong>Name:</strong></td>
-            <td>@Model.DisplayName</td>
-        </tr>
-        <tr>
-            <td><strong>ID:</strong></td>
-            <td>@Model.Id</td>
-        </tr>
-        <tr>
-            <td><strong>Email:</strong></td>
-            <td>@Model.Email</td>
-        </tr>
-        <tr>
-            <td><strong>Email confrimed</strong></td>
-            <td>@Model.EmailConfirmed</td>
-        </tr>
-        <tr>
-            <td><strong>Phone</strong></td>
-            <td>@Model.PhoneNumber</td>
-        </tr>
-        <tr>
-            <td><strong>Phone confrimed</strong></td>
-            <td>@Model.PhoneNumberConfirmed</td>
-        </tr>
-        <tr>
-            <td><strong>Country</strong></td>
-            <td>@Model.Country</td>
-        </tr>
-        <tr>
-            <td><strong>City</strong></td>
-            <td>@Model.City</td>
-        </tr>
-        <tr>
-            <td><strong>Address</strong></td>
-            <td>@Model.Address</td>
-        </tr>
-        <tr>
-            <td><strong>Role</strong></td>
-            <td>
-                @foreach (string roleName in Model.RoleNames)
-                {
-                    @roleName;
-                }
-            </td>
-        </tr>
-    </tbody>
-</table>
-<br />
-<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Group") + "'");">Back to List</button>
+<div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Personal info @Model.DisplayName   </h4>
+                <form class="form-sample">
+                    <p class="card-description">
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input value="@Model.DisplayName" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">ID</label>
+                                <div class="col-sm-9">
+                                    <input value="@Model.Id" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">E-mail</label>
+                                <div class="col-sm-9">
+                                    <input value="@Model.Email" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Phone</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" value="@Model.PhoneNumber" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">E-mail Confirmed</label>
+                                <div class="col-sm-9">
+
+                                    @if (Model.EmailConfirmed.ToString() == "True")
+                                    {
+
+                                        <label class="badge badge-success">Completed</label>
+
+                                    }
+                                    else
+                                    {
+
+                                        <label class="badge badge-warning">In progress</label>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Country</label>
+                                <div class="col-sm-9">
+                                    <input value="@Model.Country" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">City</label>
+                                <div class="col-sm-9">
+                                    <input value="@Model.City" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Address</label>
+                                <div class="col-sm-9">
+                                    <input value="@Model.Address" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Role</label>
+                                <div class="col-sm-9">
+                                    <input value="@foreach (string roleName in Model.RoleNames){@roleName;}" class="form-control" placeholder="no info" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Group") + "'");">Back to List</button>
+            </div>
+        </div>
+    </div>

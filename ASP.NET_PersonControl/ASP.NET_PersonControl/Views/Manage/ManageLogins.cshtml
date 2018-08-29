@@ -4,7 +4,7 @@
     ViewBag.Title = "Управление внешними именами входа";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>Manage external names.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 @{
@@ -21,14 +21,16 @@
     {
         if (Model.CurrentLogins.Count > 0)
         {
-            <h4>Зарегистрированные имена входа</h4>
-            <table class="table">
+        <h4>
+            Registered Login Names
+        </h4>
+            <table class="table table-hover">
                 <tbody>
                     @foreach (var account in Model.CurrentLogins)
                     {
                         <tr>
-                            <td>@account.LoginProvider</td>
-                            <td>
+                            <td class="text-success">@account.LoginProvider</td>
+                            <td class="text-success">
                                 @if (ViewBag.ShowRemoveButton)
                                 {
                                     using (Html.BeginForm("RemoveLogin", "Manage"))
@@ -37,7 +39,7 @@
                                         <div>
                                             @Html.Hidden("loginProvider", account.LoginProvider)
                                             @Html.Hidden("providerKey", account.ProviderKey)
-                                            <input type="submit" class="btn btn-default" value="Удалить" title="Удалить это имя входа @account.LoginProvider из вашей учетной записи" />
+                                            <input type="submit" class="btn btn-outline-danger btn-rounded btn-fw" value="Delete" title="Delete this is login name @account.LoginProvider " />
                                         </div>
                                     }
                                 }
@@ -60,7 +62,7 @@
                 <p>
                     @foreach (AuthenticationDescription p in Model.OtherLogins)
                     {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Войти с помощью учетной записи @p.Caption">@p.AuthenticationType</button>
+                        <button type="submit" class="btn btn-outline-success btn-rounded btn-fw" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Login with in @p.Caption">@p.AuthenticationType</button>
                     }
                 </p>
                 </div>

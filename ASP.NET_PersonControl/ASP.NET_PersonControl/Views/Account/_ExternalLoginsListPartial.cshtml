@@ -1,35 +1,55 @@
 ﻿@model ASP.NET_PersonControl.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
-
-<h4>Используйте для входа другую службу.</h4>
 <hr />
+<!-- plugins:css -->
+
 @{
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    if (loginProviders.Count() == 0)
+    if (loginProviders.Count() != 0)
     {
-        <div>
-            <p>
-                Внешние службы проверки подлинности не настроены. Подробности о настройке входа через внешние службы для этого приложения ASP.NET
-                см. в <a href="https://go.microsoft.com/fwlink/?LinkId=403804">этой статье</a>.
-            </p>
-        </div>
-    }
-    else
-    {
-        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+        using (Html.BeginForm("ExternalLogin", "Account", new { Model.ReturnUrl }))
         {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders)
-                    {
-                        <button type="submit" class="btn btn-block btn-social btn-google btn-flat" style=" font-size:larger; color:white; background-color:firebrick;" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Войти с помощью учетной записи @p.Caption">@p.AuthenticationType</button>
-                        <br />
-                        <br />
-                    }
-                </p>
-            </div>
+    <div id="socialLoginList">
 
+        @foreach (var p in loginProviders)
+        {
+            if (p.AuthenticationType == "Google")
+            {
+                <div class="form-group">
+
+                  
+                    <button type="submit" class="btn btn-block btn-outline-danger btn-rounded btn-flat" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType">
+                        Google+
+                    </button>
+
+                </div>
+            }
+            else if (p.AuthenticationType == "Microsoft")
+            {
+               
+
+                <button type="submit" class="btn btn-block btn-outline-dark btn-rounded btn-flat" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType">Microsoft</button>
+            }
+        }
+
+
+    </div>
         }
     }
+
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <script src="../../vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/misc.js"></script>
 }
+

@@ -9,26 +9,35 @@
 @using (Html.BeginForm("NewRole", "Employees"))
 {
     @Html.AntiForgeryToken()
-    <div>
-        <div class="form-group">
-            @Html.Label("Role name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RoleNeme, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoleNeme, "", new { @class = "text-danger" })
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form class="forms-sample">
+                    <div class="form-group">
+                        @Html.Label("Role name", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => model.RoleNeme, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter role name" } })
+                        @Html.ValidationMessageFor(model => model.RoleNeme, "", new { @class = "text-danger" })
+
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(m => m.Roles)
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select user role", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.RoleId)
+                            </div>
+                        </div>*@
+                </form>
+                <button class="btn btn-primary">Create</button>
+                <input class="btn btn-light" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Employees") + "'");" />
             </div>
         </div>
-        @*<div class="form-group">
-                @Html.LabelFor(m => m.Roles)
-                <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select user role", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.RoleId)
-                </div>
-            </div>*@
-
-        <button class="btn btn-primary">Create</button>
-        <input class="btn" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Employees") + "'");" />
-
     </div>
+
+
+
 }
 
 @section Scripts {

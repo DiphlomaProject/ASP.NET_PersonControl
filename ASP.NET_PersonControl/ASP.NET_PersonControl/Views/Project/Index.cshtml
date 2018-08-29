@@ -4,67 +4,74 @@
     ViewBag.Title = "Project";
 }
 
-<h2>Index</h2>
 
-<h2>Project Manager</h2>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2>Project Manager</h2>
+            <h4 class="card-title">Current Avtive Project</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="group">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Project Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Deadline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.projects.Count(); i++)
+                        {
+                            <tr>
 
-@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager")))
-{
-<h4>You can add new Project. </h4>
-    <button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Create", "Project") + "'");">Add Project</button>
-}
-<br />
-<br />
-<h4>Current Project.</h4>
+                                <td>
+                                    @Html.ActionLink(Model.customers.ElementAt(i).Company, "DeteilCustomer", "Project", new { @id = Model.customers.ElementAt(i).Id }, null)
+                                </td>
 
-<table id="group" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Customer</th>
-            <th>Project Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>isComplite</th>
-            <th>BeginTime</th>
-            <th>UntilTime</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.projects.Count(); i++)
-        {
-        <tr>
-
-            <td>
-            @Html.ActionLink(Model.customers.ElementAt(i).Company, "DeteilCustomer", "Project", new { @id = Model.customers.ElementAt(i).Id }, null)
-            </td>
-
-            <td>
-            @Html.ActionLink(Model.projects.ElementAt(i).Title, "Edit", "Project", new { @id = Model.projects.ElementAt(i).Id }, null)
-            </td>
-           
-
-            <td>
-                @Model.projects.ElementAt(i).Description
-            </td>
-
-            <td>
-                @Model.projects.ElementAt(i).PriceInDollars
-            </td>
-
-            <td>
-                @Model.projects.ElementAt(i).isComplite
-            </td>
-            <td>
-                @Model.projects.ElementAt(i).BeginTime
-            </td>
-            <td>
-                @Model.projects.ElementAt(i).UntilTime
-            </td>
-
-        </tr>
-        }
+                                <td>
+                                    @Html.ActionLink(Model.projects.ElementAt(i).Title, "Edit", "Project", new { @id = Model.projects.ElementAt(i).Id }, null)
+                                </td>
 
 
-    </tbody>
-</table>
-<button class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");">Back</button>
+                                <td>
+                                    @Model.projects.ElementAt(i).Description
+                                </td>
+
+                                <td>
+                                    $ @Model.projects.ElementAt(i).PriceInDollars
+                                </td>
+                                @if (@Model.projects.ElementAt(i).isComplite.ToString() == "True")
+                                {
+                                    <td>
+                                        <label class="badge badge-success">Completed</label>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <label class="badge badge-warning">In progress</label>
+                                    </td>
+                                }
+                                <td>
+                                    @Model.projects.ElementAt(i).BeginTime
+                                </td>
+                                <td>
+                                    @Model.projects.ElementAt(i).UntilTime
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <button class="btn btn-inverse-link btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");">
+                <i class="mdi mdi-refresh"></i>Back
+            </button>
+        </div>
+    </div>
+</div>

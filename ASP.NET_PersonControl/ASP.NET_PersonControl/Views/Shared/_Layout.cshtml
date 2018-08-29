@@ -1,81 +1,395 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title – application ASP.NET</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Person Control</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+    <link rel=" stylesheet" href="~/images/" />
+    <link href="~/Content/Chosen/chosen.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:600,700|Roboto:300,400&amp;subset=cyrillic-ext" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    <link href="~/Content/Chosen/chosen.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    @Scripts.Render("~/css/")
+    @Scripts.Render("~/ventors/")
+    @Scripts.Render("~/scss/")
+    @Scripts.Render("~/Content/Chosen/chosen.min.css")
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
 
+        .for_logo {
+            display: inline-block;
+            position: relative;
+            color: #000;
+            margin-top: 5px;
+        }
+
+        .logo_square {
+            background: #3E92EA;
+            width: 70px;
+            height: 54px;
+            position: absolute;
+            transition: 400ms ease;
+        }
+
+        .logo_text {
+            padding-left: 14px;
+        }
+
+        .big_logo_text {
+            font-size: 30px;
+            position: relative;
+            z-index: 2;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+            .big_logo_text span {
+                color: #fff;
+                padding-right: 14px;
+            }
+
+        .small_logo_text {
+            font-size: 14px;
+            color: #fff;
+            position: absolute;
+            z-index: 2;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            margin-top: -11px;
+        }
+
+        .logo_link:hover .logo_square {
+            background: #14cfd6;
+            transition: 400ms ease;
+        }
+
+        .navbar.default-layout .navbar-menu-wrapper {
+            background: #3e92ea !important;
+        }
+
+        .navbar.default-layout {
+            background: none !important;
+        }
+
+        .nav > li > a:hover, .nav > li > a:focus {
+            background-color: #3e92ea !important;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Employees control", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="container-scroller">
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+
+                <a href="@Url.Action("Index","Home")" class="logo_link">
+                    <div class="for_logo">
+                        <div class="logo_square"></div>
+                        <div class="logo_text">
+                            <div class="big_logo_text"><span>Per</span>sonControl</div>
+                            <div class="small_logo_text">Diploma</div>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About us", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if (Context.User.Identity.IsAuthenticated && Context.User.IsInRole("Admin"))
-                    {
-                        <li> @Html.ActionLink("Employees", "Index", "Employees") </li>
-                    }
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+                    <li class="nav-item">
+                        <a href="@Url.Action("About","Home")" class="nav-link">
+                            <i class="mdi mdi-elevation-rise"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="@Url.Action("Contact","Home")" class="nav-link">
+                            <i class="mdi mdi-bookmark-plus-outline"></i>Contact
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav navbar-nav-right ">
                     @if (Context.User.Identity.IsAuthenticated)
                     {
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"> Groups <span class="caret" style="color:gray"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("My groups", "Index", "MyGroups")</li>
-                                @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
-                                {
-                                    <li>@Html.ActionLink("Grops managment", "Index", "Group")</li>
-                                }
-                            </ul>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-file-document-box"></i>
+                                <span class="count">7</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                                <div class="dropdown-item">
+                                    <p class="mb-0 font-weight-normal float-left">
+                                        You have 7 unread mails
+                                    </p>
+                                    <span class="badge badge-info badge-pill float-right">View all</span>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                                    </div>
+                                    <div class="preview-item-content flex-grow">
+                                        <h6 class="preview-subject ellipsis font-weight-medium text-dark">
+                                            David Grey
+                                            <span class="float-right font-weight-light small-text">1 Minutes ago</span>
+                                        </h6>
+                                        <p class="font-weight-light small-text">
+                                            The meeting is cancelled
+                                        </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                                    </div>
+                                    <div class="preview-item-content flex-grow">
+                                        <h6 class="preview-subject ellipsis font-weight-medium text-dark">
+                                            Tim Cook
+                                            <span class="float-right font-weight-light small-text">15 Minutes ago</span>
+                                        </h6>
+                                        <p class="font-weight-light small-text">
+                                            New product launch
+                                        </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                                    </div>
+                                    <div class="preview-item-content flex-grow">
+                                        <h6 class="preview-subject ellipsis font-weight-medium text-dark">
+                                            Johnson
+                                            <span class="float-right font-weight-light small-text">18 Minutes ago</span>
+                                        </h6>
+                                        <p class="font-weight-light small-text">
+                                            Upcoming board meeting
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </li>
-                        <li>@Html.ActionLink("Notification", "Index", "Notification")</li>
-                        <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"> Projects <span class="caret" style="color:gray"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("My projects", "Index", "Home")</li>
-                                @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
-                                {
-                                    <li>@Html.ActionLink("Project manager", "Index", "Project")</li>
-                                }
-                            </ul>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                                <i class="mdi mdi-bell"></i>
+                                <span class="count">4</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                                <a class="dropdown-item">
+                                    <p class="mb-0 font-weight-normal float-left">
+                                        You have 4 new notifications
+                                    </p>
+                                    <span class="badge badge-pill badge-warning float-right">View all</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-success">
+                                            <i class="mdi mdi-alert-circle-outline mx-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <h6 class="preview-subject font-weight-medium text-dark">Application Error</h6>
+                                        <p class="font-weight-light small-text">
+                                            Just now
+                                        </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-warning">
+                                            <i class="mdi mdi-comment-text-outline mx-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <h6 class="preview-subject font-weight-medium text-dark">Settings</h6>
+                                        <p class="font-weight-light small-text">
+                                            Private message
+                                        </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-info">
+                                            <i class="mdi mdi-email-outline mx-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <h6 class="preview-subject font-weight-medium text-dark">New user registration</h6>
+                                        <p class="font-weight-light small-text">
+                                            2 days ago
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </li>
-                        @*<li>@Html.ActionLink("Project", "Index", "Project")</li>*@
+                    }
+                    @Html.Partial("_LoginPartial")
+                </ul>
+
+            </div>
+
+        </nav>
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            @if (Context.User.Identity.IsAuthenticated)
+                            {
+                                <div class="user-wrapper">
+                                    @*<div class="profile-image">
+                                            <img src="images/faces/face1.jpg" alt="profile image">
+
+                                        </div>*@
+                                    <div class="text-wrapper">
+                                        <p class="profile-name">@Context.User.Identity.Name</p>
+                                        @if (Context.User.IsInRole("Admin"))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Admin</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                        @if (Context.User.IsInRole("Manager"))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Manager</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                        @if (Context.User.IsInRole(""))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">No Role</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
+                                {
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Project")'">
+                                        New Project
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Group")'">
+                                        New Group
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Index", "Home")'">
+                                        New Task
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
+                                        New Customer
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+
+
+                                }
+                            }
+                        </div>
+                    </li>
+                    @if (Context.User.Identity.IsAuthenticated)
+                    {
+                        if (Context.User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Employees")">
+                                    <i class="menu-icon mdi mdi-sticker"></i>
+                                    <span class="menu-title">Employees</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Customers")">
+                                    <i class="menu-icon mdi mdi-sticker"></i>
+                                    <span class="menu-title">Customers</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                                <i class="menu-icon mdi mdi-content-copy"></i>
+                                <span class="menu-title">Group's</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@Url.Action("Index", "MyGroups")">My Groups</a>
+                                    </li>
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="@Url.Action("Index", "Group")">Group Manager</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+                                <i class="menu-icon mdi mdi-content-copy"></i>
+                                <span class="menu-title">Project's</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic2">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@Url.Action("Index", "Home")">My Project's</a>
+                                    </li>
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="@Url.Action("Index", "Project")">Project Manager</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
                     }
 
-
                 </ul>
-                @Html.Partial("_LoginPartial")
+            </nav>
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – application ASP.NET</p>
-        </footer>
-    </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/css/")
+    @Scripts.Render("~/ventors/")
+    @Scripts.Render("~/scss/")
+    @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
+    @Scripts.Render("~/Content/Chosen/chosen.min.css")
+
     <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
+    <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
