@@ -260,6 +260,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationHub.cs" />
     <Compile Include="Models\Projects.cs" />
     <Compile Include="Models\ProjectsGroups.cs" />
     <Compile Include="Models\Token.cs" />

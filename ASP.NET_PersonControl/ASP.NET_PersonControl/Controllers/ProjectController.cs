@@ -21,18 +21,19 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
 
             List<Projects> projectsList = _context.Projects.Select(p => p).ToList<Projects>();
-            List<Customers> customersList = (from c in _context.Customers.ToList()
+            /*List<Customers> customersList = (from c in _context.Customers.ToList()
                                              from pj in _context.Projects.ToList()
                                              where c.Id == pj.Customer
-                                             select c).ToList();
-           
+                                             select c).ToList();*/
+            List<Customers> customersList = new List<Customers>();
+            foreach (int custID in projectsList.Select(pjId => pjId.Customer))
+                if (_context.Customers.ToList().FirstOrDefault(gId => gId.Id == custID) != null)
+                    customersList.Add(_context.Customers.ToList().FirstOrDefault(gId => gId.Id == custID));
 
             var viewModel = new ProjectsFormViewModel()
             {
                 projects = projectsList,
                 customers = customersList
-               
-
             };
           
             

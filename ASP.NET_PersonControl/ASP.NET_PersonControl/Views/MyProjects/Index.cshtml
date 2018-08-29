@@ -16,6 +16,7 @@
                     <tr>
                         <th>Project title</th>
                         <th>Customer</th>
+                        <th>Company</th>
                         <th>Group</th>
                         <th>Group owner</th>
                         <th>Price in $</th>
@@ -30,6 +31,7 @@
                     <tr>
                         <td>@Model.projects.ElementAt(i).Title</td>
                         <td>@Model.customersList.ElementAt(i).ContactPerson</td>
+                        <td>@Model.customersList.ElementAt(i).Company</td>
                         <td>@Model.groupsInProject.ElementAt(i).Title</td>
                         <td>@Model.groupsOwners.ElementAt(i).DisplayName</td>
                         <td> $ @Model.projects.ElementAt(i).PriceInDollars</td>
