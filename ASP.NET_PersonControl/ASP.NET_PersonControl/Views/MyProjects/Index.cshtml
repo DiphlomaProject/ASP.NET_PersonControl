@@ -4,48 +4,52 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<div>
-    <h4>ProjectsFormViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <div class="table-responsive">
-            <table id="roles" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Project title</th>
-                        <th>Customer</th>
-                        <th>Company</th>
-                        <th>Group</th>
-                        <th>Group owner</th>
-                        <th>Price in $</th>
-                        <th>Description</th>
-                        <th>Begin time</th>
-                        <th>End time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for(int i = 0; i < Model.projects.Count(); i++)
-                    {
-                    <tr>
-                        <td>@Model.projects.ElementAt(i).Title</td>
-                        <td>@Model.customersList.ElementAt(i).ContactPerson</td>
-                        <td>@Model.customersList.ElementAt(i).Company</td>
-                        <td>@Model.groupsInProject.ElementAt(i).Title</td>
-                        <td>@Model.groupsOwners.ElementAt(i).DisplayName</td>
-                        <td> $ @Model.projects.ElementAt(i).PriceInDollars</td>
-                        <td>@Model.projects.ElementAt(i).Description</td>
-                        <td>@Model.projects.ElementAt(i).BeginTime</td>
-                        <td>@Model.projects.ElementAt(i).UntilTime</td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">My Active Project</h4>
+            <p class="card-description">
+
+
+            </p>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Project title</th>
+                            <th>Customer</th>
+                            <th>Company</th>
+                            <th>Group</th>
+                            <th>Group owner</th>
+                            <th>Price in $</th>
+                            <th>Description</th>
+                            <th>Begin time</th>
+                            <th>End time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.projects.Count(); i++)
+                        {
+                            <tr>
+                                <td>@Model.projects.ElementAt(i).Title</td>
+                                <td>@Model.customersList.ElementAt(i).ContactPerson</td>
+                                <td>@Model.customersList.ElementAt(i).Company</td>
+                                <td>@Model.groupsInProject.ElementAt(i).Title</td>
+                                <td>@Model.groupsOwners.ElementAt(i).DisplayName</td>
+                                <td> $ @Model.projects.ElementAt(i).PriceInDollars</td>
+                                <td>@Model.projects.ElementAt(i).Description</td>
+                                <td>@Model.projects.ElementAt(i).BeginTime</td>
+                                <td>@Model.projects.ElementAt(i).UntilTime</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <button class="btn btn-outline-primary btn-rounded btn-fw" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">
+                <i class="mdi mdi-refresh"></i>Back
+            </button>
         </div>
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </div>
+        </div>
