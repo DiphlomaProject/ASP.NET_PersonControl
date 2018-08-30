@@ -32,6 +32,21 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
         public struct User
         {
+            public User(string email, string password, string displayName, string address, string city, string country, string phone, bool twoFactorEnabled, bool emailConfirmed, bool phoneConfirmed, string token) : this()
+            {
+                this.email = email;
+                this.password = password;
+                this.displayName = displayName;
+                this.address = address;
+                this.city = city;
+                this.country = country;
+                this.phone = phone;
+                this.twoFactorEnabled = twoFactorEnabled;
+                this.emailConfirmed = emailConfirmed;
+                this.phoneConfirmed = phoneConfirmed;
+                this.token = token;
+            }
+
             [Required]
             public string email { get; set; }
             public string password { get; set; }
