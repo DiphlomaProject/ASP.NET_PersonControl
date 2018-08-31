@@ -184,16 +184,19 @@ namespace ASP.NET_PersonControl.Controllers
 
 
         [HttpPost]
-        public ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
+        public ActionResult UploadFiles(List<HttpPostedFileBase> fileData)
         {
-            foreach (var file in files)
+            string path = Server.MapPath("~/dragDroptest/");
+            foreach (HttpPostedFileBase postedFile in fileData)
             {
-                string filePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                file.SaveAs(Path.Combine(Server.MapPath("~/dragDrop test"), filePath));
-                //Here you can write code for save this information in your database if you want
+                if (postedFile != null)
+                {
+                    string fileName = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(path + fileName);
+                }
             }
 
-            return Json("file uploaded successfully");
+            return Content("Success");
         }
     }
 }

@@ -183,7 +183,7 @@
     <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-    <script src="~/Scripts/jquery.filedrop.js"></script>
+    <script src="~/Scripts/filedrop.js"></script>
     @*<script>
             $("#datepicker1").datetimepicker({
 
@@ -222,13 +222,15 @@
         });
 
           $(function () {
-            $('#dropArea').filedrop({
+              $("#dropArea").filedrop({
+                fallback_id: 'btnUpload',
+                fallback_dropzoneClick: true,
                 url: '@Url.Action("UploadFiles")',
-                allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif'],
-                allowedfileextensions: ['.jpg', '.jpeg', '.png', '.gif'],
-                paramname: 'files',
-                maxfiles: 5,
-                maxfilesize: 5, // in MB
+                //allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/doc'],
+                allowedfileextensions: ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png', '.gif'],
+                paramname: 'fileData',
+                maxfiles: 5, //Maximum Number of Files allowed at a time.
+                maxfilesize: 2, //Maximum File Size in MB.
                 dragOver: function () {
                     $('#dropArea').addClass('active-drop');
                 },
@@ -238,44 +240,13 @@
                 drop: function () {
                     $('#dropArea').removeClass('active-drop');
                 },
-                afterAll: function (e) {
-                    $('#dropArea').html('file(s) uploaded successfully');
-                },
                 uploadFinished: function (i, file, response, time) {
-                    $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
+                    $('#uploadList').append('<li class="list-group-item">' + file.name +'</li>')
+                },
+                afterAll: function (e) {
+                    //To do some task after all uploads done.
                 }
             })
         })
     </script>
-
-
-
-
-    @*<script type="text/javascript">
-        $(function () {
-            $('#dropArea').filedrop({
-                url: '@Url.Action("UploadFiles")',
-                allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif'],
-                allowedfileextensions: ['.jpg', '.jpeg', '.png', '.gif'],
-                paramname: 'files',
-                maxfiles: 5,
-                maxfilesize: 5, // in MB
-                dragOver: function () {
-                    $('#dropArea').addClass('active-drop');
-                },
-                dragLeave: function () {
-                    $('#dropArea').removeClass('active-drop');
-                },
-                drop: function () {
-                    $('#dropArea').removeClass('active-drop');
-                },
-                afterAll: function (e) {
-                    $('#dropArea').html('file(s) uploaded successfully');
-                },
-                uploadFinished: function (i, file, response, time) {
-                    $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
-                }
-            })
-        })
-    </script>*@
 }

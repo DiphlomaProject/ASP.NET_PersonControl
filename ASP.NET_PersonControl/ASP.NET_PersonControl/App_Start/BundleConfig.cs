@@ -17,7 +17,8 @@ namespace ASP.NET_PersonControl
                            "~/Scripts/misc.js",
                             "~/Scripts/off-canvas.js",
                             "~/Scripts/jquery-ui-1.12.1.min.j",
-                            "~/Scripts/chosen.jquery.min.js"));
+                            "~/Scripts/chosen.jquery.min.js",
+                            "~/Scripts/jquery.filedrop.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -31,7 +32,8 @@ namespace ASP.NET_PersonControl
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/bootstrap - datetimepicker.js",
                       "~/Scripts/jquery-ui-1.12.1.min.j",
-                      "~/Scripts/chosen.jquery.min.js"));
+                      "~/Scripts/chosen.jquery.min.js",
+                            "~/Scripts/jquery.filedrop.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -42,7 +44,8 @@ namespace ASP.NET_PersonControl
                       "~/vendors/iconfonts/mdi/css/materialdesignicons.min.css",
                       "~/vendors/css/vendor.bundle.base.css",
                       "~/vendors/css/vendor.bundle.addons.css",
-                      "~/images/faces/face1.jpg"
+             
+                            "~/Scripts/jquery.filedrop.js"
                       ));
 
 

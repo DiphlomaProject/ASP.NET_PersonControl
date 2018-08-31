@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -65,6 +66,22 @@ namespace ASP.NET_PersonControl.Controllers
 
 
             return View(new ProjectsFormViewModel(){ projects = projectsList, groupsInProject = groupsList/*, customersList = normalizedCustomers, groupsOwners = normalizedOwnersGroups*/ });
+        }
+
+        [HttpPost]
+        public ActionResult Upload(List<HttpPostedFileBase> fileData)
+        {
+            string path = Server.MapPath("~/dragDroptest/");
+            foreach (HttpPostedFileBase postedFile in fileData)
+            {
+                if (postedFile != null)
+                {
+                    string fileName = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(path + fileName);
+                }
+            }
+
+            return Content("Success");
         }
     }
 }
