@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -178,6 +179,21 @@ namespace ASP.NET_PersonControl.Controllers
             };
 
             return View(viewModel);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
+        {
+            foreach (var file in files)
+            {
+                string filePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                file.SaveAs(Path.Combine(Server.MapPath("~/dragDrop test"), filePath));
+                //Here you can write code for save this information in your database if you want
+            }
+
+            return Json("file uploaded successfully");
         }
     }
 }

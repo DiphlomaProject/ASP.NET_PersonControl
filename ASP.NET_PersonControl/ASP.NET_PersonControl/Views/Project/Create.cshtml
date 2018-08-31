@@ -143,6 +143,32 @@
                         <br />
                         @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
                     </div>
+                    <br />
+                    <div  id="dropArea">
+                        Drop your files here
+                    </div>
+                    <br />
+                    <h4>Uploaded files : </h4>
+                    <ul class="list-group" id="uploadList"></ul>
+
+                    <style>
+                        #dropArea {
+                            background: #b5b5b5;
+                            border: black dashed 1px;
+                            height: 50px;
+                            text-align: center;
+                            color: #fff;
+                            padding-top: 12px;
+                        }
+
+                        .active-drop {
+                            background: #77bafa !important;
+                            border: solid 2px blue !important;
+                            opacity: .5;
+                            color: blue !important;
+                        }
+                    </style>
+
                     <input type="submit" value="Create" class="btn btn-success mr-2" />
                     <input class="btn btn-light" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");" />
                 </form>
@@ -157,7 +183,7 @@
     <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-
+    <script src="~/Scripts/jquery.filedrop.js"></script>
     @*<script>
             $("#datepicker1").datetimepicker({
 
@@ -194,5 +220,62 @@
         $(function () {
             $("#normalDropDown3").chosen();
         });
+
+          $(function () {
+            $('#dropArea').filedrop({
+                url: '@Url.Action("UploadFiles")',
+                allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif'],
+                allowedfileextensions: ['.jpg', '.jpeg', '.png', '.gif'],
+                paramname: 'files',
+                maxfiles: 5,
+                maxfilesize: 5, // in MB
+                dragOver: function () {
+                    $('#dropArea').addClass('active-drop');
+                },
+                dragLeave: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                drop: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                afterAll: function (e) {
+                    $('#dropArea').html('file(s) uploaded successfully');
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
+                }
+            })
+        })
     </script>
+
+
+
+
+    @*<script type="text/javascript">
+        $(function () {
+            $('#dropArea').filedrop({
+                url: '@Url.Action("UploadFiles")',
+                allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif'],
+                allowedfileextensions: ['.jpg', '.jpeg', '.png', '.gif'],
+                paramname: 'files',
+                maxfiles: 5,
+                maxfilesize: 5, // in MB
+                dragOver: function () {
+                    $('#dropArea').addClass('active-drop');
+                },
+                dragLeave: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                drop: function () {
+                    $('#dropArea').removeClass('active-drop');
+                },
+                afterAll: function (e) {
+                    $('#dropArea').html('file(s) uploaded successfully');
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
+                }
+            })
+        })
+    </script>*@
 }
