@@ -2,9 +2,14 @@
 using ASP.NET_PersonControl.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -178,6 +183,36 @@ namespace ASP.NET_PersonControl.Controllers
             };
 
             return View(viewModel);
+        }
+
+
+
+        [HttpPost]
+      
+        public async Task<ActionResult> UploadFiles(HttpPostedFileBase fileData)
+        {
+
+            string storageAccountName = "aspnetpersoncontrol";
+            string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
+            string nameOfStorage = "project";
+            StorageCredentials storageCredentials = new StorageCredentials(storageAccountName, keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+       
+
+            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
+            await cloudBlobContainer.CreateIfNotExistsAsync();
+
+            _context = new ApplicationDbContext();
+            //string id = User.Identity.GetUserId();
+            //string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
+            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference("projectid");
+           
+
+            CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference(fileData.FileName);
+            await cloudBlockBlob.UploadFromStreamAsync(fileData.InputStream);
+            return Content("Success"); 
         }
     }
 }

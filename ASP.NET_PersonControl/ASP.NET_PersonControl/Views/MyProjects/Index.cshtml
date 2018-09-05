@@ -1,7 +1,72 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Create";
 }
+<!DOCTYPE html>
 
-<h2>Index</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
 
+        #dropSection {
+            height: 300px;
+            width: 600px;
+            background-color: skyblue;
+
+        }
+
+        #btnUpload {
+            display: none;
+        }
+
+        .active {
+            background-color: yellow !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="dropSection">
+    </div>
+    <br />
+    Uploaded Files:
+    <hr />
+    <div id="uploadedFiles">
+    </div>
+    <input type="button" id="btnUpload" value="Upload" />
+    <script type="text/javascript">
+        $(function () {
+            $("#dropSection").filedrop({
+                fallback_id: 'btnUpload',
+                fallback_dropzoneClick: true,
+                url: '@Url.Action("Upload")',
+                //allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/doc'],
+                allowedfileextensions: ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png', '.gif'],
+                paramname: 'fileData',
+                maxfiles: 5, //Maximum Number of Files allowed at a time.
+                maxfilesize: 2, //Maximum File Size in MB.
+                dragOver: function () {
+                    $('#dropSection').addClass('active');
+                },
+                dragLeave: function () {
+                    $('#dropSection').removeClass('active');
+                },
+                drop: function () {
+                    $('#dropSection').removeClass('active');
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadedFiles').append(file.name + '<br />')
+                },
+                afterAll: function (e) {
+                    //To do some task after all uploads done.
+                }
+            })
+        })
+    </script>
+</body>
+</html>
