@@ -48,6 +48,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             }
 
             [Required]
+            public string id { get; set; }
             public string email { get; set; }
             public string password { get; set; }
             public string displayName { get; set; }
