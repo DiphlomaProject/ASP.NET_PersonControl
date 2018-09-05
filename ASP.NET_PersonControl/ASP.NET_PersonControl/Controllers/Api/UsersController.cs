@@ -306,6 +306,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             }else
             {
                 result.Add("code", HttpStatusCode.Accepted);
+                result.Add("user", employee);
                 result.Add("message", "You can login with Google.");
 
                 string token;
