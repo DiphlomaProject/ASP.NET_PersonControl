@@ -229,7 +229,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                     result.Add("code", HttpStatusCode.Accepted);
                     result.Add("message", "You can login");
                     result.Add("token", token);
-                    result.Add("user", usertempl);
+                    result.Add("data", usertempl);
                     result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
                     return Ok(result);
                 } else
