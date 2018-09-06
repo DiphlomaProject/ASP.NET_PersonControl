@@ -75,7 +75,7 @@
                     </div>
 
                     <div id="dropArea">
-                        @Html.HiddenFor(model => Model.group.Id)
+                        @Html.HiddenFor(model => Model.group.Id,new {@id=Model.project.Id })
                         Drop your files here
                     </div>
                     <br />
@@ -145,7 +145,8 @@
         });
 
         $(function () {
-             @*var id = @Model.project.Id;*@
+           
+            
             $("#dropArea").filedrop({
 
                 fallback_id: 'btnUpload',
@@ -159,17 +160,23 @@
                 
                 dragOver: function () {
                     $('#dropArea').addClass('active-drop');
+                   
+               
                 },
                 dragLeave: function () {
                     $('#dropArea').removeClass('active-drop');
+                 
                 },
                 drop: function () {
                     $('#dropArea').removeClass('active-drop');
+                    //Session["testing"] = "This is my session";
                 },
                 uploadFinished: function (i, file, response, time) {
                     $('#uploadList').append('<li class="list-group-item">' + file.name +'</li>')
                 },
                 afterAll: function (e) {
+
+                    
                     //To do some task after all uploads done.
                 }
             })

@@ -49,6 +49,7 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Edit(int id)
         {
             _context = new ApplicationDbContext();
+            Session["id"] = id;
             Projects project = _context.Projects.FirstOrDefault(gr => gr.Id == id);
             if (project == null)
                 return RedirectToAction("Index", "Project");
@@ -191,7 +192,11 @@ namespace ASP.NET_PersonControl.Controllers
       
         public async Task<ActionResult> UploadFiles(HttpPostedFileBase fileData)
         {
-
+            //if (Session["id"] != null)
+            //{
+                int sessionData = (int)Session["id"];
+            string projectID = Convert.ToString(sessionData);
+            
             string storageAccountName = "aspnetpersoncontrol";
             string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
             string nameOfStorage = "project";
@@ -207,12 +212,11 @@ namespace ASP.NET_PersonControl.Controllers
             _context = new ApplicationDbContext();
             //string id = User.Identity.GetUserId();
             //string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
-            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference("projectid");
-           
-
+            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(projectID);
             CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference(fileData.FileName);
             await cloudBlockBlob.UploadFromStreamAsync(fileData.InputStream);
             return Content("Success"); 
+
         }
     }
 }
