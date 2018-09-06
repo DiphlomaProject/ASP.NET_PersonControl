@@ -192,9 +192,8 @@ namespace ASP.NET_PersonControl.Controllers
       
         public async Task<ActionResult> UploadFiles(HttpPostedFileBase fileData)
         {
-            //if (Session["id"] != null)
-            //{
-                int sessionData = (int)Session["id"];
+          
+            int sessionData = (int)Session["id"];
             string projectID = Convert.ToString(sessionData);
             
             string storageAccountName = "aspnetpersoncontrol";
@@ -210,8 +209,6 @@ namespace ASP.NET_PersonControl.Controllers
             await cloudBlobContainer.CreateIfNotExistsAsync();
 
             _context = new ApplicationDbContext();
-            //string id = User.Identity.GetUserId();
-            //string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
             CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(projectID);
             CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference(fileData.FileName);
             await cloudBlockBlob.UploadFromStreamAsync(fileData.InputStream);
