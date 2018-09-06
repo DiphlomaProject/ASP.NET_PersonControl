@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
+using ASP.NET_PersonControl.Controllers.Support_Classes;
 namespace ASP.NET_PersonControl.Controllers
 {
     [Authorize(Roles = "Admin, Manager")]
@@ -20,6 +20,8 @@ namespace ASP.NET_PersonControl.Controllers
     {
         public ApplicationDbContext _context { get; set; } // cennect to data base;
         public RoleManager<IdentityRole> RoleManager { get; set; }
+
+        public SingletonManager singleton = SingletonManager.getInstance();
         // GET: Project
         public ActionResult Index()
         {
@@ -40,8 +42,8 @@ namespace ASP.NET_PersonControl.Controllers
                 projects = projectsList,
                 customers = customersList
             };
-          
-            
+
+            ListBlobs();
             return View(viewModel);
             
         }
@@ -192,14 +194,11 @@ namespace ASP.NET_PersonControl.Controllers
       
         public async Task<ActionResult> UploadFiles(HttpPostedFileBase fileData)
         {
-          
+            
             int sessionData = (int)Session["id"];
             string projectID = Convert.ToString(sessionData);
-            
-            string storageAccountName = "aspnetpersoncontrol";
-            string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
             string nameOfStorage = "project";
-            StorageCredentials storageCredentials = new StorageCredentials(storageAccountName, keyOne);
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
             CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
             CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
 
@@ -214,6 +213,97 @@ namespace ASP.NET_PersonControl.Controllers
             await cloudBlockBlob.UploadFromStreamAsync(fileData.InputStream);
             return Content("Success"); 
 
+        }
+
+
+        public void ListBlobs()
+        {
+            CloudBlobContainer container = GetCloudBlobContainer();
+            string con = container.Name;
+            List<string> blobs = new List<string>();
+            int sessionData = (int)Session["id"];
+            string projectID = Convert.ToString(sessionData);
+            foreach (IListBlobItem item in container.ListBlobs(useFlatBlobListing: true))
+            {
+               
+                //if(item.Parent.Container.Name == "8")
+                if (item.GetType() == typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob blob = (CloudBlockBlob)item;
+                    string[] namePart = blob.Name.Split('/');
+                    if(namePart!=null && namePart.Count() > 0 && namePart[0] == projectID )
+                    blobs.Add(blob.Name);
+                }
+                else if (item.GetType() == typeof(CloudPageBlob))
+                {
+                    CloudPageBlob blob = (CloudPageBlob)item;
+                    blobs.Add(blob.Name);
+                }
+                else if (item.GetType() == typeof(CloudBlobDirectory))
+                {
+                    CloudBlobDirectory dir = (CloudBlobDirectory)item;
+                    blobs.Add(dir.Uri.ToString());
+                }
+            }
+//            @model List<string>
+ 
+
+// < h2 > List blobs </ h2 >
+    
+
+//    < ul >
+//        @foreach(var item in Model)
+//    {
+//    < li >  < a href = "/home/GetFileFromBlob/?id=@item" > @item </ a ></ li >
+//    }
+//</ ul >
+
+            //return View(blobs);
+        }
+
+        private CloudBlobContainer GetCloudBlobContainer()
+        {
+            
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxx");
+
+            CloudBlobClient BlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer c1 = BlobClient.GetContainerReference("project");
+            
+            return c1;
+
+        }
+
+        public ActionResult GetFileFromBlob(string id)
+        {
+
+            MemoryStream ms = new MemoryStream();
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
+
+            CloudBlobClient BlobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer c1 = BlobClient.GetContainerReference("mycontainer");
+
+            if (c1.Exists())
+            {
+                CloudBlob file = c1.GetBlobReference(id);
+
+                if (file.Exists())
+                {
+                    file.DownloadToStreamAsync(ms);
+                    Stream blobStream = file.OpenReadAsync().Result;
+                    return File(blobStream, file.Properties.ContentType, file.Name);
+                }
+                else
+                {
+                    return Content("File does not exist");
+                }
+            }
+            else
+            {
+                return Content("Dir does not exist");
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Save", "Project"))
 {
     @Html.AntiForgeryToken()
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-md-6 grid-margin stretch-card" >
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Editor project: @Model.project.Title</h4>
@@ -74,7 +74,7 @@
                         @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
                     </div>
 
-                    <div id="dropArea">
+                    <div id="dropArea" >
                         @Html.HiddenFor(model => Model.group.Id,new {@id=Model.project.Id })
                         Drop your files here
                     </div>
@@ -87,6 +87,7 @@
                             background: #b5b5b5;
                             border: black dashed 1px;
                             height: 50px;
+                            
                             text-align: center;
                             color: #fff;
                             padding-top: 12px;
