@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -213,14 +214,14 @@ namespace ASP.NET_PersonControl.Controllers.Api
             db = new ApplicationDbContext();
 
             //var passwordHash = userManager.PasswordHasher.HashPassword("mySecurePassword");
-            if (user.password != null && user.email != null && db.Users.FirstOrDefault(u => u.Email == user.email) != null) { 
-                if (Crypto.VerifyHashedPassword(db.Users.FirstOrDefault(u => u.Email == user.email).PasswordHash, user.password)){
+            if (user.password != null && user.email != null && db.Users.FirstOrDefault(u => u.Email == user.email) != null) {
+                if (Crypto.VerifyHashedPassword(db.Users.FirstOrDefault(u => u.Email == user.email).PasswordHash, user.password)) {
 
                     ApplicationUser usertempl = db.Users.FirstOrDefault(u => u.Email == user.email);
 
                     string token;
 
-                    if(db.Tokens.FirstOrDefault(t => t.userId == usertempl.Id) != null)
+                    if (db.Tokens.FirstOrDefault(t => t.userId == usertempl.Id) != null)
                         token = db.Tokens.FirstOrDefault(t => t.userId == usertempl.Id).token.ToString();
                     else
                     {
@@ -231,7 +232,10 @@ namespace ASP.NET_PersonControl.Controllers.Api
                         db.SaveChanges();
                     }
 
-                    usertempl.img = this.getUserImg(usertempl.Email);
+                    if (this.getUserImg(usertempl.Email) != null) { 
+                        var bytesAsString = Encoding.UTF8.GetString(this.getUserImg(usertempl.Email));
+                        result.Add("img", this.getUserImg(usertempl.Email));
+                    }
                     usertempl.RoleNames = (from r in db.Roles
                                            from u in r.Users
                                            where u.UserId == usertempl.Id
