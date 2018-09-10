@@ -232,9 +232,9 @@ namespace ASP.NET_PersonControl.Controllers.Api
                         db.SaveChanges();
                     }
 
-                    if (this.getUserImg(usertempl.Email) != null) { 
-                        var bytesAsString = Encoding.UTF8.GetString(this.getUserImg(usertempl.Email));
-                        result.Add("img", this.getUserImg(usertempl.Email));
+                    byte[] img = this.getUserImg(usertempl.Email);
+                    if (img != null) { 
+                        result.Add("img",Convert.ToBase64String(img);
                     }
                     usertempl.RoleNames = (from r in db.Roles
                                            from u in r.Users
