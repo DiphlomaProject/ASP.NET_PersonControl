@@ -214,8 +214,10 @@ namespace ASP.NET_PersonControl.Controllers.Api
             db = new ApplicationDbContext();
 
             //var passwordHash = userManager.PasswordHasher.HashPassword("mySecurePassword");
-            if (user.password != null && user.email != null && db.Users.FirstOrDefault(u => u.Email == user.email) != null) {
-                if (Crypto.VerifyHashedPassword(db.Users.FirstOrDefault(u => u.Email == user.email).PasswordHash, user.password)) {
+            if (user.password != null && user.email != null && db.Users.FirstOrDefault(u => u.Email == user.email) != null)
+            {
+                if (Crypto.VerifyHashedPassword(db.Users.FirstOrDefault(u => u.Email == user.email).PasswordHash, user.password))
+                {
 
                     ApplicationUser usertempl = db.Users.FirstOrDefault(u => u.Email == user.email);
 
@@ -233,8 +235,9 @@ namespace ASP.NET_PersonControl.Controllers.Api
                     }
 
                     byte[] img = this.getUserImg(usertempl.Email);
-                    if (img != null) { 
-                        result.Add("img",Convert.ToBase64String(img));
+                    if (img != null)
+                    {
+                        result.Add("img", "data:image/png;base64," + Convert.ToBase64String(img));
                     }
                     usertempl.RoleNames = (from r in db.Roles
                                            from u in r.Users
@@ -247,14 +250,17 @@ namespace ASP.NET_PersonControl.Controllers.Api
                     result.Add("data", usertempl);
                     result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
                     return Ok(result);
-                } else
+                }
+                else
                 {
                     result.Add("code", HttpStatusCode.NotAcceptable);
                     result.Add("message", "Email or password is not correct.");
                     result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
                     return Ok(result);
                 }
-            } else {
+            }
+            else
+            {
                 result.Add("code", HttpStatusCode.NotAcceptable);
                 result.Add("message", "User not found.");
                 result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
