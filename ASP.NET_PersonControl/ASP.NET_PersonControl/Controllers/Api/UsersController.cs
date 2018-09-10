@@ -234,12 +234,12 @@ namespace ASP.NET_PersonControl.Controllers.Api
                         db.SaveChanges();
                     }
 
-                    byte[] img = this.getUserImg(usertempl.Email);
+                    /*byte[] img = this.getUserImg(usertempl.Email);
                     if (img != null)
                     {
                         string base64String = Convert.ToBase64String(img, 0, img.Length);
-                        result.Add("img", "data:image/png;base64," + base64String);
-                    }
+                        //result.Add("img", "data:image/png;base64," + base64String);
+                    }*/
                     usertempl.RoleNames = (from r in db.Roles
                                            from u in r.Users
                                            where u.UserId == usertempl.Id
