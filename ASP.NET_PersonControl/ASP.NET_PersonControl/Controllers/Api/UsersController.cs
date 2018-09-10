@@ -1,6 +1,10 @@
-﻿using ASP.NET_PersonControl.Models;
+﻿using ASP.NET_PersonControl.Controllers.Support_Classes;
+using ASP.NET_PersonControl.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -227,6 +231,12 @@ namespace ASP.NET_PersonControl.Controllers.Api
                         db.SaveChanges();
                     }
 
+                    usertempl.img = this.getUserImg(usertempl.Email);
+                    usertempl.RoleNames = (from r in db.Roles
+                                           from u in r.Users
+                                           where u.UserId == usertempl.Id
+                                           select r.Name).ToList();
+
                     result.Add("code", HttpStatusCode.Accepted);
                     result.Add("message", "You can login");
                     result.Add("token", token);
@@ -349,6 +359,41 @@ namespace ASP.NET_PersonControl.Controllers.Api
             result.Add("message", "Reset link was send on email.");
             result.Add("code", HttpStatusCode.Accepted);
             return Ok(result);
+        }
+
+        private byte[] getUserImg(string email)
+        {
+            //get user image
+            SingletonManager singleton = SingletonManager.getInstance();
+
+            string nameOfStorage = "storage";
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            //get users folder
+            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
+            //get users folder
+            string userFolder = email;
+            CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder);
+            //add file to sub dir
+            CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage.jpg");
+            byte[] employeeImg = null;
+            try
+            {
+                cloudBlockBlob.FetchAttributes();
+                long fileByteLength = cloudBlockBlob.Properties.Length;
+                employeeImg = new byte[fileByteLength];
+                for (int i = 0; i < fileByteLength; i++)
+                {
+                    employeeImg[i] = 0x20;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return employeeImg;
         }
 
         private bool isTokenValid(string token) {
