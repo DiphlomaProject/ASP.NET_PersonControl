@@ -237,7 +237,8 @@ namespace ASP.NET_PersonControl.Controllers.Api
                     byte[] img = this.getUserImg(usertempl.Email);
                     if (img != null)
                     {
-                        result.Add("img", "data:image/png;base64," + Convert.ToBase64String(img));
+                        string base64String = Convert.ToBase64String(img, 0, img.Length);
+                        result.Add("img", "data:image/png;base64," + base64String);
                     }
                     usertempl.RoleNames = (from r in db.Roles
                                            from u in r.Users
