@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ASP.NET_PersonControl.Controllers.Support_Classes;
+using System.Web.Helpers;
+using System.Security.Cryptography;
+using System.Web.Security;
+
 namespace ASP.NET_PersonControl.Controllers
 {
     [Authorize(Roles = "Admin, Manager")]
@@ -20,13 +24,14 @@ namespace ASP.NET_PersonControl.Controllers
     {
         public ApplicationDbContext _context { get; set; } // cennect to data base;
         public RoleManager<IdentityRole> RoleManager { get; set; }
+        
 
         public SingletonManager singleton = SingletonManager.getInstance();
         // GET: Project
         public ActionResult Index()
         {
             _context = new ApplicationDbContext();
-
+           
             List<Projects> projectsList = _context.Projects.Select(p => p).ToList<Projects>();
             /*List<Customers> customersList = (from c in _context.Customers.ToList()
                                              from pj in _context.Projects.ToList()

@@ -192,6 +192,9 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 //user.UserName = user.email;
                 db.Users.Add(newUser);
                 db.SaveChanges();
+                UserManager<IdentityUser> userManager =
+                new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+                userManager.AddPassword(db.Users.FirstOrDefault(u => u.Email == user.email ).Id, user.password);
                 result.Add("code", HttpStatusCode.Accepted);
                 result.Add("message", "User was add");
                 result.Add("user", newUser);
@@ -306,7 +309,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 //user.UserName = user.email;
                 db.Users.Add(newUser);
                 db.SaveChanges();
-
+                employee.RoleNames = new List<string>() { "Guest" };
                 result.Add("code", HttpStatusCode.Accepted);
                 result.Add("data", user);
                 result.Add("message", "User was add by Google Account. You can login with Google.");
@@ -327,7 +330,12 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 return Ok(result);
             }else
             {
+                employee.RoleNames = (from r in db.Roles
+                                       from u in r.Users
+                                       where u.UserId == employee.Id
+                                       select r.Name).ToList();
                 result.Add("code", HttpStatusCode.Accepted);
+
                 result.Add("data", employee);
                 result.Add("message", "You can login with Google.");
 
