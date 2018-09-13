@@ -360,6 +360,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
         [ResponseType(typeof(Dictionary<string, object>))]
         public IHttpActionResult ResetPassword(User user)
         {
+            db = new ApplicationDbContext();
             Dictionary<string, object> result = new Dictionary<string, object>();
             result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
             var userFounded = db.Users.FirstOrDefault(u => u.Email == user.email);
