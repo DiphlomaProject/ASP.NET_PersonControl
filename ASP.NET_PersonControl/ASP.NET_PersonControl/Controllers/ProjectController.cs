@@ -48,7 +48,7 @@ namespace ASP.NET_PersonControl.Controllers
                 customers = customersList
             };
 
-            ListBlobs();
+          //  ListBlobs();
             return View(viewModel);
             
         }
