@@ -242,6 +242,7 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\Support Classes\SingletonManager.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -264,6 +265,7 @@
     <Compile Include="Models\NotificationHub.cs" />
     <Compile Include="Models\Projects.cs" />
     <Compile Include="Models\ProjectsGroups.cs" />
+    <Compile Include="Models\Tasks.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\UsersGroups.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="ViewModels\NewRoleFormModel.cs" />
     <Compile Include="ViewModels\ProfileVMRequired.cs" />
     <Compile Include="ViewModels\ProjectsFormViewModel.cs" />
+    <Compile Include="ViewModels\TasksForUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -2481,6 +2484,8 @@
     <Content Include="vendors\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Account\MyLogin.cshtml" />
     <Content Include="Views\MyProjects\Index.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="Views\Tasks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

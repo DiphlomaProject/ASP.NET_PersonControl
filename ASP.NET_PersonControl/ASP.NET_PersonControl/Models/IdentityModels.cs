@@ -44,6 +44,11 @@ namespace ASP.NET_PersonControl.Models
         public DbSet<ProjectsGroups> ProjectsGroups { get; set; }
         public DbSet<Projects> Projects { get; set; }
         public DbSet<Token> Tokens { get; set; }
+        public DbSet<TasksForUser> TasksForUser { get; set; }
+        public DbSet<TasksForGroups> TasksForGroups { get; set; }
+        public DbSet<TasksForProjects> TasksForProjects { get; set; }
+
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
