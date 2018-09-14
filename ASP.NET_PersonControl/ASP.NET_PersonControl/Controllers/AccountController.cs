@@ -254,6 +254,7 @@ namespace ASP.NET_PersonControl.Controllers
 
         public async void ForgotPasswordForApi(string Email)
         {
+
             var user = await UserManager.FindByNameAsync(Email);
             //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) отправка писма только на подтвержденную почту
             if (user == null)
