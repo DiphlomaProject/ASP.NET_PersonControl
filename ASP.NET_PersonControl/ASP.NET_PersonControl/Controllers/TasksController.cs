@@ -107,5 +107,70 @@ namespace ASP.NET_PersonControl.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
+
+
+        public ActionResult CreateTaskForGroups()
+        {
+            _context = new ApplicationDbContext();
+
+
+            string id = User.Identity.GetUserId();
+
+            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+            var viewModel = new TasksForUserViewModel
+            {
+                tasksForUser = new TasksForUser(),
+                user = employee,
+                toUser = _context.Users.Select(c => c).ToList()
+            };
+
+
+            return View(viewModel);
+
+        }
+
+        // POST: Employees/Create
+        [HttpPost]
+        public ActionResult CreateTaskForGroups(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
+
+
+        public ActionResult CreateTaskForProjects()
+        {
+            
+
+            return View();
+
+        }
+
+        // POST: Employees/Create
+        [HttpPost]
+        public ActionResult CreateTaskForProjects(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
