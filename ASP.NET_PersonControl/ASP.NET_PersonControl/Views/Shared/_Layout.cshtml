@@ -258,9 +258,9 @@
                             {
                                 <div class="user-wrapper">
                                     @*<div class="profile-image">
-                                            <img src="images/faces/face1.jpg" alt="profile image">
+                    <img src="images/faces/face1.jpg" alt="profile image">
 
-                                        </div>*@
+                </div>*@
                                     <div class="text-wrapper">
                                         <p class="profile-name">@Context.User.Identity.Name</p>
                                         @if (Context.User.IsInRole("Admin"))
@@ -288,24 +288,38 @@
                                 </div>
                                 if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
                                 {
-                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Project")'">
-                                        New Project
+
+                                    <button class="btn btn-success btn-block"
+                                            onclick="location.href='@Url.Action("Create", "Tasks")'">
+                                        New Task Person
                                         <i class="mdi mdi-plus"></i>
                                     </button>
-                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Group")'">
-                                        New Group
+                                    <br />
+                                    <button class="btn btn-success btn-block"
+                                            onclick="location.href='@Url.Action("CreateTaskForGroups", "Tasks")'">
+                                        New Task Groups
                                         <i class="mdi mdi-plus"></i>
                                     </button>
-                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Index", "Home")'">
-                                        New Task
+                                    <button class="btn btn-success btn-block"
+                                            onclick="location.href='@Url.Action("CreateTaskForProjects", "Tasks")'">
+                                        New Task Project
                                         <i class="mdi mdi-plus"></i>
                                     </button>
+                                    <br />
                                     <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
                                         New Customer
                                         <i class="mdi mdi-plus"></i>
                                     </button>
-
-
+                                    <br />
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Project")'">
+                                        New Project
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+                                    <br />
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Group")'">
+                                        New Group
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
                                 }
                             }
                         </div>
@@ -379,23 +393,24 @@
             </div>
         </div>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/css/")
-    @Scripts.Render("~/ventors/")
-    @Scripts.Render("~/scss/")
-    @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
-    @Scripts.Render("~/Content/Chosen/chosen.min.css")
+  
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/css/")
+        @Scripts.Render("~/ventors/")
+        @Scripts.Render("~/scss/")
+        @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
+        @Scripts.Render("~/Content/Chosen/chosen.min.css")
 
-    <script src="~/Scripts/chosen.jquery.min.js"></script>
-    <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
-    <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    <script src="~/Scripts/modernizr-2.8.3.js"></script>
-    <script src="~/Scripts/jquery.filedrop.js"></script>
-    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
-    <script src="~/Scripts/filedrop.js"></script>
-    @RenderSection("scripts", required: false)
+        <script src="~/Scripts/chosen.jquery.min.js"></script>
+        <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
+        <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>
+        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+        <script src="~/Scripts/modernizr-2.8.3.js"></script>
+        <script src="~/Scripts/jquery.filedrop.js"></script>
+        <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+        <script src="~/Scripts/filedrop.js"></script>
+        @RenderSection("scripts", required: false)
 
-</body>
+    </body>
 </html>

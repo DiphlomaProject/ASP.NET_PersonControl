@@ -282,6 +282,8 @@
     <Compile Include="ViewModels\NewRoleFormModel.cs" />
     <Compile Include="ViewModels\ProfileVMRequired.cs" />
     <Compile Include="ViewModels\ProjectsFormViewModel.cs" />
+    <Compile Include="ViewModels\TaskForGroupsViewModel.cs" />
+    <Compile Include="ViewModels\TaskForProjectsViewModel.cs" />
     <Compile Include="ViewModels\TasksForUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2490,6 +2492,8 @@
     <Content Include="Views\MyProjects\Index.cshtml" />
     <Content Include="Views\Tasks\Create.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
+    <Content Include="Views\Tasks\CreateTaskForGroups.cshtml" />
+    <Content Include="Views\Tasks\CreateTaskForProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
