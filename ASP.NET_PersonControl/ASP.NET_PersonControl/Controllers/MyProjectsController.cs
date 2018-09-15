@@ -41,31 +41,53 @@ namespace ASP.NET_PersonControl.Controllers
                                             where pj.Id == gp.ProjId && gp.GroupId == gl.Id
                                             select pj).Distinct().ToList();
 
+            groupsList.Clear();
+            foreach (Projects pjId in projectsList) {
+                List<Groups> grTempl = (from gr in _context.Groups.ToList()
+                             from pg in _context.ProjectsGroups.ToList()
+                             where pg.GroupId == gr.Id && pjId.Id == pg.ProjId
+                             select gr).Distinct().ToList();
+                foreach (Groups group in grTempl)
+                    if (!groupsList.Contains(group))
+                        groupsList.Add(group); 
+            }
 
             Dictionary<int, List<Groups>> dictGroups = new Dictionary<int, List<Groups>>();
-            Dictionary<int, ApplicationUser> dictGroupsOwners = new Dictionary<int, ApplicationUser>();
             foreach (int id in projectsList.Select(id => id.Id))
             {
                 dictGroups.Add(id, (from pg in _context.ProjectsGroups.ToList()
-                                       from pj in projectsList
-                                       from gr in groupsList
-                                       where pj.Id == pg.ProjId && pg.GroupId == gr.Id && pg.ProjId == id
-                                       select gr).ToList());
-
-                for (int i = 0; i < dictGroups[id].Count; i++)
-                {
-                    Groups group = dictGroups[id][i];
-                    if(dictGroupsOwners.ContainsKey(group.Id) == false)
-                        dictGroupsOwners.Add(group.Id, _context.Users.FirstOrDefault(u => u.Id == group.Owner));
-                }
+                                    from pj in projectsList
+                                    from gr in groupsList
+                                    where pj.Id == pg.ProjId && pg.GroupId == gr.Id && pg.ProjId == id
+                                    select gr).ToList());
             }
+            //Dictionary<int, ApplicationUser> dictGroupsOwners = new Dictionary<int, ApplicationUser>();
+            //foreach (int id in projectsList.Select(id => id.Id))
+            //{
+            //    dictGroups.Add(id, (from pg in _context.ProjectsGroups.ToList()
+            //                        from pj in projectsList
+            //                        from gr in groupsList
+            //                        where pj.Id == pg.ProjId && pg.GroupId == gr.Id && pg.ProjId == id
+            //                        select gr).ToList());
+
+            //    for (int i = 0; i < dictGroups[id].Count; i++)
+            //    {
+            //        Groups group = dictGroups[id][i];
+            //        if (dictGroupsOwners.ContainsKey(group.Id) == false)
+            //            dictGroupsOwners.Add(group.Id, _context.Users.FirstOrDefault(u => u.Id == group.Owner));
+            //    }
+            //}
 
             Dictionary<int, Customers> dictCustomers = new Dictionary<int, Customers>();
             foreach (Projects proj in projectsList.Select(p => p))
                 dictCustomers.Add(proj.Id, _context.Customers.FirstOrDefault(c => c.Id == proj.Customer));
 
+            List<Dictionary<int, Customers>> dictCustomersInList = new List<Dictionary<int, Customers>>();
+            dictCustomersInList.Add(dictCustomers);
+            List<Dictionary<int, List<Groups>>> dictGroupsInList = new List<Dictionary<int, List<Groups>>>();
+            dictGroupsInList.Add(dictGroups);
 
-            return View(new ProjectsFormViewModel(){ projects = projectsList, groupsInProject = groupsList/*, customersList = normalizedCustomers, groupsOwners = normalizedOwnersGroups*/ });
+            return View(new ProjectsFormViewModel(){ projectsList = projectsList, groupsInProjectList = dictGroupsInList, customersList = dictCustomersInList });
         }
 
         [HttpPost]

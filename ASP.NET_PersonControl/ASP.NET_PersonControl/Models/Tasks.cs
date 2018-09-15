@@ -8,6 +8,7 @@ namespace ASP.NET_PersonControl.Models
     public class TasksForUser
     {
         public int Id { get; set; }
+        public String title { get; set; }
         public String toUserId { get; set; }
         public String fromUserId { get; set; }
         public String description { get; set; }
@@ -19,6 +20,7 @@ namespace ASP.NET_PersonControl.Models
     public class TasksForGroups
     {
         public int Id { get; set; }
+        public String title { get; set; }
         public int toGroupId { get; set; }
         public String fromUserId { get; set; }
         public String description { get; set; }
@@ -30,6 +32,7 @@ namespace ASP.NET_PersonControl.Models
     public class TasksForProjects
     {
         public int Id { get; set; }
+        public String title { get; set; }
         public int toProjectId { get; set; }
         public String fromUserId { get; set; }
         public String description { get; set; }

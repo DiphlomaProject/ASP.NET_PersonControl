@@ -254,6 +254,10 @@
     <Compile Include="Migrations\201808201742455_Token_Create.Designer.cs">
       <DependentUpon>201808201742455_Token_Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809151551171_UpdateTasks.cs" />
+    <Compile Include="Migrations\201809151551171_UpdateTasks.Designer.cs">
+      <DependentUpon>201809151551171_UpdateTasks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customers.cs" />
@@ -2510,6 +2514,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808201742455_Token_Create.resx">
       <DependentUpon>201808201742455_Token_Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809151551171_UpdateTasks.resx">
+      <DependentUpon>201809151551171_UpdateTasks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
