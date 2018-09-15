@@ -117,13 +117,13 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
 
             ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
-            var viewModel = new TasksForUserViewModel
-            {
-                tasksForUser = new TasksForUser(),
+            List<Groups> groupList = _context.Groups.Select(g => g).ToList<Groups>();
+            var viewModel = new TaskForGroupsViewModel
+            {   taskForGroups = new TasksForGroups(),
                 user = employee,
-                toUser = _context.Users.Select(c => c).ToList()
+                groups = groupList
             };
-
+ 
 
             return View(viewModel);
 
@@ -146,6 +146,51 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
 
+      
+
+        public ActionResult SaveGroupTask(TaskForGroupsViewModel taskForGroupsViewModel)
+        {
+            _context = new ApplicationDbContext();
+            string id = User.Identity.GetUserId();
+            if (taskForGroupsViewModel.taskForGroups.description == null || taskForGroupsViewModel.taskForGroups.dateTimeEnd == null || taskForGroupsViewModel.taskForGroups.dateTimeBegin == null)
+            {
+                ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+                List<Groups> groupList = _context.Groups.Select(g => g).ToList<Groups>();
+                var viewModel = new TaskForGroupsViewModel
+                {
+                    taskForGroups = new TasksForGroups(),
+                    user = employee,
+                    groups = groupList
+                };
+                return View("Create", viewModel);
+            }
+            if (_context.TasksForUser.FirstOrDefault(c => c.Id == taskForGroupsViewModel.taskForGroups.Id) == null)
+            {
+
+                
+                taskForGroupsViewModel.taskForGroups.fromUserId = taskForGroupsViewModel.user.Id;
+                taskForGroupsViewModel.taskForGroups.toGroupId = taskForGroupsViewModel.group.Id;
+                var result = taskForGroupsViewModel.taskForGroups;
+                _context.TasksForGroups.Add(result);
+            }
+            else
+            {
+                //Projects projects = _context.Projects.FirstOrDefault(c => c.Id == projectController.project.Id);
+                //TasksForUser tasksForUser = _context.TasksForUser.FirstOrDefault(c=>c.Id == tasksForUser.Id)
+                //projects.Customer = projectController.customer.Id;
+                //projects.Title = projectController.project.Title;
+                //projects.Description = projectController.project.Description;
+                //projects.PriceInDollars = projectController.project.PriceInDollars;
+                //projects.isComplite = projectController.project.isComplite;
+                //projects.BeginTime = projectController.project.BeginTime;
+                //projects.UntilTime = projectController.project.UntilTime;
+            }
+
+
+            //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
 
 
 

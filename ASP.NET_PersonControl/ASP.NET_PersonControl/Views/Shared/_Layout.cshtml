@@ -258,9 +258,9 @@
                             {
                                 <div class="user-wrapper">
                                     @*<div class="profile-image">
-                                            <img src="images/faces/face1.jpg" alt="profile image">
+                    <img src="images/faces/face1.jpg" alt="profile image">
 
-                                        </div>*@
+                </div>*@
                                     <div class="text-wrapper">
                                         <p class="profile-name">@Context.User.Identity.Name</p>
                                         @if (Context.User.IsInRole("Admin"))
@@ -288,13 +288,18 @@
                                 </div>
                                 if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
                                 {
-                                
+
                                     <button class="btn btn-success btn-block"
                                             onclick="location.href='@Url.Action("Create", "Tasks")'">
-                                        New Task
+                                        New Task Person
                                         <i class="mdi mdi-plus"></i>
                                     </button>
-                                    
+                                    <br />
+                                    <button class="btn btn-success btn-block"
+                                            onclick="location.href='@Url.Action("CreateTaskForGroups", "Tasks")'">
+                                        New Task Groups
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
                                     <br />
                                     <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
                                         New Customer

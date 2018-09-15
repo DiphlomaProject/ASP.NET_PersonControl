@@ -1,7 +1,113 @@
-﻿
+﻿@model ASP.NET_PersonControl.ViewModels.TaskForGroupsViewModel
 @{
+   
+
     ViewBag.Title = "CreateTaskForGroups";
 }
 
-<h2>CreateTaskForGroups</h2>
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+
+@using (Html.BeginForm("SaveGroupTask", "Tasks"))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Create Groups Task </h4>
+                <p class="card-description">
+                    @*Basic form elements*@
+                </p>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.taskForGroups.Id, htmlAttributes: new { })
+                        @*<input type="text" class="form-control" id="exampleInputName1" placeholder="Name">*@
+                        <br />
+                        @Html.EditorFor(model => Model.user.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => Model.user.Id, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("To Groups", htmlAttributes: new { })
+                        <br />
+                        @Html.DropDownListFor(m => m.group.Id, new SelectList(Model.groups, "Id", "Title"), "Enter Group Name", new { id = "normalDropDown", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.group.Id, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.taskForGroups.description, htmlAttributes: new { })
+                        <br />
+                        @Html.TextAreaFor(Model => Model.taskForGroups.description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "ect" })
+                        @Html.ValidationMessageFor(model => Model.taskForGroups.description, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        @Html.Label("Status", htmlAttributes: new { })
+                        <br />
+                        &nbsp;&nbsp;&nbsp;   @Html.CheckBoxFor(Model => Model.taskForGroups.isComplite, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.taskForGroups.isComplite, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Begin time", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.taskForGroups.dateTimeBegin, new { htmlAttributes = new { @class = "form-control", id = "datepicker1", @placeholder = "Time Start" } })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Until Time", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.taskForGroups.dateTimeEnd, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
+                    </div>
+                    <br />
+
+
+
+
+                    <input type="submit" value="Create" class="btn btn-success mr-2" />
+                    <input class="btn btn-light" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");" />
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+    <script>
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+
+        $(function () {
+            $("#normalDropDown").chosen();
+        });
+
+        $(function () {
+            $("#normalDropDown3").chosen();
+        });
+
+
+    </script>
+}
 

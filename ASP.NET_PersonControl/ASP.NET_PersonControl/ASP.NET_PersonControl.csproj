@@ -278,6 +278,8 @@
     <Compile Include="ViewModels\NewRoleFormModel.cs" />
     <Compile Include="ViewModels\ProfileVMRequired.cs" />
     <Compile Include="ViewModels\ProjectsFormViewModel.cs" />
+    <Compile Include="ViewModels\TaskForGroupsViewModel.cs" />
+    <Compile Include="ViewModels\TaskForProjectsViewModel.cs" />
     <Compile Include="ViewModels\TasksForUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
