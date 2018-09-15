@@ -21,13 +21,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                @*here must be foreach*@
-                                @foreach (ASP.NET_PersonControl.Models.Projects pj in Model.projectsList)
-                                {
-                                    <tr>
+
+                            @*here must be foreach*@
+                            @foreach (ASP.NET_PersonControl.Models.Projects pj in Model.projectsList)
+                            {
+                                <tr>
                                     <td>@pj.Title </td>
-                                   @foreach (Dictionary<int, ASP.NET_PersonControl.Models.Customers> dicCust in Model.customersList)
+                                    @foreach (Dictionary<int, ASP.NET_PersonControl.Models.Customers> dicCust in Model.customersList)
                                     {
                                         if (dicCust.Keys.ElementAt(counter) == pj.Id)
                                         {
@@ -44,7 +44,7 @@
                                             String resGroups = "";
                                             foreach (ASP.NET_PersonControl.Models.Groups group in groups)
                                             {
-                                                if(resGroups.IsEmpty() == false)
+                                                if (resGroups.IsEmpty() == false)
                                                 {
                                                     resGroups = resGroups + "  |  ";
                                                 }
@@ -53,11 +53,12 @@
                                             <td>@resGroups</td>
                                         }
                                     }
-                                    </tr>
-                                    <tr>@pj.UntilTime</tr>
-                                    counter++; 
-                                }
-                           
+                                    <td>@pj.UntilTime</td>
+                                </tr>
+
+                                counter++;
+                            }
+
                         </tbody>
                     </table>
 
