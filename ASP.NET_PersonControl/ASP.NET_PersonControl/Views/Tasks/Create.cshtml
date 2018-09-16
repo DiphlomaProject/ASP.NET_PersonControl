@@ -23,7 +23,7 @@
                         @Html.LabelFor(Model => Model.tasksForUser.fromUserId, htmlAttributes: new { })
                         @*<input type="text" class="form-control" id="exampleInputName1" placeholder="Name">*@
                         <br />
-                        @Html.EditorFor(model => Model.user.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name",@readonly = "readonly" } })
+                        @Html.EditorFor(model => Model.user.Id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => Model.user.Id, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
@@ -33,21 +33,28 @@
                         @Html.ValidationMessageFor(m => m.userTo.Id, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
+                        @Html.Label("Title ", htmlAttributes: new { })
+                        <br />
+                        @Html.TextAreaFor(Model => Model.tasksForUser.title, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "ect" })
+                        @Html.ValidationMessageFor(model => Model.tasksForUser.title, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(Model => Model.tasksForUser.description, htmlAttributes: new { })
                         <br />
                         @Html.TextAreaFor(Model => Model.tasksForUser.description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "ect" })
                         @Html.ValidationMessageFor(model => Model.tasksForUser.description, "", new { @class = "text-danger" })
 
                     </div>
-                  
 
-                   
+
+
                     <div class="form-group">
 
                         @Html.Label("Status", htmlAttributes: new { })
                         <br />
                         &nbsp;&nbsp;&nbsp;   @Html.CheckBoxFor(Model => Model.tasksForUser.isComplite, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.tasksForUser.isComplite, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => Model.tasksForUser.isComplite, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.Label("Begin time", htmlAttributes: new { })
@@ -60,9 +67,9 @@
                         @Html.EditorFor(model => Model.tasksForUser.dateTimeEnd, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
                     </div>
                     <br />
-                
 
-                    
+
+
 
                     <input type="submit" value="Create" class="btn btn-success mr-2" />
                     <input class="btn btn-light" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");" />
