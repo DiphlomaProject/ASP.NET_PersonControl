@@ -381,7 +381,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             return Ok(result);
         }
 
-        private byte[] getUserImg(string email)
+        public HttpResponseMessage getUserImg(string email)
         {
             //get user image
             SingletonManager singleton = SingletonManager.getInstance();
@@ -413,7 +413,17 @@ namespace ASP.NET_PersonControl.Controllers.Api
             {
 
             }
-            return employeeImg;
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new StreamContent(cloudBlockBlob.OpenRead());
+            result.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/octet-stream");
+
+            //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            //result.Content = new ByteArrayContent(employeeImg);
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+            return result;
         }
 
         private bool isTokenValid(string token) {
