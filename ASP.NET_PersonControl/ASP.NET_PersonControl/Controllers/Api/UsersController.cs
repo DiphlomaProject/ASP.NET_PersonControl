@@ -37,7 +37,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
         public struct User
         {
-            public User(string email, string password, string displayName, string address, string city, string country, string phone, bool twoFactorEnabled, bool emailConfirmed, bool phoneConfirmed, string token) : this()
+            public User(string email, string password, string displayName, string address, string city, string country, string phone, bool twoFactorEnabled, bool emailConfirmed, bool phoneConfirmed, string token, string FCMToken) : this()
             {
                 this.email = email;
                 this.password = password;
@@ -50,6 +50,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 this.emailConfirmed = emailConfirmed;
                 this.phoneConfirmed = phoneConfirmed;
                 this.token = token;
+                this.FCMToken = FCMToken;
             }
 
             [Required]
@@ -65,6 +66,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             public bool emailConfirmed { get; set; }
             public bool phoneConfirmed { get; set; }
             public string token { get; set; }
+            public string FCMToken { get; set; }
         }
 
         private ApplicationDbContext db { get; set; }
@@ -223,6 +225,11 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 {
 
                     ApplicationUser usertempl = db.Users.FirstOrDefault(u => u.Email == user.email);
+                    if (user.FCMToken != null && user.FCMToken.Length > 0)
+                    {
+                        usertempl.FCMToken = user.FCMToken;
+                        db.SaveChanges();
+                    }
 
                     string token;
 
@@ -306,6 +313,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 newUser.PhoneNumberConfirmed = user.phoneConfirmed;
                 newUser.EmailConfirmed = user.emailConfirmed;
                 newUser.TwoFactorEnabled = user.twoFactorEnabled;
+                newUser.FCMToken = user.FCMToken;
                 //user.UserName = user.email;
                 db.Users.Add(newUser);
                 db.SaveChanges();
@@ -334,8 +342,14 @@ namespace ASP.NET_PersonControl.Controllers.Api
                                        from u in r.Users
                                        where u.UserId == employee.Id
                                        select r.Name).ToList();
-                result.Add("code", HttpStatusCode.Accepted);
 
+                if (user.FCMToken != null && user.FCMToken.Length > 0)
+                {
+                    employee.FCMToken = user.FCMToken;
+                    db.SaveChanges();
+                }
+
+                result.Add("code", HttpStatusCode.Accepted);
                 result.Add("data", employee);
                 result.Add("message", "You can login with Google.");
 
@@ -424,6 +438,33 @@ namespace ASP.NET_PersonControl.Controllers.Api
             //result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
 
             return result;
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult SignOut(User user)
+        {
+            db = new ApplicationDbContext();
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+            if (!isTokenValid(user.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+
+                return Ok(result);
+            }
+
+            if (db.Users.FirstOrDefault(u => u.Id == db.Tokens.FirstOrDefault(token => token.token == user.token).userId).FCMToken == null)
+            {
+                result.Add("message", "FCMToken not found");
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+            }
+
+            result.Add("message", "FCMToken was removed.");
+            result.Add("code", HttpStatusCode.Accepted);
+
+            return Ok(result);
         }
 
         private bool isTokenValid(string token) {

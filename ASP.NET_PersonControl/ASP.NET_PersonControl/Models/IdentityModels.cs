@@ -24,6 +24,7 @@ namespace ASP.NET_PersonControl.Models
         public string DisplayName { get; set; }
         //[Required(ErrorMessage = "Please enter Role Empl")]
         public List<string> RoleNames;
+        public string FCMToken { get; set; }
         public byte[] img;
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
