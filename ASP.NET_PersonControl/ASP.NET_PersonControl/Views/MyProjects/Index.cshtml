@@ -8,7 +8,7 @@
     <div class="row flex-grow">
         <div class="col-12 grid-margin">
             <div class="card">
-                <div class="card-body">
+                <div clas="card-body">
 
                     <table  class="table table-hover">
                         <thead>
@@ -25,36 +25,37 @@
                             @*here must be foreach*@
                             @foreach (ASP.NET_PersonControl.Models.Projects pj in Model.projectsList)
                             {
-                                <tr>
-                                    <td>@pj.Title </td>
-                                    @foreach (Dictionary<int, ASP.NET_PersonControl.Models.Customers> dicCust in Model.customersList)
+                            <tr>
+                                <td> @Html.ActionLink(pj.Title, "ProjectDitail", "MyProjects", new { @id = pj.Id }, null) </td>
+                               
+                                @foreach (Dictionary<int, ASP.NET_PersonControl.Models.Customers> dicCust in Model.customersList)
+                                {
+                                    if (dicCust.Keys.ElementAt(counter) == pj.Id)
                                     {
-                                        if (dicCust.Keys.ElementAt(counter) == pj.Id)
-                                        {
-                                            <td>@dicCust[pj.Id].ContactPerson</td>
-                                            <td>@dicCust[pj.Id].Company</td>
-                                        }
+                                        <td>@dicCust[pj.Id].ContactPerson</td>
+                                        <td>@dicCust[pj.Id].Company</td>
                                     }
+                                }
 
-                                    @foreach (Dictionary<int, List<ASP.NET_PersonControl.Models.Groups>> listDictGroups in Model.groupsInProjectList)
+                                @foreach (Dictionary<int, List<ASP.NET_PersonControl.Models.Groups>> listDictGroups in Model.groupsInProjectList)
+                                {
+                                    if (listDictGroups.Keys.ElementAt(counter) == pj.Id)
                                     {
-                                        if (listDictGroups.Keys.ElementAt(counter) == pj.Id)
+                                        List<ASP.NET_PersonControl.Models.Groups> groups = listDictGroups[pj.Id];
+                                        String resGroups = "";
+                                        foreach (ASP.NET_PersonControl.Models.Groups group in groups)
                                         {
-                                            List<ASP.NET_PersonControl.Models.Groups> groups = listDictGroups[pj.Id];
-                                            String resGroups = "";
-                                            foreach (ASP.NET_PersonControl.Models.Groups group in groups)
+                                            if (resGroups.IsEmpty() == false)
                                             {
-                                                if (resGroups.IsEmpty() == false)
-                                                {
-                                                    resGroups = resGroups + "  |  ";
-                                                }
-                                                resGroups = resGroups + group.Title;
+                                                resGroups = resGroups + "  |  ";
                                             }
-                                            <td>@resGroups</td>
+                                            resGroups = resGroups + group.Title;
                                         }
+                                        <td>@resGroups</td>
                                     }
-                                    <td>@pj.UntilTime</td>
-                                </tr>
+                                }
+                                <td>@pj.UntilTime</td>
+                            </tr>
 
                                 counter++;
                             }
@@ -67,75 +68,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-@*<!DOCTYPE html>
-
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Index</title>
-        <style type="text/css">
-            body {
-                font-family: Arial;
-                font-size: 10pt;
-            }
-
-            #dropSection {
-                height: 300px;
-                width: 600px;
-                background-color: skyblue;
-
-            }
-
-            #btnUpload {
-                display: none;
-            }
-
-            .active {
-                background-color: yellow !important;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="dropSection">
-        </div>
-        <br />
-        Uploaded Files:
-        <hr />
-        <div id="uploadedFiles">
-        </div>
-        <input type="button" id="btnUpload" value="Upload" />
-        <script type="text/javascript">
-            $(function () {
-                $("#dropSection").filedrop({
-                    fallback_id: 'btnUpload',
-                    fallback_dropzoneClick: true,
-                    url: '@Url.Action("Upload")',
-                    //allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/doc'],
-                    allowedfileextensions: ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png', '.gif'],
-                    paramname: 'fileData',
-                    maxfiles: 5, //Maximum Number of Files allowed at a time.
-                    maxfilesize: 2, //Maximum File Size in MB.
-                    dragOver: function () {
-                        $('#dropSection').addClass('active');
-                    },
-                    dragLeave: function () {
-                        $('#dropSection').removeClass('active');
-                    },
-                    drop: function () {
-                        $('#dropSection').removeClass('active');
-                    },
-                    uploadFinished: function (i, file, response, time) {
-                        $('#uploadedFiles').append(file.name + '<br />')
-                    },
-                    afterAll: function (e) {
-                        //To do some task after all uploads done.
-                    }
-                })
-            })
-        </script>
-    </body>
-    </html>*@

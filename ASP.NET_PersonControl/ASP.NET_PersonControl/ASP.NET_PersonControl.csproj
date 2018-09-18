@@ -2498,6 +2498,7 @@
     <Content Include="Views\Tasks\Index.cshtml" />
     <Content Include="Views\Tasks\CreateTaskForGroups.cshtml" />
     <Content Include="Views\Tasks\CreateTaskForProjects.cshtml" />
+    <Content Include="Views\MyProjects\ProjectDitail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
