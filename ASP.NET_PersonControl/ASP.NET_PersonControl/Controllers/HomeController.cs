@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ASP.NET_PersonControl.Models;
 using FireSharp;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using FireSharp.Serialization.JsonNet;
 using FireSharp.Serialization.ServiceStack;
+using Microsoft.AspNet.Identity;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace ASP.NET_PersonControl.Controllers
 {
+    
     public class HomeController : Controller
     {
         IFirebaseConfig config = new FirebaseConfig
@@ -21,12 +28,59 @@ namespace ASP.NET_PersonControl.Controllers
         };
 
         IFirebaseClient client;
+        private ApplicationDbContext _context;
+
         public ActionResult Index()
         {
+            _context = new ApplicationDbContext();
+
+           if( HttpContext.User.Identity.IsAuthenticated)
+            {
+                string id = User.Identity.GetUserId();
+
+                ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+                Session["DisplayName"] = employee.DisplayName;
+                //get user image
+                string storageAccountName = "aspnetpersoncontrol";
+                string keyOne = "GfiRnxHVXsaluga4L4R0zZOy4Ken4VnF3xM7I66OC263LJ9Sf2BOQgX41+/WpBlA8vMB5aP4wN/Uh00OF4MdXw==";
+                string nameOfStorage = "storage";
+                StorageCredentials storageCredentials = new StorageCredentials(storageAccountName, keyOne);
+                CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+                //get users folder
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
+                //get users folder
+                string userFolder = ((ApplicationUser)_context.Users.SingleOrDefault(u => u.Id == id)).Email;
+                CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(userFolder);
+                //add file to sub dir
+                CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference("AccountImage.jpg");
+                try
+                {
+                    cloudBlockBlob.FetchAttributes();
+                    long fileByteLength = cloudBlockBlob.Properties.Length;
+                    employee.img = new byte[fileByteLength];
+                    for (int i = 0; i < fileByteLength; i++)
+                    {
+                        employee.img[i] = 0x20;
+                    }
+                    cloudBlockBlob.DownloadToByteArray(employee.img, 0);
+                }
+                catch
+                {
+                    employee.img = new byte[8];
+                }
+                Session["Image"] = Convert.ToBase64String(employee.img);
+                
+
+            }
+
+
+            //employee.DisplayName = profileVM.DisplayName;
             client = new FireSharp.FirebaseClient(config);
             if(client!=null)
             {
-                TempData["msg"] = "<script>alert('Connect to DB_FB succesfully');</script>";
+               // TempData["msg"] = "<script>alert('Connect to DB_FB succesfully');</script>";
             }
             return View();
         }

@@ -257,12 +257,12 @@
                             @if (Context.User.Identity.IsAuthenticated)
                             {
                                 <div class="user-wrapper">
-                                    @*<div class="profile-image">
-                                            <img src="images/faces/face1.jpg" alt="profile image">
-
-                                        </div>*@
+                                    <div class="profile-image">
+                                            <img src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="profile image">
+                                          @*<img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">*@
+                                        </div>
                                     <div class="text-wrapper">
-                                        <p class="profile-name">@Context.User.Identity.Name</p>
+                                        <p class="profile-name">@*@Context.User.Identity.Name*@ @HttpContext.Current.Session["DisplayName"].ToString()</p>
                                         @if (Context.User.IsInRole("Admin"))
                                         {
                                             <div>
