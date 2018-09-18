@@ -111,13 +111,44 @@ namespace ASP.NET_PersonControl.Controllers
                                 from gu in _context.ProjectsGroups.ToList()
                                 where gu.ProjId == @project.Id && gu.GroupId == u.Id
                                 select u).ToList();
+            /////files
+
+            CloudBlobContainer container = GetCloudBlobContainer();
+            string con = container.Name;
+            List<string> blobs = new List<string>();
+            int sessionData = (int)Session["id"];
+            string projectID = Convert.ToString(sessionData);
+            foreach (IListBlobItem item in container.ListBlobs(useFlatBlobListing: true))
+            {
+
+                //if(item.Parent.Container.Name == "8")
+                if (item.GetType() == typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob blob = (CloudBlockBlob)item;
+                    string[] namePart = blob.Name.Split('/');
+                    if (namePart != null && namePart.Count() > 0 && namePart[0] == projectID)
+                        blobs.Add(blob.Name);
+                }
+                else if (item.GetType() == typeof(CloudPageBlob))
+                {
+                    CloudPageBlob blob = (CloudPageBlob)item;
+                    blobs.Add(blob.Name);
+                }
+                else if (item.GetType() == typeof(CloudBlobDirectory))
+                {
+                    CloudBlobDirectory dir = (CloudBlobDirectory)item;
+                    blobs.Add(dir.Uri.ToString());
+                }
+            }
+            /////files
             var viewModel = new ProjectsFormViewModel
             {
                 project = project,
                 customer = customer,
                 customers = customersList,
                 groups = groupList,
-                groupsInProject = projectGroup
+                groupsInProject = projectGroup,
+                filelist = blobs
 
 
             };
@@ -151,7 +182,7 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
 
-        public void ListBlobs()
+        public ActionResult ListBlobs()
         {
             CloudBlobContainer container = GetCloudBlobContainer();
             string con = container.Name;
@@ -180,20 +211,7 @@ namespace ASP.NET_PersonControl.Controllers
                     blobs.Add(dir.Uri.ToString());
                 }
             }
-            //            @model List<string>
-
-
-            // < h2 > List blobs </ h2 >
-
-
-            //    < ul >
-            //        @foreach(var item in Model)
-            //    {
-            //    < li >  < a href = "/home/GetFileFromBlob/?id=@item" > @item </ a ></ li >
-            //    }
-            //</ ul >
-
-            //return View(blobs);
+            return View(blobs);
         }
 
         private CloudBlobContainer GetCloudBlobContainer()
@@ -215,10 +233,11 @@ namespace ASP.NET_PersonControl.Controllers
 
             MemoryStream ms = new MemoryStream();
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
-
-            CloudBlobClient BlobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer c1 = BlobClient.GetContainerReference("mycontainer");
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient BlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer c1 = BlobClient.GetContainerReference("project");
 
             if (c1.Exists())
             {
