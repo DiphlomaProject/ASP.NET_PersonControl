@@ -182,38 +182,7 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
 
-        public ActionResult ListBlobs()
-        {
-            CloudBlobContainer container = GetCloudBlobContainer();
-            string con = container.Name;
-            List<string> blobs = new List<string>();
-            int sessionData = (int)Session["id"];
-            string projectID = Convert.ToString(sessionData);
-            foreach (IListBlobItem item in container.ListBlobs(useFlatBlobListing: true))
-            {
-
-                //if(item.Parent.Container.Name == "8")
-                if (item.GetType() == typeof(CloudBlockBlob))
-                {
-                    CloudBlockBlob blob = (CloudBlockBlob)item;
-                    string[] namePart = blob.Name.Split('/');
-                    if (namePart != null && namePart.Count() > 0 && namePart[0] == projectID)
-                        blobs.Add(blob.Name);
-                }
-                else if (item.GetType() == typeof(CloudPageBlob))
-                {
-                    CloudPageBlob blob = (CloudPageBlob)item;
-                    blobs.Add(blob.Name);
-                }
-                else if (item.GetType() == typeof(CloudBlobDirectory))
-                {
-                    CloudBlobDirectory dir = (CloudBlobDirectory)item;
-                    blobs.Add(dir.Uri.ToString());
-                }
-            }
-            return View(blobs);
-        }
-
+      
         private CloudBlobContainer GetCloudBlobContainer()
         {
 
@@ -258,6 +227,27 @@ namespace ASP.NET_PersonControl.Controllers
             {
                 return Content("Dir does not exist");
             }
+        }
+
+        public ActionResult DeleteFileFromBlob(string id)
+        {
+
+            MemoryStream ms = new MemoryStream();
+
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient BlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer c1 = BlobClient.GetContainerReference("project");
+
+            if (c1.Exists())
+            {
+                CloudBlob file = c1.GetBlobReference(id);
+                file.Delete();
+                
+            }
+            int sessionData = (int)Session["id"];
+            return Redirect("/MyProjects/ProjectDitail/" + sessionData);
         }
     }
 }
