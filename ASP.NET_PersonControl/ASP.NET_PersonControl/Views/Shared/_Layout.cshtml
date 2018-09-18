@@ -258,9 +258,9 @@
                             {
                                 <div class="user-wrapper">
                                     @*<div class="profile-image">
-                    <img src="images/faces/face1.jpg" alt="profile image">
+                                            <img src="images/faces/face1.jpg" alt="profile image">
 
-                </div>*@
+                                        </div>*@
                                     <div class="text-wrapper">
                                         <p class="profile-name">@Context.User.Identity.Name</p>
                                         @if (Context.User.IsInRole("Admin"))
@@ -393,24 +393,45 @@
             </div>
         </div>
     </div>
-  
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/css/")
-        @Scripts.Render("~/ventors/")
-        @Scripts.Render("~/scss/")
-        @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
-        @Scripts.Render("~/Content/Chosen/chosen.min.css")
 
-        <script src="~/Scripts/chosen.jquery.min.js"></script>
-        <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
-        <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>
-        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-        <script src="~/Scripts/modernizr-2.8.3.js"></script>
-        <script src="~/Scripts/jquery.filedrop.js"></script>
-        <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
-        <script src="~/Scripts/filedrop.js"></script>
-        @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/css/")
+    @Scripts.Render("~/ventors/")
+    @Scripts.Render("~/scss/")
+    @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
+    @Scripts.Render("~/Content/Chosen/chosen.min.css")
 
-    </body>
+    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <!-- Firebase App is always required and must be first -->
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBhEdR6tm2oIXgtn4sFIhzkx6y-O14_CJE",
+            authDomain: "personscontrol.firebaseapp.com",
+            databaseURL: "https://personscontrol.firebaseio.com",
+            projectId: "personscontrol",
+            storageBucket: "personscontrol.appspot.com",
+            messagingSenderId: "525481537619"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
+    <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery.filedrop.js"></script>
+    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+    <script src="~/Scripts/filedrop.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
 </html>

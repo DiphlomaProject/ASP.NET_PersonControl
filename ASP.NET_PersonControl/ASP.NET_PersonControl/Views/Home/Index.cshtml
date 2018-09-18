@@ -5,6 +5,7 @@
 
 @if (Context.User.Identity.IsAuthenticated)
 {
+    @Html.Raw(TempData["msg"])
     <div class="main-panel; margin-left: 20px;">
         <div class="content-wrapper">
             <div class="row">
@@ -429,4 +430,26 @@ else
         </div>
     </div>
 
+}
+@section scripts{
+    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <!-- Firebase App is always required and must be first -->
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>-
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBhEdR6tm2oIXgtn4sFIhzkx6y-O14_CJE",
+            authDomain: "personscontrol.firebaseapp.com",
+            databaseURL: "https://personscontrol.firebaseio.com",
+            projectId: "personscontrol",
+            storageBucket: "personscontrol.appspot.com",
+            messagingSenderId: "525481537619"
+        };
+        firebase.initializeApp(config);
+    </script>
 }
