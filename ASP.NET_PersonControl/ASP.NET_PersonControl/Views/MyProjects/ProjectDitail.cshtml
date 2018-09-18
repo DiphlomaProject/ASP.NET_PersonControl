@@ -1,0 +1,173 @@
+﻿@model ASP.NET_PersonControl.ViewModels.ProjectsFormViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+
+    @Html.AntiForgeryToken()
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Detail project: @Model.project.Title</h4>
+                <p class="card-description">
+                    @*Basic form elements*@
+                </p>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.project.Id)
+                        @Html.LabelFor(Model => Model.project.Customer, htmlAttributes: new { })
+                        @*<input type="text" class="form-control" id="exampleInputName1" placeholder="Name">*@
+
+                        <br />
+                        @Html.DropDownListFor(m => m.customer.Id, new SelectList(Model.customers, "Id", "Company"), "Enter Customer", new { id = "normalDropDown", @class = "form-control", @disabled = "disabled" })  
+                        @Html.ValidationMessageFor(model => Model.project.Customer, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Project Name", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Title", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => Model.project.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.project.Description, htmlAttributes: new { })
+                        <br />
+                        @Html.TextAreaFor(Model => Model.project.Description, htmlAttributes: new { @class = "form-control", @rows = "4", @placeholder = "ect", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => Model.project.Description, "", new { @class = "text-danger" })
+
+                    </div>
+                    
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            @Html.HiddenFor(model => Model.group.Id)
+                            <label>Select Groups</label>
+                            <br />
+                            @Html.ListBoxFor(m => m.SelectedIDArray, new MultiSelectList(Model.groups, "Id", "Title"), new { id = "normalDropDown3", multiple = "multiple", @class = "form-control", @placeholder = "no group",@disabled = "disabled" })
+                              @*@Html.EditorFor(model => Model.customer.Company, new { htmlAttributes = new { @class = "form-control", @placeholder = "Title", @readonly = "readonly" } })*@
+                        </div>
+                    }
+          
+                    <div class="form-group">
+                        @Html.Label("Begin time", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.BeginTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker1", @placeholder = "Time Start", @readonly = "readonly" } })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Until Time", htmlAttributes: new { })
+                        <br />
+                        @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2", @readonly = "readonly" } })
+                    </div>
+
+                    <div id="dropArea">
+                        @Html.HiddenFor(model => Model.group.Id, new { @id = Model.project.Id })
+                        Drop your files here
+                    </div>
+                    <br />
+                    <h4>Uploaded files : </h4>
+                    <ul class="list-group" id="uploadList"></ul>
+
+                    <style>
+                        #dropArea {
+                            background: #b5b5b5;
+                            border: black dashed 1px;
+                            height: 50px;
+                            text-align: center;
+                            color: #fff;
+                            padding-top: 12px;
+                        }
+
+                        .active-drop {
+                            background: #77bafa !important;
+                            border: solid 2px blue !important;
+                            opacity: .5;
+                            color: blue !important;
+                        }
+                    </style>
+
+                </form>
+                
+                <a class="btn btn-primary" href="@Url.Action("Index", "MyProjects" )" data-form-method="get">Return</a>
+
+            </div>
+        </div>
+    </div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/filedrop.js"></script>
+    <script>
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy',
+            changeYear: true,
+            yearRange: "2018:2038",
+            showButtonPanel: true
+        });
+
+        $(function () {
+            $("#normalDropDown").chosen();
+        });
+
+        $(function () {
+            $("#normalDropDown3").chosen();
+        });
+
+        $(function () {
+
+
+            $("#dropArea").filedrop({
+
+                fallback_id: 'btnUpload',
+                fallback_dropzoneClick: true,
+                url: '@Url.Action("UploadFiles")',
+                allowedfileextensions: ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png', '.gif','.txt','.zip','.html'],
+                paramname: 'fileData',
+
+                maxfiles: 10, //Maximum Number of Files allowed at a time.
+                maxfilesize: 100, //Maximum File Size in MB.
+
+                dragOver: function () {
+                    $('#dropArea').addClass('active-drop');
+
+
+                },
+                dragLeave: function () {
+                    $('#dropArea').removeClass('active-drop');
+
+                },
+                drop: function () {
+                    $('#dropArea').removeClass('active-drop');
+                    //Session["testing"] = "This is my session";
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">' + file.name +'</li>')
+                },
+                afterAll: function (e) {
+
+
+                    //To do some task after all uploads done.
+                }
+            })
+        })
+    </script>
+}
