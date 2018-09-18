@@ -225,6 +225,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\FirebaseCMController.cs" />
     <Compile Include="Controllers\Api\GroupsController.cs" />
     <Compile Include="Controllers\Api\ProjectsController.cs" />
     <Compile Include="Controllers\Api\RestApiHelperController.cs" />
@@ -2287,7 +2288,9 @@
     <Content Include="vendors\tinymce\tinymce.jquery.min.js" />
     <Content Include="vendors\tinymce\tinymce.js" />
     <Content Include="vendors\tinymce\tinymce.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
