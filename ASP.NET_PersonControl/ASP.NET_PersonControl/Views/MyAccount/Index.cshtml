@@ -48,7 +48,7 @@
                                 <br />
                                 <label><h4>Name</h4></label>
                                 <br />
-                                <input value="@Model.DisplayName" placeholder="Full name" class="form-control form-control-line" readonly>
+                                <input value=" @HttpContext.Current.Session["DisplayName"].ToString()" placeholder="Full name" class="form-control form-control-line" readonly>
                             </div>
                         </div>
                         <div class="form-group">
