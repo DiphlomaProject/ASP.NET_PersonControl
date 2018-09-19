@@ -271,6 +271,7 @@
     <Compile Include="Controllers\MyAccountController.cs" />
     <Compile Include="Controllers\MyGroupsController.cs" />
     <Compile Include="Controllers\MyProjectsController.cs" />
+    <Compile Include="Controllers\MyTaskController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\Support Classes\SingletonManager.cs" />
@@ -2533,6 +2534,7 @@
     <Content Include="Views\Tasks\CreateTaskForGroups.cshtml" />
     <Content Include="Views\Tasks\CreateTaskForProjects.cshtml" />
     <Content Include="Views\MyProjects\ProjectDitail.cshtml" />
+    <Content Include="Views\MyTask\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
