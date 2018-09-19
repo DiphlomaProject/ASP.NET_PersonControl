@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ASP.NET_PersonControl.ViewModels;
+using ASP.NET_PersonControl.Controllers.Api;
 namespace ASP.NET_PersonControl.Controllers
 {
     [Authorize(Roles = "Admin, Manager")]
@@ -18,6 +19,8 @@ namespace ASP.NET_PersonControl.Controllers
         public ApplicationUser userCur { get; set; }
 
         public SingletonManager singleton = SingletonManager.getInstance();
+
+        FirebaseCMController firebase = new FirebaseCMController();
         // GET: Tasks
         public ActionResult Index()
         {
@@ -38,6 +41,7 @@ namespace ASP.NET_PersonControl.Controllers
                 tasksForUser = new TasksForUser(),
                 user = employee,
                 toUser = _context.Users.Select(c => c).ToList()
+
             };
 
             
@@ -87,7 +91,24 @@ namespace ASP.NET_PersonControl.Controllers
                 //groupController.group.Owner = groupController.curOwner.Id;
                 tasksForUserController.tasksForUser.toUserId = tasksForUserController.userTo.Id;
                 var result = tasksForUserController.tasksForUser;
-                _context.TasksForUser.Add(result);
+                string id = User.Identity.GetUserId();
+
+                ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == id);
+                string Title = employeeFrom.DisplayName;
+                ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == tasksForUserController.userTo.Id);
+                var FCMToken = employeeTo.FCMToken;
+                string token = FCMToken.ToString();
+                string TouserId = tasksForUserController.userTo.Id;
+                string Message = tasksForUserController.tasksForUser.title;
+                
+               if(_context.TasksForUser.Add(result) != null)
+                {
+                   
+                    firebase.FirebaseNotification(token, TouserId, Title, Message);
+                }
+                //_context.TasksForUser.Add(result);
+
+              
             }
             else
             {
