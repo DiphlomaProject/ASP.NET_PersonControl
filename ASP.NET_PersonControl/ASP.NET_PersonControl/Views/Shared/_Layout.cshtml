@@ -326,8 +326,9 @@
                     </li>
                     @if (Context.User.Identity.IsAuthenticated)
                     {
-                        if (Context.User.IsInRole("Admin"))
+                        if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
                         {
+
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "Employees")">
                                     <i class="menu-icon mdi mdi-sticker"></i>
@@ -341,10 +342,12 @@
                                     <span class="menu-title">Customers</span>
                                 </a>
                             </li>
-                        }
-
-                        if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
-                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                    <i class="menu-icon mdi mdi-television"></i>
+                                    <span class="menu-title">Task's</span>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                                     <i class="menu-icon mdi mdi-content-copy"></i>
@@ -366,31 +369,6 @@
                                 </div>
 
                             </li>
-                        }
-
-                        if (Context.User.IsInRole("Employer") || Context.User.IsInRole(""))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Index", "Home")">
-                                    <i class="menu-icon mdi mdi-television"></i>
-                                    <span class="menu-title">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Index", "MyGroups")">
-                                    <i class="menu-icon mdi mdi-television"></i>
-                                    <span class="menu-title">Groups</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"  href="@Url.Action("Index", "MyProjects")">
-                                    <i class="menu-icon mdi mdi-television"></i>
-                                    <span class="menu-title">Projects</span>
-                                </a>
-                            </li>
-                        }
-                        if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
-                        {
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
                                     <i class="menu-icon mdi mdi-content-copy"></i>
@@ -409,6 +387,40 @@
 
                                     </ul>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                    <i class="menu-icon mdi mdi-television"></i>
+                                    <span class="menu-title">File Storage</span>
+                                </a>
+                            </li>
+                        }
+
+                        if (Context.User.IsInRole("Employer") || Context.User.IsInRole(""))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                    <i class="menu-icon mdi mdi-television"></i>
+                                    <span class="menu-title">Task</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "MyGroups")">
+                                    <i class="menu-icon mdi mdi-television"></i>
+                                    <span class="menu-title">Groups</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "MyProjects")">
+                                    <i class="menu-icon mdi mdi-television"></i>
+                                    <span class="menu-title">Projects</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                    <i class="menu-icon mdi mdi-television"></i>
+                                    <span class="menu-title">File Storage</span>
+                                </a>
                             </li>
                         }
                     }
