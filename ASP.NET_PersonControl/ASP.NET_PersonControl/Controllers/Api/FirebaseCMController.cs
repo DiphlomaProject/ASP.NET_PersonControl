@@ -14,11 +14,19 @@ namespace ASP.NET_PersonControl.Controllers.Api
     public class FirebaseCMController : ApiController
     {
        [HttpGet]
-       public IHttpActionResult FirebaseNotification()
+       public IHttpActionResult FirebaseNotification(string FCMToken)
         {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+                if (FCMToken.Equals("") == true)
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "FCMToken is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+                return Ok(result);
+            }
             var data = new
             {
-                to = "fhhbCYyDf3M:APA91bGlF5pZF-DMN0ZECfIhTWAeoJxZEt8l-09-E4-F7Llv-COy6gfWVTyjDGy7Z6e96sVVFASFwY_lzIMPAOP6GJ5m84Irunt_6UcuiuSCYbQI1sg_LVYswL4nd_ssQBFB4EAzIa7T",
+                to = FCMToken,
                 data = new
                 {
                     message = "Asp.Net FCM Api",
@@ -29,7 +37,10 @@ namespace ASP.NET_PersonControl.Controllers.Api
             };
 
             SendNotification(data);
-            return Ok();
+            result.Add("code", HttpStatusCode.Accepted);
+            result.Add("message", "FCM was send");
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+            return Ok(result);
         }
 
         public void SendNotification(object data)
