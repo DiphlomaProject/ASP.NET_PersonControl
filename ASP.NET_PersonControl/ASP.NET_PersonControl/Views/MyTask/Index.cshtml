@@ -1,7 +1,116 @@
-﻿
+﻿@model ASP.NET_PersonControl.ViewModels.MyTaskForUserViewModel
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>nema</h2>
+<style>
+    /* Style The Dropdown Button */
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
 
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: center;
+        background-color: #f9f9f9;
+        min-width: 10px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 12px;
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2>My Tasks</h2>
+            <h4 class="card-title"></h4>
+            <div class="table-responsive">
+                <table id="group" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Create Task</th>
+                            <th>Time Begin</th>
+                            <th>Time End</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Tasks.Count(); i++)
+                        {
+                        <tr>
+                            <td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>
+
+                            <td>@Model.Tasks.ElementAt(i).description</td>
+
+                            <td>@Model.Tasks.ElementAt(i).fromUserId</td>
+
+                            <td>@Model.Tasks.ElementAt(i).dateTimeBegin</td>
+
+                            <td>@Model.Tasks.ElementAt(i).dateTimeEnd</td>
+
+
+                            @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
+                            {
+
+                                <td><a class="badge badge-success">Completed</a></td>
+
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="badge badge-warning">In progress</button>
+                                        <div class="dropdown-content"> 
+                                            <br />
+                                            @Html.ActionLink("Completed", "UpdateTask", "MyTask", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-success" })
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

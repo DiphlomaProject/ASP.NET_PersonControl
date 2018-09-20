@@ -316,6 +316,7 @@
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeFormViewModel.cs" />
     <Compile Include="ViewModels\GroupsViewModel.cs" />
+    <Compile Include="ViewModels\MyTaskForUserViewModel.cs" />
     <Compile Include="ViewModels\NewRoleFormModel.cs" />
     <Compile Include="ViewModels\ProfileVMRequired.cs" />
     <Compile Include="ViewModels\ProjectsFormViewModel.cs" />

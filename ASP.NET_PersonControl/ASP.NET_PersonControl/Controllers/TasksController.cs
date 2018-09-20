@@ -96,35 +96,28 @@ namespace ASP.NET_PersonControl.Controllers
                 ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == id);
                 string Title = employeeFrom.DisplayName;
                 ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == tasksForUserController.userTo.Id);
-                var FCMToken = employeeTo.FCMToken;
-                string token = FCMToken.ToString();
-                string TouserId = tasksForUserController.userTo.Id;
-                string Message = tasksForUserController.tasksForUser.title;
-                
-               if(_context.TasksForUser.Add(result) != null)
+               
+                if(employeeTo.FCMToken != null)
                 {
-                   
-                    firebase.FirebaseNotification(token, TouserId, Title, Message);
+                    var FCMToken = employeeTo.FCMToken;
+                    string token = FCMToken.ToString();
+                    string TouserId = tasksForUserController.userTo.Id;
+                    string Message = tasksForUserController.tasksForUser.title;
+
+                    if (_context.TasksForUser.Add(result) != null)
+                    {
+
+                        firebase.FirebaseNotification(token, TouserId, Title, Message);
+                    }
+                    _context.TasksForUser.Add(result);
                 }
-                //_context.TasksForUser.Add(result);
+                {
+                    _context.TasksForUser.Add(result);
+                }
+                
 
-              
+
             }
-            else
-            {
-                //Projects projects = _context.Projects.FirstOrDefault(c => c.Id == projectController.project.Id);
-                //TasksForUser tasksForUser = _context.TasksForUser.FirstOrDefault(c=>c.Id == tasksForUser.Id)
-                //projects.Customer = projectController.customer.Id;
-                //projects.Title = projectController.project.Title;
-                //projects.Description = projectController.project.Description;
-                //projects.PriceInDollars = projectController.project.PriceInDollars;
-                //projects.isComplite = projectController.project.isComplite;
-                //projects.BeginTime = projectController.project.BeginTime;
-                //projects.UntilTime = projectController.project.UntilTime;
-            }
-
-
-            //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
