@@ -20,7 +20,7 @@
 
                 <div class="text-center">
 
-                    <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" class="img-circle" width="150" alt="avatar" />
+                    <img id="dataID" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.img))" class="img-circle" width="150" alt="avatar" />
                     
                     @using (Html.BeginForm("Upload", "MyAccount", FormMethod.Post, new { id = "formid", enctype = "multipart/form-data" }))
                     {
@@ -188,12 +188,12 @@
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#javaImage')
+                        $('#dataID')
                             .attr('src', e.target.result)
                             .width(200)
                             .height(200);
-                        document.getElementById('dataID').value = e.target.result;
-                        alert(e.target.result);
+                        document.getElementById('fileID').value = e.target.result;
+                        //alert(e.target.result);
                     };
                     reader.readAsDataURL(input.files[0]);
                 }
