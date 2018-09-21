@@ -27,8 +27,6 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult Index()
         {
             _context = new ApplicationDbContext();
-
-            //UsersGroups curUser = _context.Users User.Identity.GetUserId
             string curUserID = User.Identity.GetUserId();
 
             List<Groups> groupsList = (from gr in _context.Groups.ToList()

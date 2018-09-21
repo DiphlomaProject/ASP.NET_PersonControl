@@ -19,7 +19,6 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
             
             List<TasksForUser> tasklist = (from gr in _context.TasksForUser.ToList() where gr.toUserId == User.Identity.GetUserId() select gr).ToList();
-            
             var viewModel = new MyTaskForUserViewModel
             {
                 Tasks = tasklist
