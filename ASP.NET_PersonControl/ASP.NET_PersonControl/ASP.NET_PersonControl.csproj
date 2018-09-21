@@ -265,6 +265,7 @@
     <Compile Include="Controllers\BitmapImage.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\FileStorageController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -2536,6 +2537,7 @@
     <Content Include="Views\Tasks\CreateTaskForProjects.cshtml" />
     <Content Include="Views\MyProjects\ProjectDitail.cshtml" />
     <Content Include="Views\MyTask\Index.cshtml" />
+    <Content Include="Views\FileStorage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

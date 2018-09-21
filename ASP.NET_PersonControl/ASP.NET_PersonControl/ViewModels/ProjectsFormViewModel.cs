@@ -31,7 +31,10 @@ namespace ASP.NET_PersonControl.ViewModels
         public IEnumerable<Groups> groupsInProject {get;set; }
         public IEnumerable<Dictionary<int, List<Groups>>> groupsInProjectList { get; set; } // for my projects
 
-        public List<string> filelist { get; set; } 
+        public List<string> filelist { get; set; }
+        public List<string> fileinfo { get; set; }
+
+
 
     }
 }

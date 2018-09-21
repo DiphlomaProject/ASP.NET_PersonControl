@@ -1,0 +1,160 @@
+﻿@model ASP.NET_PersonControl.ViewModels.ProjectsFormViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>File Storage</h2>
+<style>
+    /* Style The Dropdown Button */
+    #dropArea {
+        background: #b5b5b5;
+        border: black dashed 1px;
+        height: 100px;
+        text-align: center;
+        color: #fff;
+        padding-top: 12px;
+    }
+
+    .active-drop {
+        background: #77bafa !important;
+        border: solid 2px blue !important;
+        opacity: .5;
+        color: blue !important;
+    }
+
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: center;
+        background-color: #f9f9f9;
+        min-width: 10px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 12px;
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
+
+
+
+
+<div class="card">
+    <div clas="card-body">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Download</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @*here must be foreach*@
+                @foreach (var item in Model.filelist)
+                {
+                    <tr>
+                        <td><a>@item</a> </td>
+                        <td><a class="badge badge-success" href="/FileStorage/GetFileFromBlob/?id=@item">Download</a></td>
+                        <td><a class="badge badge-danger" href="/FileStorage/DeleteFileFromBlob/?id=@item">Delete</a></td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<br />
+<div class="card">
+    <button type="button" class="btn btn-primary btn-fw"  data-toggle="collapse" data-target="#demo"> Drop Area </button>
+    <div id="demo" class="collapse">
+        <br />
+        <div id="dropArea">
+            Drop your files here
+        </div>
+    </div>
+    </div>
+    <br />
+
+    @section scripts{
+        <script src="~/Scripts/filedrop.js"></script>
+        <script>
+
+        $(function () {
+
+
+            $("#dropArea").filedrop({
+
+                fallback_id: 'btnUpload',
+                fallback_dropzoneClick: true,
+                url: '@Url.Action("UploadFiles","FileStorage")',
+                allowedfileextensions: ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png', '.gif','.txt','.zip','.html'],
+                paramname: 'fileData',
+
+                maxfiles: 10, //Maximum Number of Files allowed at a time.
+                maxfilesize: 100, //Maximum File Size in MB.
+
+                dragOver: function () {
+                    $('#dropArea').addClass('active-drop');
+
+
+                },
+                dragLeave: function () {
+                    $('#dropArea').removeClass('active-drop');
+
+                },
+                drop: function () {
+                    $('#dropArea').removeClass('active-drop');
+                    //Session["testing"] = "This is my session";
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">' + file.name + '</li>')
+                },
+                afterAll: function (e) {
+
+
+                    //To do some task after all uploads done.
+                }
+            })
+        })
+        </script>
+    }
