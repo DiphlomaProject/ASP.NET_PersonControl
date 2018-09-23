@@ -35,7 +35,7 @@ namespace ASP.NET_PersonControl.Controllers
         {
             _context = new ApplicationDbContext();
 
-           if( HttpContext.User.Identity.IsAuthenticated)
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
                 string id = User.Identity.GetUserId();
 
@@ -72,7 +72,7 @@ namespace ASP.NET_PersonControl.Controllers
                     employee.img = new byte[8];
                 }
                 Session["Image"] = Convert.ToBase64String(employee.img);
-                
+
 
             }
 

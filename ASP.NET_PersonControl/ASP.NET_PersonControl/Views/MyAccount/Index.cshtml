@@ -46,16 +46,23 @@
                             <h1>My Profile</h1>
                             <div class="col-xs-6">
                                 <br />
-                                <label><h4>Name</h4></label>
+                                <label>Name</label>
                                 <br />
-                                <input value=" @HttpContext.Current.Session["DisplayName"].ToString()" placeholder="Full name" class="form-control form-control-line" readonly>
+                                @if (Session["DisplayName"] != null)
+                                {
+                                    <input value=" @HttpContext.Current.Session["DisplayName"].ToString()" placeholder="Full name" class="form-control form-control-line" readonly>
+                                }
+                                else
+                                {
+                                    <input value="@Model.DisplayName" placeholder="Full name" class="form-control form-control-line" readonly>
+                                }
                             </div>
                         </div>
                         <div class="form-group">
 
                             <div class="col-xs-6">
                                 <br />
-                                <label><h4>Country</h4></label>
+                                <label>Country</label>
                                 <br />
                                 <input value="@Model.Country" placeholder="no info" class="form-control form-control-line" readonly>
                             </div>
