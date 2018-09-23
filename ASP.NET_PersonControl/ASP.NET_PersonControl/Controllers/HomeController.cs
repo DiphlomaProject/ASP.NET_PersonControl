@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ASP.NET_PersonControl.Models;
+using ASP.NET_PersonControl.ViewModels;
 using FireSharp;
 using FireSharp.Config;
 using FireSharp.Interfaces;
@@ -82,7 +83,30 @@ namespace ASP.NET_PersonControl.Controllers
             {
                // TempData["msg"] = "<script>alert('Connect to DB_FB succesfully');</script>";
             }
-            return View();
+            /// to Admin
+            List<TasksForUser> tasklist = (from gr in _context.TasksForUser.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            List<TasksForGroups> tasklistGroups = (from gr in _context.TasksForGroups.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            List<TasksForProjects> tasklistProjects = (from gr in _context.TasksForProjects.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            var CountgetTaksAdmin = tasklist.Count() + tasklistGroups.Count() + tasklistProjects.Count();
+            //to Employees
+            List<TasksForUser> tasklistEmp = (from gr in _context.TasksForUser.ToList() where gr.toUserId == User.Identity.GetUserId() select gr).ToList();
+            var CountgetTaskEml = tasklistEmp.Count();
+
+            //
+            List<Projects> projectComplete = (from gr in _context.Projects.ToList() where gr.isComplite == true select gr).ToList();
+
+            var viewModel = new StatViewModel
+            {
+
+                Employees = _context.Users.Select(c => c).ToList(),
+                countGetTaskAdmin = CountgetTaksAdmin,
+                projectsList = projectComplete,
+                countGetTaskEmpl = CountgetTaskEml
+
+            };
+
+
+            return View(viewModel);
         }
 
         public ActionResult About()

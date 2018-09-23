@@ -6,9 +6,17 @@
             @Html.AntiForgeryToken()
             <li class="nav-item dropdown d-none d-xl-inline-block">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                    <span class="profile-text">Hello, @*@Context.User.Identity.Name*@ @HttpContext.Current.Session["DisplayName"].ToString()!</span>
-                    <img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">
-                 
+                    @if (Session["DisplayName"] != null)
+                    {
+                        <span class="profile-text">Hello, @*@Context.User.Identity.Name*@ @HttpContext.Current.Session["DisplayName"].ToString()!</span>
+                        <img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">
+                    }
+                    else
+                    {
+                        <span class="profile-text">Hello, @Context.User.Identity.Name!</span>
+                       // <img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">
+                    }
+
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                     <a class="dropdown-item p-0">
@@ -29,9 +37,6 @@
                     </a>
                     <a href="@Url.Action("ChangePassword", "Manage")" class="dropdown-item">
                         Change Password
-                    </a>
-                    <a class="dropdown-item">
-                        Check Inbox
                     </a>
                     <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
                         Sign Out
