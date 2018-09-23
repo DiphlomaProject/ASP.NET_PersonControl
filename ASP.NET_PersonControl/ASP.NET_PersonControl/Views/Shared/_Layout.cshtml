@@ -289,22 +289,32 @@
                                 if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
                                 {
 
-                                    <button class="btn btn-success btn-block"
-                                            onclick="location.href='@Url.Action("Create", "Tasks")'">
-                                        New Task Person
-                                        <i class="mdi mdi-plus"></i>
-                                    </button>
-                                    <br />
-                                    <button class="btn btn-success btn-block"
-                                            onclick="location.href='@Url.Action("CreateTaskForGroups", "Tasks")'">
-                                        New Task Groups
-                                        <i class="mdi mdi-plus"></i>
-                                    </button>
-                                    <button class="btn btn-success btn-block"
-                                            onclick="location.href='@Url.Action("CreateTaskForProjects", "Tasks")'">
-                                        New Task Project
-                                        <i class="mdi mdi-plus"></i>
-                                    </button>
+                             
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" style="margin: 10px 0; min-width: 185px;">
+                                            New Task 
+                                        </button>
+                                        <div class="dropdown-menu" style="padding: 25px 10px; top: 45px;">
+                                            <button class="btn btn-success btn-block"
+                                                    onclick="location.href='@Url.Action("Create", "Tasks")'">
+                                                New Task Person
+                                                <i class="mdi mdi-plus"></i>
+                                            </button>
+                                            <br />
+                                            <button class="btn btn-success btn-block"
+                                                    onclick="location.href='@Url.Action("CreateTaskForGroups", "Tasks")'">
+                                                New Task Groups
+                                                <i class="mdi mdi-plus"></i>
+                                            </button>
+                                            <br />
+                                            <button class="btn btn-success btn-block"
+                                                    onclick="location.href='@Url.Action("CreateTaskForProjects", "Tasks")'">
+                                                New Task Project
+                                                <i class="mdi mdi-plus"></i>
+                                            </button>
+
+                                        </div> 
+                                    </div> 
                                     <br />
                                     <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
                                         New Customer
@@ -443,27 +453,6 @@
     @Scripts.Render("~/vendors/iconfonts/mdi/css/materialdesignicons.min.css")
     @Scripts.Render("~/Content/Chosen/chosen.min.css")
 
-    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
-    <!-- Firebase App is always required and must be first -->
-
-    <!-- Add additional services that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyBhEdR6tm2oIXgtn4sFIhzkx6y-O14_CJE",
-            authDomain: "personscontrol.firebaseapp.com",
-            databaseURL: "https://personscontrol.firebaseio.com",
-            projectId: "personscontrol",
-            storageBucket: "personscontrol.appspot.com",
-            messagingSenderId: "525481537619"
-        };
-        firebase.initializeApp(config);
-    </script>
     <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script src=@Url.Content("~/Scripts/chosen.jquery.min.js")></script>
     <script src=@Url.Content("~/Scripts/jquery-ui-1.12.1.min.j")></script>
