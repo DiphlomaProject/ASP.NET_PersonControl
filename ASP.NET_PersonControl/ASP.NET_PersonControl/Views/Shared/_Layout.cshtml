@@ -256,137 +256,136 @@
                         <div class="nav-link">
                             @if (Context.User.Identity.IsAuthenticated)
                             {
-                                if (Session["DisplayName"] != null)
-                                {
                             <div class="user-wrapper">
-                                @if (Session["Image"] != null)
-                                {
-                                    <div class="profile-image">
-                                        <img src="@String.Format("data:image/png;base64,{0}", HttpContext.Current.Session["Image"].ToString())" alt="profile image">
-                                        @*<img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">*@
-                                    </div>
-                                }
-                                else
+
+                                @if (Session["DisplayName"] != null)
                                 {
 
-                                }
-
-                                <div class="text-wrapper">
-                                    <p class="profile-name">@*@Context.User.Identity.Name*@ @HttpContext.Current.Session["DisplayName"].ToString()</p>
-                                    @if (Context.User.IsInRole("Admin"))
+                                    if (Session["Image"] != null)
                                     {
-                                        <div>
-                                            <small class="designation text-muted">Admin</small>
-                                            <span class="status-indicator online"></span>
-                                        </div>
-                                    }
-                                    @if (Context.User.IsInRole("Manager"))
-                                    {
-                                        <div>
-                                            <small class="designation text-muted">Manager</small>
-                                            <span class="status-indicator online"></span>
-                                        </div>
-                                    }
-                                    @if (Context.User.IsInRole("Employer"))
-                                    {
-                                        <div>
-                                            <small class="designation text-muted">Employer</small>
-                                            <span class="status-indicator online"></span>
-                                        </div>
-                                    }
-
-                                </div>
-                            </div>
-                                }
-                                else
-                                {
-                                    <div class="user-wrapper">
                                         <div class="profile-image">
-                                            
-                                             
-
-                                            @*<img src="@String.Format("data:image/png;base64,{0}", HttpContext.Current.Session["Image"].ToString())" alt="profile image">*@
+                                            <img src="@String.Format("data:image/png;base64,{0}", HttpContext.Current.Session["Image"].ToString())" alt="profile image">
                                             @*<img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">*@
                                         </div>
-                                        <div class="text-wrapper">
-                                            <p class="profile-name">@Context.User.Identity.Name</p>
-                                            @if (Context.User.IsInRole("Admin"))
-                                            {
-                                                <div>
-                                                    <small class="designation text-muted">Admin</small>
-                                                    <span class="status-indicator online"></span>
-                                                </div>
-                                            }
-                                            @if (Context.User.IsInRole("Manager"))
-                                            {
-                                                <div>
-                                                    <small class="designation text-muted">Manager</small>
-                                                    <span class="status-indicator online"></span>
-                                                </div>
-                                            }
-                                            @if (Context.User.IsInRole("Employer"))
-                                            {
-                                                <div>
-                                                    <small class="designation text-muted">Employer</small>
-                                                    <span class="status-indicator online"></span>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div>
-                                                    <small class="designation text-muted">No role</small>
-                                                    <span class="status-indicator online"></span>
-                                                </div>
-                                            }
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                    <div class="text-wrapper">
+                                        <p class="profile-name">@*@Context.User.Identity.Name*@ @HttpContext.Current.Session["DisplayName"].ToString()</p>
+                                        @if (Context.User.IsInRole("Admin"))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Admin</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                        else if (Context.User.IsInRole("Manager"))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Manager</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                        @*@if (Context.User.IsInRole("Employee"))*@
+                                        else
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Employee</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    if (Session["Image"] != null)
+                                    {
+                                        <div class="profile-image">
+                                            <img src="@String.Format("data:image/png;base64,{0}", HttpContext.Current.Session["Image"].ToString())" alt="profile image">
+                                            @*<img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">*@
                                         </div>
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                    <div class="text-wrapper">
+                                        <p class="profile-name">@Context.User.Identity.Name</p>
+                                        @if (Context.User.IsInRole("Admin"))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Admin</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                        else if (Context.User.IsInRole("Manager"))
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Manager</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
+                                        else/* if (Context.User.IsInRole("Employee"))*/
+                                        {
+                                            <div>
+                                                <small class="designation text-muted">Employee</small>
+                                                <span class="status-indicator online"></span>
+                                            </div>
+                                        }
                                     </div>
                                 }
+                            </div>
                                 if (Context.User.IsInRole("Admin") || Context.User.IsInRole("Manager"))
                                 {
 
 
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" style="margin: 10px 0; min-width: 185px;">
-                                                New Task
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" style="margin: 10px 0; min-width: 185px;">
+                                            New Task
+                                        </button>
+                                        <div class="dropdown-menu" style="padding: 25px 10px; top: 45px;">
+                                            <button class="btn btn-success btn-block"
+                                                    onclick="location.href='@Url.Action("Create", "Tasks")'">
+                                                New Task Person
+                                                <i class="mdi mdi-plus"></i>
                                             </button>
-                                            <div class="dropdown-menu" style="padding: 25px 10px; top: 45px;">
-                                                <button class="btn btn-success btn-block"
-                                                        onclick="location.href='@Url.Action("Create", "Tasks")'">
-                                                    New Task Person
-                                                    <i class="mdi mdi-plus"></i>
-                                                </button>
-                                                <br />
-                                                <button class="btn btn-success btn-block"
-                                                        onclick="location.href='@Url.Action("CreateTaskForGroups", "Tasks")'">
-                                                    New Task Groups
-                                                    <i class="mdi mdi-plus"></i>
-                                                </button>
-                                                <br />
-                                                <button class="btn btn-success btn-block"
-                                                        onclick="location.href='@Url.Action("CreateTaskForProjects", "Tasks")'">
-                                                    New Task Project
-                                                    <i class="mdi mdi-plus"></i>
-                                                </button>
+                                            <br />
+                                            <button class="btn btn-success btn-block"
+                                                    onclick="location.href='@Url.Action("CreateTaskForGroups", "Tasks")'">
+                                                New Task Groups
+                                                <i class="mdi mdi-plus"></i>
+                                            </button>
+                                            <br />
+                                            <button class="btn btn-success btn-block"
+                                                    onclick="location.href='@Url.Action("CreateTaskForProjects", "Tasks")'">
+                                                New Task Project
+                                                <i class="mdi mdi-plus"></i>
+                                            </button>
 
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
-                                            New Customer
-                                            <i class="mdi mdi-plus"></i>
-                                        </button>
-                                        <br />
-                                        <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Project")'">
-                                            New Project
-                                            <i class="mdi mdi-plus"></i>
-                                        </button>
-                                        <br />
-                                        <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Group")'">
-                                            New Group
-                                            <i class="mdi mdi-plus"></i>
-                                        </button>
-                                    }
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Customers")'">
+                                        New Customer
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+                                    <br />
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Project")'">
+                                        New Project
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
+                                    <br />
+                                    <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Create", "Group")'">
+                                        New Group
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
                                 }
+                            }
                         </div>
                     </li>
                     @if (Context.User.Identity.IsAuthenticated)
@@ -461,7 +460,8 @@
                             </li>
                         }
 
-                        if (Context.User.IsInRole("Employer") || Context.User.IsInRole(""))
+                        //if (Context.User.IsInRole("Employee") || Context.User.IsInRole(""))
+                        else
                         {
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "MyTask")">

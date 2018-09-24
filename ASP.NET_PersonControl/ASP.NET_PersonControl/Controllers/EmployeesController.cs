@@ -270,6 +270,9 @@ namespace ASP.NET_PersonControl.Controllers
                     }
                 }
             }//catch
+            string id = User.Identity.GetUserId();
+            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+            Session["DisplayName"] = employee.DisplayName;
 
             return RedirectToAction("Index", "Employees");
         }

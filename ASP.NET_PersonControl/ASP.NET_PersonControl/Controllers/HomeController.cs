@@ -40,6 +40,10 @@ namespace ASP.NET_PersonControl.Controllers
                 string id = User.Identity.GetUserId();
 
                 ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+                if(employee == null)
+                    return RedirectToAction("Login", "Account");
+
+
                 Session["DisplayName"] = employee.DisplayName;
                 //get user image
                 string storageAccountName = "aspnetpersoncontrol";

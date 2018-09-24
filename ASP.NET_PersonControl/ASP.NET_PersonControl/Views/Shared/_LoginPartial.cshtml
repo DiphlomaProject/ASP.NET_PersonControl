@@ -9,20 +9,19 @@
                     @if (Session["DisplayName"] != null)
                     {
                         <span class="profile-text">Hello, @*@Context.User.Identity.Name*@ @HttpContext.Current.Session["DisplayName"].ToString()!</span>
-                        if (Session["Image"] != null)
-                        {
-                            <img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">
-                        }
-                        else
-                        {
-                           
-                        }
-
                     }
                     else
                     {
                         <span class="profile-text">Hello, @Context.User.Identity.Name!</span>
                         // <img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">
+                    }
+                    @if (Session["Image"] != null)
+                    {
+                    <img class="img-xs rounded-circle" src="@String.Format("data:image/png;base64,{0}",  HttpContext.Current.Session["Image"].ToString())" alt="Profile image">
+                    }
+                    else
+                    {
+
                     }
 
                 </a>

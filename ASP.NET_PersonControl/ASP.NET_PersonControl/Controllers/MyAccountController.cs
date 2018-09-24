@@ -194,12 +194,12 @@ namespace ASP.NET_PersonControl.Controllers
                     employee.img[i] = 0x20;
                 }
                 cloudBlockBlob.DownloadToByteArray(employee.img, 0);
+                Session["Image"] = Convert.ToBase64String(employee.img);
             }
             catch
             {
                 employee.img = new byte[8];
             }
-            Session["Image"] = Convert.ToBase64String(employee.img);
         }
         // POST: MyAccount/Edit/5
         [HttpPost]
@@ -277,6 +277,10 @@ namespace ASP.NET_PersonControl.Controllers
 
 
             _context.SaveChanges();
+
+            string id = User.Identity.GetUserId();
+            ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+            Session["DisplayName"] = employee.DisplayName;
 
             return RedirectToAction("Index", "MyAccount");
         }
