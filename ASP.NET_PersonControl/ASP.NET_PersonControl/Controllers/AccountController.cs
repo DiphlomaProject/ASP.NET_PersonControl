@@ -212,7 +212,7 @@ namespace ASP.NET_PersonControl.Controllers
 
                         ApplicationDbContext db = new ApplicationDbContext();
                         var roleId = db.Roles.FirstOrDefault(r => r.Name == "Employee").Id;
-                        if(roleId != null)
+                        if (roleId != null)
                         {
                             db = new ApplicationDbContext();
                             var userId = db.Users.FirstOrDefault(u => u.Email == user.Email).Id;
@@ -230,7 +230,7 @@ namespace ASP.NET_PersonControl.Controllers
                                 //add role
                                 UserManager.AddToRole(userId, db.Roles.SingleOrDefault(r => r.Id == roleId).Name);
                             }
-
+                        }
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
