@@ -527,6 +527,7 @@
     <Content Include="js\maps.js" />
     <Content Include="js\misc.js" />
     <Content Include="js\off-canvas.js" />
+    <Content Include="js\panelState.js" />
     <Content Include="pages\charts\chartjs.html" />
     <Content Include="pages\forms\basic_elements.html" />
     <Content Include="pages\icons\font-awesome.html" />
