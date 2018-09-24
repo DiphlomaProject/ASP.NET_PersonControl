@@ -322,6 +322,7 @@
     <Compile Include="ViewModels\ProfileVMRequired.cs" />
     <Compile Include="ViewModels\ProjectsFormViewModel.cs" />
     <Compile Include="ViewModels\StatViewModel.cs" />
+    <Compile Include="ViewModels\TaskAdminViewModel.cs" />
     <Compile Include="ViewModels\TaskForGroupsViewModel.cs" />
     <Compile Include="ViewModels\TaskForProjectsViewModel.cs" />
     <Compile Include="ViewModels\TasksForUserViewModel.cs" />

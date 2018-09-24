@@ -1,17 +1,229 @@
-﻿
+﻿@model ASP.NET_PersonControl.ViewModels.TaskAdminViewModel
 @{
-    Layout = null;
+              
+                ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
+<div class="card">
+    <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#demo"> Assigned Task's to Users  (@Model.Tasks.Count()) </button>
+    <div id="demo" class="collapse">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="table-responsive">
+                        <table id="group" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>to User</th>
+                                    <th>Time Begin</th>
+                                    <th>Time End</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Tasks.Count(); i++)
+                                {
+                                    <tr>
+                                        @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
+                                        <td>@Model.Tasks.ElementAt(i).title</td>
+
+                                        <td>@Model.Tasks.ElementAt(i).description</td>
+
+                                        <td>@Model.Tasks.ElementAt(i).toUserId</td>
+
+                                        <td>@Model.Tasks.ElementAt(i).dateTimeBegin</td>
+
+                                        <td>@Model.Tasks.ElementAt(i).dateTimeEnd</td>
+
+
+                                        @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
+                                        {
+
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="badge badge-success">Completed</button>
+                                                <div class="dropdown-content">
+                                                    <br />
+                                                    @Html.ActionLink("Delete", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="badge badge-warning">In progress</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Cancel", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+<br />
+<div class="card">
+    <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#demo2"> Assigned Task's to Groups  (@Model.taskGroups.Count()) </button>
+    <div id="demo2" class="collapse">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="table-responsive">
+                        <table id="group" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>to User</th>
+                                    <th>Time Begin</th>
+                                    <th>Time End</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.taskGroups.Count(); i++)
+                                {
+                                <tr>
+                                    @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
+
+                                    <td>@Model.taskGroups.ElementAt(i).title</td>
+
+                                    <td>@Model.taskGroups.ElementAt(i).description</td>
+
+                                    <td>@Model.taskGroups.ElementAt(i).toGroupId</td>
+
+                                    <td>@Model.taskGroups.ElementAt(i).dateTimeBegin</td>
+
+                                    <td>@Model.taskGroups.ElementAt(i).dateTimeEnd</td>
+
+
+                                    @if (@Model.taskGroups.ElementAt(i).isComplite.ToString() == "True")
+                                    {
+
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="badge badge-success">Completed</button>
+                                                <div class="dropdown-content">
+                                                    <br />
+                                                    @Html.ActionLink("Delete", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="badge badge-warning">In progress</button>
+                                                <div class="dropdown-content">
+                                                    <br />
+                                                    @Html.ActionLink("Cancel", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    }
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="card">
+    <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#demo3"> Assigned Task's to Project's  (@Model.taskProjects.Count()) </button>
+    <div id="demo3" class="collapse">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                   
+                    <h4 class="card-title"></h4>
+                    <div class="table-responsive">
+                        <table id="group" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>to User</th>
+                                    <th>Time Begin</th>
+                                    <th>Time End</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.taskProjects.Count(); i++)
+                                {
+                                <tr>
+                                    @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
+
+                                    <td>@Model.taskProjects.ElementAt(i).title</td>
+
+                                    <td>@Model.taskProjects.ElementAt(i).description</td>
+
+                                    <td>@Model.taskProjects.ElementAt(i).toProjectId</td>
+
+                                    <td>@Model.taskProjects.ElementAt(i).dateTimeBegin</td>
+
+                                    <td>@Model.taskProjects.ElementAt(i).dateTimeEnd</td>
+
+
+                                    @if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "True")
+                                    {
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="badge badge-success">Completed</button>
+                                            <div class="dropdown-content">
+                                                <br />
+                                                @Html.ActionLink("Delete", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                            </div>
+                                        </div>
+                                    </td>
+                                        
+                                       
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="badge badge-warning">In progress</button>
+                                                <div class="dropdown-content">
+                                                    <br />
+                                                    @Html.ActionLink("Cancel", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    }
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

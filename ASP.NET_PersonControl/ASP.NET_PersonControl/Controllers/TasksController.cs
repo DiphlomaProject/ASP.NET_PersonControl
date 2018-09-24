@@ -24,7 +24,26 @@ namespace ASP.NET_PersonControl.Controllers
         // GET: Tasks
         public ActionResult Index()
         {
-            return View();
+
+
+            _context = new ApplicationDbContext();
+
+            string id = User.Identity.GetUserId();
+
+            List<TasksForUser> tasklist = (from gr in _context.TasksForUser.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            List<TasksForGroups> tasklistGroups = (from gr in _context.TasksForGroups.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            List<TasksForProjects> tasklistProject = (from gr in _context.TasksForProjects.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            var viewModel = new TaskAdminViewModel
+            {
+                Tasks = tasklist,
+                taskGroups = tasklistGroups,
+                taskProjects = tasklistProject
+            };
+            return View(viewModel);
+
+            
+
+           
         }
 
 
@@ -122,7 +141,21 @@ namespace ASP.NET_PersonControl.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult DeleteTaskUser(int id)
+        {
+            _context = new ApplicationDbContext();
+            if (_context.TasksForUser.FirstOrDefault(c => c.Id == id) == null)
+                return RedirectToAction("Index", "Tasks");
 
+            _context.TasksForUser.Remove(_context.TasksForUser.FirstOrDefault(c => c.Id == id));
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Tasks");
+
+
+
+        }
         public ActionResult CreateTaskForGroups()
         {
             _context = new ApplicationDbContext();
@@ -206,7 +239,21 @@ namespace ASP.NET_PersonControl.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult DeleteTaskGroups(int id)
+        {
+            _context = new ApplicationDbContext();
+            if (_context.TasksForGroups.FirstOrDefault(c => c.Id == id) == null)
+                return RedirectToAction("Index", "Tasks");
 
+            _context.TasksForGroups.Remove(_context.TasksForGroups.FirstOrDefault(c => c.Id == id));
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Tasks");
+
+
+
+        }
 
         public ActionResult CreateTaskForProjects()
         {
@@ -288,6 +335,22 @@ namespace ASP.NET_PersonControl.Controllers
             //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult DeleteTaskProject(int id)
+        {
+            _context = new ApplicationDbContext();
+            if (_context.TasksForProjects.FirstOrDefault(c => c.Id == id) == null)
+                return RedirectToAction("Index", "Tasks");
+
+            _context.TasksForProjects.Remove(_context.TasksForProjects.FirstOrDefault(c => c.Id == id));
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Tasks");
+
+
+
         }
     }
 }
