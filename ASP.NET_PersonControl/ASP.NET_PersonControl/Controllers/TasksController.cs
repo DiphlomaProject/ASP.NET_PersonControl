@@ -138,7 +138,7 @@ namespace ASP.NET_PersonControl.Controllers
 
             }
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Tasks");
         }
 
         public ActionResult DeleteTaskUser(int id)
@@ -236,7 +236,7 @@ namespace ASP.NET_PersonControl.Controllers
 
             //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Tasks");
         }
 
         public ActionResult DeleteTaskGroups(int id)
@@ -334,7 +334,7 @@ namespace ASP.NET_PersonControl.Controllers
 
             //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Tasks");
         }
 
         public ActionResult DeleteTaskProject(int id)
