@@ -229,8 +229,8 @@ namespace ASP.NET_PersonControl.Controllers
                                 UserManager.RemoveFromRoles(user.Id, roles.ToArray());
                                 //add role
                                 UserManager.AddToRole(userId, db.Roles.SingleOrDefault(r => r.Id == roleId).Name);
-                            }
-                        }
+                            }//if
+                        }//if
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
