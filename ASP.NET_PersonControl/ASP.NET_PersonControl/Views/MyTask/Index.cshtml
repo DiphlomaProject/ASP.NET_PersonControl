@@ -85,7 +85,10 @@
 
                                         <td>@Model.Tasks.ElementAt(i).description</td>
 
-                                        @if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                        @if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
+                                        {
+                                            <td>@Model.Tasks.ElementAt(i).userFrom.DisplayName</td>
+                                        }else if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.UserName.IsEmpty() == false)
                                         {
                                             <td>@Model.Tasks.ElementAt(i).userFrom.UserName</td>
                                         }
@@ -163,6 +166,10 @@
                                         {
                                             <td>@Model.taskGroups.ElementAt(i).userFrom.UserName</td>
                                         }
+                                        else if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                        {
+                                            <td>@Model.taskGroups.ElementAt(i).userFrom.UserName</td>
+                                        }
                                         else if (@Model.taskGroups.ElementAt(i).fromUserId != null)
                                         {
                                             <td>@Model.taskGroups.ElementAt(i).fromUserId</td>
@@ -235,6 +242,10 @@
                                             <td>@Model.taskProjects.ElementAt(i).description</td>
 
                                             @if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.taskProjects.ElementAt(i).userFrom.UserName</td>
+                                            }
+                                            else if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).userFrom.UserName.IsEmpty() == false)
                                             {
                                                 <td>@Model.taskProjects.ElementAt(i).userFrom.UserName</td>
                                             }

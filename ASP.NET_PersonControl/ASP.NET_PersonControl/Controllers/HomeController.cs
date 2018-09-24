@@ -98,6 +98,10 @@ namespace ASP.NET_PersonControl.Controllers
 
             //
             List<Projects> projectComplete = (from gr in _context.Projects.ToList() where gr.isComplite == true select gr).ToList();
+            int price = 0;
+            foreach (Projects pj in projectComplete)
+                if (pj.PriceInDollars != 0 && pj.isComplite == true)
+                    price += pj.PriceInDollars;
 
             var viewModel = new StatViewModel
             {
@@ -105,8 +109,8 @@ namespace ASP.NET_PersonControl.Controllers
                 Employees = _context.Users.Select(c => c).ToList(),
                 countGetTaskAdmin = CountgetTaksAdmin,
                 projectsList = projectComplete,
-                countGetTaskEmpl = CountgetTaskEml
-
+                countGetTaskEmpl = CountgetTaskEml,
+                priceCompliteTotal = price
             };
 
 

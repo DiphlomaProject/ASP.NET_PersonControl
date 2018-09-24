@@ -300,6 +300,10 @@
     <Compile Include="Migrations\201809242040575_TaskUpdate.Designer.cs">
       <DependentUpon>201809242040575_TaskUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809242331582_PriceTotal.cs" />
+    <Compile Include="Migrations\201809242331582_PriceTotal.Designer.cs">
+      <DependentUpon>201809242331582_PriceTotal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customers.cs" />
@@ -2578,6 +2582,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809242040575_TaskUpdate.resx">
       <DependentUpon>201809242040575_TaskUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809242331582_PriceTotal.resx">
+      <DependentUpon>201809242331582_PriceTotal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

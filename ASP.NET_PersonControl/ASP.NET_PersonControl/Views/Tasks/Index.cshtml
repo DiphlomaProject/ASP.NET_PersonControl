@@ -33,7 +33,22 @@
 
                                             <td>@Model.Tasks.ElementAt(i).description</td>
 
-                                            <td>@Model.Tasks.ElementAt(i).toUserId</td>
+                                            @if (@Model.Tasks.ElementAt(i).userTo != null && Model.Tasks.ElementAt(i).userTo.DisplayName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.Tasks.ElementAt(i).userTo.DisplayName</td>
+                                            }
+                                            else if (@Model.Tasks.ElementAt(i).userTo != null && Model.Tasks.ElementAt(i).userTo.UserName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.Tasks.ElementAt(i).userTo.UserName</td>
+                                            }
+                                            else if (@Model.Tasks.ElementAt(i).userTo != null)
+                                            {
+                                                <td>@Model.Tasks.ElementAt(i).toUserId</td>
+                                            }
+                                            else
+                                            {
+                                                <td> </td>
+                                            }
 
                                             <td>@Model.Tasks.ElementAt(i).dateTimeBegin</td>
 
@@ -109,7 +124,14 @@
 
                                             <td>@Model.taskGroups.ElementAt(i).description</td>
 
-                                            <td>@Model.taskGroups.ElementAt(i).toGroupId</td>
+                                            @if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).groupName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.taskGroups.ElementAt(i).groupName</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Model.taskGroups.ElementAt(i).toGroupId</td>
+                                            }
 
                                             <td>@Model.taskGroups.ElementAt(i).dateTimeBegin</td>
 
@@ -186,7 +208,14 @@
 
                                             <td>@Model.taskProjects.ElementAt(i).description</td>
 
-                                            <td>@Model.taskProjects.ElementAt(i).toProjectId</td>
+                                            @if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).projectName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.taskProjects.ElementAt(i).projectName</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Model.taskProjects.ElementAt(i).toProjectId</td>
+                                            }
 
                                             <td>@Model.taskProjects.ElementAt(i).dateTimeBegin</td>
 

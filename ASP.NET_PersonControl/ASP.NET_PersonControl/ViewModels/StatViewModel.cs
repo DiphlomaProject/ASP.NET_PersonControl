@@ -21,5 +21,6 @@ namespace ASP.NET_PersonControl.ViewModels
 
         public int countGetTaskAdmin { get; set; }
         public int countGetTaskEmpl { get; set; }
+        public int priceCompliteTotal { get; set; }
     }
 }

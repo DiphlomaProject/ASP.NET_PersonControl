@@ -31,6 +31,7 @@ namespace ASP.NET_PersonControl.Models
         public DateTime dateTimeEnd { get; set; }
         public Boolean isComplite { get; set; }
 
+        public String groupName { get; set; }
         public ApplicationUser userFrom { get; set; }
     }
 
@@ -45,6 +46,7 @@ namespace ASP.NET_PersonControl.Models
         public DateTime dateTimeEnd { get; set; }
         public Boolean isComplite { get; set; }
 
+        public String projectName { get; set; }
         public ApplicationUser userFrom { get; set; }
     }
 }

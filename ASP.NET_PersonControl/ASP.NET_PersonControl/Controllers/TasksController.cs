@@ -31,8 +31,20 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
 
             List<TasksForUser> tasklist = (from gr in _context.TasksForUser.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            foreach (TasksForUser taskForUser in tasklist)
+                if (taskForUser.toUserId != null)
+                    taskForUser.userTo = _context.Users.FirstOrDefault(user => user.Id == taskForUser.toUserId.ToString());
+
             List<TasksForGroups> tasklistGroups = (from gr in _context.TasksForGroups.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            foreach (TasksForGroups groupTask in tasklistGroups)
+                if (_context.Groups.FirstOrDefault(p => p.Id == groupTask.Id) != null)
+                    groupTask.groupName = _context.Groups.FirstOrDefault(p => p.Id == groupTask.Id).Title;
+
             List<TasksForProjects> tasklistProject = (from gr in _context.TasksForProjects.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
+            foreach (TasksForProjects projTask in tasklistProject)
+                if (_context.Projects.FirstOrDefault(p => p.Id == projTask.Id) != null)
+                    projTask.projectName = _context.Projects.FirstOrDefault(p => p.Id == projTask.Id).Title;
+
             var viewModel = new TaskAdminViewModel
             {
                 Tasks = tasklist,
