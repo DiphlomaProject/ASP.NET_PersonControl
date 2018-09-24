@@ -296,6 +296,10 @@
     <Compile Include="Migrations\201809171538338_FCM_Token.Designer.cs">
       <DependentUpon>201809171538338_FCM_Token.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809242040575_TaskUpdate.cs" />
+    <Compile Include="Migrations\201809242040575_TaskUpdate.Designer.cs">
+      <DependentUpon>201809242040575_TaskUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customers.cs" />
@@ -2571,6 +2575,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809171538338_FCM_Token.resx">
       <DependentUpon>201809171538338_FCM_Token.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809242040575_TaskUpdate.resx">
+      <DependentUpon>201809242040575_TaskUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

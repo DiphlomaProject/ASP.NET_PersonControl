@@ -19,9 +19,59 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
             
             List<TasksForUser> tasklist = (from gr in _context.TasksForUser.ToList() where gr.toUserId == User.Identity.GetUserId() select gr).ToList();
+
+            foreach(TasksForUser taskForUser in tasklist)
+            {
+                if (taskForUser.toUserId != null)
+                    taskForUser.userTo = _context.Users.FirstOrDefault(user => user.Id == taskForUser.toUserId.ToString());
+                if(taskForUser.fromUserId != null)
+                    taskForUser.userFrom = _context.Users.FirstOrDefault(user => user.Id == taskForUser.fromUserId.ToString());
+            }
+
+            // group taks 
+            string curUserID = User.Identity.GetUserId();
+            List<Groups> groupsList = (from gr in _context.Groups.ToList()
+                                       from ug in _context.UsersGroups.ToList()
+                                       where gr.Id == ug.GroupId && ug.UserId == User.Identity.GetUserId()
+                                       select gr).ToList();
+            List<Groups> gWhereUserOwner = (from gr in _context.Groups.ToList()
+                                            where gr.Owner == User.Identity.GetUserId()
+                                            select gr).ToList();
+            //groupsList.AddRange(gWhereUserOwner);
+            foreach (Groups g2 in gWhereUserOwner)
+                if (groupsList.Contains(g2) == false)
+                    groupsList.Add(g2);
+
+            List<TasksForGroups> taskGroups = (from gr in groupsList
+                                               from task in _context.TasksForGroups.ToList()
+                                               where task.toGroupId == gr.Id select task).ToList();
+            foreach (TasksForGroups groupTask in taskGroups)
+            {
+                if (groupTask.fromUserId != null)
+                    groupTask.userFrom = _context.Users.FirstOrDefault(user => user.Id == groupTask.fromUserId.ToString());
+            }
+
+            //project tasks
+            List<Projects> projectsList = (from pj in _context.Projects.ToList()
+                                           from gl in groupsList
+                                           from gp in _context.ProjectsGroups.ToList()
+                                           where pj.Id == gp.ProjId && gp.GroupId == gl.Id
+                                           select pj).Distinct().ToList();
+
+            List<TasksForProjects> taskProjects = (from pj in projectsList
+                                                   from task in _context.TasksForProjects.ToList()
+                                                   where task.toProjectId == pj.Id select task).ToList();
+            foreach (TasksForProjects projTask in taskProjects)
+            {
+                if (projTask.fromUserId != null)
+                    projTask.userFrom = _context.Users.FirstOrDefault(user => user.Id == projTask.fromUserId.ToString());
+            }
+
             var viewModel = new MyTaskForUserViewModel
             {
-                Tasks = tasklist
+                Tasks = tasklist,
+                taskGroups = taskGroups,
+                taskProjects = taskProjects
             };
             return View(viewModel);
         }

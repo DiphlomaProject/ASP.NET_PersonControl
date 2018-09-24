@@ -15,6 +15,9 @@ namespace ASP.NET_PersonControl.Models
         public DateTime dateTimeBegin { get; set; }
         public DateTime dateTimeEnd { get; set; }
         public Boolean isComplite { get; set; }
+
+        public ApplicationUser userTo { get; set; }
+        public ApplicationUser userFrom { get; set; }
     }
 
     public class TasksForGroups
@@ -27,6 +30,8 @@ namespace ASP.NET_PersonControl.Models
         public DateTime dateTimeBegin { get; set; }
         public DateTime dateTimeEnd { get; set; }
         public Boolean isComplite { get; set; }
+
+        public ApplicationUser userFrom { get; set; }
     }
 
     public class TasksForProjects
@@ -39,5 +44,7 @@ namespace ASP.NET_PersonControl.Models
         public DateTime dateTimeBegin { get; set; }
         public DateTime dateTimeEnd { get; set; }
         public Boolean isComplite { get; set; }
+
+        public ApplicationUser userFrom { get; set; }
     }
 }
