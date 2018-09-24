@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using ASP.NET_PersonControl.Models;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ASP.NET_PersonControl.Controllers
 {
@@ -208,6 +209,27 @@ namespace ASP.NET_PersonControl.Controllers
                         string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+
+                        ApplicationDbContext db = new ApplicationDbContext();
+                        var roleId = db.Roles.FirstOrDefault(r => r.Name == "Employee").Id;
+                        if(roleId != null)
+                        {
+                            db = new ApplicationDbContext();
+                            var userId = db.Users.FirstOrDefault(u => u.Email == user.Email).Id;
+                            if (userId != null)
+                            {
+                                // Создать хранилище ролей
+                                var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                                // Создать менеджер ролей
+                                RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(roleStore);
+
+
+                                //remove from old roles 
+                                var roles = UserManager.GetRoles(user.Id);
+                                UserManager.RemoveFromRoles(user.Id, roles.ToArray());
+                                //add role
+                                UserManager.AddToRole(userId, db.Roles.SingleOrDefault(r => r.Id == roleId).Name);
+                            }
 
                         return RedirectToAction("Index", "Home");
                     }
