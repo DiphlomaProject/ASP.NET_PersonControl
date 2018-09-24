@@ -37,13 +37,13 @@ namespace ASP.NET_PersonControl.Controllers
 
             List<TasksForGroups> tasklistGroups = (from gr in _context.TasksForGroups.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
             foreach (TasksForGroups groupTask in tasklistGroups)
-                if (_context.Groups.FirstOrDefault(p => p.Id == groupTask.Id) != null)
-                    groupTask.groupName = _context.Groups.FirstOrDefault(p => p.Id == groupTask.Id).Title;
+                if (_context.Groups.FirstOrDefault(p => p.Id == groupTask.toGroupId) != null)
+                    groupTask.groupName = _context.Groups.FirstOrDefault(p => p.Id == groupTask.toGroupId).Title;
 
             List<TasksForProjects> tasklistProject = (from gr in _context.TasksForProjects.ToList() where gr.fromUserId == User.Identity.GetUserId() select gr).ToList();
             foreach (TasksForProjects projTask in tasklistProject)
-                if (_context.Projects.FirstOrDefault(p => p.Id == projTask.Id) != null)
-                    projTask.projectName = _context.Projects.FirstOrDefault(p => p.Id == projTask.Id).Title;
+                if (_context.Projects.FirstOrDefault(p => p.Id == projTask.toProjectId) != null)
+                    projTask.projectName = _context.Projects.FirstOrDefault(p => p.Id == projTask.toProjectId).Title;
 
             var viewModel = new TaskAdminViewModel
             {

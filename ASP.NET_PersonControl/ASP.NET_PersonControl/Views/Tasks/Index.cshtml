@@ -108,7 +108,7 @@
                                     <tr>
                                         <th>Title</th>
                                         <th>Description</th>
-                                        <th>to User</th>
+                                        <th>to Groups</th>
                                         <th>Time Begin</th>
                                         <th>Time End</th>
                                         <th>Status</th>
@@ -124,7 +124,7 @@
 
                                             <td>@Model.taskGroups.ElementAt(i).description</td>
 
-                                            @if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).groupName.IsEmpty() == false)
+                                            @if (@Model.taskGroups.ElementAt(i).groupName != null && Model.taskGroups.ElementAt(i).groupName.IsEmpty() == false)
                                             {
                                                 <td>@Model.taskGroups.ElementAt(i).groupName</td>
                                             }
@@ -192,7 +192,7 @@
                                     <tr>
                                         <th>Title</th>
                                         <th>Description</th>
-                                        <th>to User</th>
+                                        <th>to Projects</th>
                                         <th>Time Begin</th>
                                         <th>Time End</th>
                                         <th>Status</th>
@@ -208,7 +208,7 @@
 
                                             <td>@Model.taskProjects.ElementAt(i).description</td>
 
-                                            @if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).projectName.IsEmpty() == false)
+                                            @if (@Model.taskProjects.ElementAt(i).projectName != null && Model.taskProjects.ElementAt(i).projectName.IsEmpty() == false)
                                             {
                                                 <td>@Model.taskProjects.ElementAt(i).projectName</td>
                                             }
