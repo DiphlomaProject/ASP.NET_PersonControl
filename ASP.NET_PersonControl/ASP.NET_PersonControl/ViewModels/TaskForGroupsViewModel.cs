@@ -14,6 +14,8 @@ namespace ASP.NET_PersonControl.ViewModels
         public ApplicationUser user { get; set; }
         public Groups group { get; set; }
         public IEnumerable<Groups> groups { get; set; }
-      
+
+        public IEnumerable<UsersGroups> userGroups { get; set; }
+
     }
 }

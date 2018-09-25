@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using ASP.NET_PersonControl.ViewModels;
 using ASP.NET_PersonControl.Controllers.Api;
+using static ASP.NET_PersonControl.Controllers.Api.UsersController;
+
 namespace ASP.NET_PersonControl.Controllers
 {
     [Authorize(Roles = "Admin, Manager")]
@@ -225,26 +227,72 @@ namespace ASP.NET_PersonControl.Controllers
             }
             if (_context.TasksForGroups.FirstOrDefault(c => c.Id == taskForGroupsViewModel.taskForGroups.Id) == null)
             {
-
-                
+                string AdminID = User.Identity.GetUserId();
                 taskForGroupsViewModel.taskForGroups.fromUserId = taskForGroupsViewModel.user.Id;
                 taskForGroupsViewModel.taskForGroups.toGroupId = taskForGroupsViewModel.group.Id;
-                var result = taskForGroupsViewModel.taskForGroups;
-                _context.TasksForGroups.Add(result);
-            }
-            else
-            {
-                //Projects projects = _context.Projects.FirstOrDefault(c => c.Id == projectController.project.Id);
-                //TasksForUser tasksForUser = _context.TasksForUser.FirstOrDefault(c=>c.Id == tasksForUser.Id)
-                //projects.Customer = projectController.customer.Id;
-                //projects.Title = projectController.project.Title;
-                //projects.Description = projectController.project.Description;
-                //projects.PriceInDollars = projectController.project.PriceInDollars;
-                //projects.isComplite = projectController.project.isComplite;
-                //projects.BeginTime = projectController.project.BeginTime;
-                //projects.UntilTime = projectController.project.UntilTime;
-            }
+                List<UsersGroups> userGroups = (from gr in _context.UsersGroups.ToList() where gr.GroupId == taskForGroupsViewModel.taskForGroups.toGroupId select gr).ToList();
+                foreach(UsersGroups userID in userGroups)
+                {
+                    if (userID.Id.ToString() != null)
+                    {
+                        ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == AdminID);
+                        string Title = employeeFrom.DisplayName;
+                        ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == userID.UserId.ToString());
 
+                        if (employeeTo.FCMToken != null)
+                        {
+                            var FCMToken = employeeTo.FCMToken;
+                            string token = FCMToken.ToString();
+                            string TouserId = employeeTo.Id;
+                            string Message = taskForGroupsViewModel.taskForGroups.title;
+                            firebase.FirebaseNotification(token, TouserId, Title, Message);
+                           
+                        }
+                    }
+
+                    var result = taskForGroupsViewModel.taskForGroups;
+                    _context.TasksForGroups.Add(result);
+
+                }
+                // List<UsersGroups> userGroups = _context.UsersGroups.Select(us => us.GroupId == taskForGroupsViewModel.taskForGroups.Id).ToList<UsersGroups>();
+
+                //foreach (TasksForGroups groupTask in taskGroups)
+                //{
+                //    if (groupTask.fromUserId != null)
+                //        groupTask.userFrom = _context.Users.FirstOrDefault(user => user.Id == groupTask.fromUserId.ToString());
+                //}
+                //tasksForUserController.tasksForUser.fromUserId = tasksForUserController.user.Id;
+                ////groupController.group.Owner = groupController.curOwner.Id;
+                //tasksForUserController.tasksForUser.toUserId = tasksForUserController.userTo.Id;
+                //var result = tasksForUserController.tasksForUser;
+                //string id = User.Identity.GetUserId();
+
+                //ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == id);
+                //string Title = employeeFrom.DisplayName;
+                //ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == tasksForUserController.userTo.Id);
+
+                //if (employeeTo.FCMToken != null)
+                //{
+                //    var FCMToken = employeeTo.FCMToken;
+                //    string token = FCMToken.ToString();
+                //    string TouserId = tasksForUserController.userTo.Id;
+                //    string Message = tasksForUserController.tasksForUser.title;
+
+                //    if (_context.TasksForUser.Add(result) != null)
+                //    {
+
+                //        firebase.FirebaseNotification(token, TouserId, Title, Message);
+                //    }
+                //    _context.TasksForUser.Add(result);
+                //}
+                //{
+                //    _context.TasksForUser.Add(result);
+                //}
+
+                
+               
+            }
+         
 
             //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
