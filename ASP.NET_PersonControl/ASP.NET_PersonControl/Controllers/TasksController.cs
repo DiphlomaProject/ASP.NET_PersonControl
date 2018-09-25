@@ -332,28 +332,40 @@ namespace ASP.NET_PersonControl.Controllers
             }
             if (_context.TasksForProjects.FirstOrDefault(c => c.Id == taskForProjectsViewModel.tasksForProjects.Id) == null)
             {
-
-
+                string AdminID = User.Identity.GetUserId();
                 taskForProjectsViewModel.tasksForProjects.fromUserId = taskForProjectsViewModel.user.Id;
                 taskForProjectsViewModel.tasksForProjects.toProjectId = taskForProjectsViewModel.project.Id;
-                var result = taskForProjectsViewModel.tasksForProjects;
-                _context.TasksForProjects.Add(result);
-            }
-            else
-            {
-                //Projects projects = _context.Projects.FirstOrDefault(c => c.Id == projectController.project.Id);
-                //TasksForUser tasksForUser = _context.TasksForUser.FirstOrDefault(c=>c.Id == tasksForUser.Id)
-                //projects.Customer = projectController.customer.Id;
-                //projects.Title = projectController.project.Title;
-                //projects.Description = projectController.project.Description;
-                //projects.PriceInDollars = projectController.project.PriceInDollars;
-                //projects.isComplite = projectController.project.isComplite;
-                //projects.BeginTime = projectController.project.BeginTime;
-                //projects.UntilTime = projectController.project.UntilTime;
-            }
 
+                List<ProjectsGroups> projectsGroups = (from gr in _context.ProjectsGroups.ToList() where gr.ProjId == taskForProjectsViewModel.tasksForProjects.toProjectId select gr).ToList();
+                foreach(ProjectsGroups projectsID in projectsGroups)
+                {
+                    if(projectsID.Id.ToString() != null)
+                    {
+                        List<UsersGroups> userGroups = (from gr in _context.UsersGroups.ToList() where gr.GroupId == projectsID.GroupId select gr).ToList();
+                        foreach (UsersGroups userID in userGroups)
+                            if (userID.Id.ToString() != null)
+                            {
+                                ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == AdminID);
+                                string Title = employeeFrom.DisplayName;
+                                ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == userID.UserId.ToString());
 
-            //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
+                                if (employeeTo.FCMToken != null)
+                                {
+                                    var FCMToken = employeeTo.FCMToken;
+                                    string token = FCMToken.ToString();
+                                    string TouserId = employeeTo.Id;
+                                    string Message = taskForProjectsViewModel.tasksForProjects.title;
+                                    firebase.FirebaseNotification(token, TouserId, Title, Message);
+
+                                }
+                            }
+                    }
+
+                    var result = taskForProjectsViewModel.tasksForProjects;
+                    _context.TasksForProjects.Add(result);
+                }
+               
+            }
             _context.SaveChanges();
             return RedirectToAction("Index", "Tasks");
         }
