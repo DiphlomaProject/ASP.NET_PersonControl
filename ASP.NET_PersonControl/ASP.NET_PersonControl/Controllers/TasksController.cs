@@ -254,47 +254,8 @@ namespace ASP.NET_PersonControl.Controllers
                     _context.TasksForGroups.Add(result);
 
                 }
-                // List<UsersGroups> userGroups = _context.UsersGroups.Select(us => us.GroupId == taskForGroupsViewModel.taskForGroups.Id).ToList<UsersGroups>();
 
-                //foreach (TasksForGroups groupTask in taskGroups)
-                //{
-                //    if (groupTask.fromUserId != null)
-                //        groupTask.userFrom = _context.Users.FirstOrDefault(user => user.Id == groupTask.fromUserId.ToString());
-                //}
-                //tasksForUserController.tasksForUser.fromUserId = tasksForUserController.user.Id;
-                ////groupController.group.Owner = groupController.curOwner.Id;
-                //tasksForUserController.tasksForUser.toUserId = tasksForUserController.userTo.Id;
-                //var result = tasksForUserController.tasksForUser;
-                //string id = User.Identity.GetUserId();
-
-                //ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == id);
-                //string Title = employeeFrom.DisplayName;
-                //ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == tasksForUserController.userTo.Id);
-
-                //if (employeeTo.FCMToken != null)
-                //{
-                //    var FCMToken = employeeTo.FCMToken;
-                //    string token = FCMToken.ToString();
-                //    string TouserId = tasksForUserController.userTo.Id;
-                //    string Message = tasksForUserController.tasksForUser.title;
-
-                //    if (_context.TasksForUser.Add(result) != null)
-                //    {
-
-                //        firebase.FirebaseNotification(token, TouserId, Title, Message);
-                //    }
-                //    _context.TasksForUser.Add(result);
-                //}
-                //{
-                //    _context.TasksForUser.Add(result);
-                //}
-
-                
-               
             }
-         
-
-            //_context.ProjectsGroups.RemoveRange(_context.ProjectsGroups.Select(ug => ug).Where(ug => ug.ProjId == projectController.project.Id).ToList());
             _context.SaveChanges();
             return RedirectToAction("Index", "Tasks");
         }
