@@ -346,31 +346,32 @@ namespace ASP.NET_PersonControl.Controllers
                 taskForProjectsViewModel.tasksForProjects.toProjectId = taskForProjectsViewModel.project.Id;
 
                 List<ProjectsGroups> projectsGroups = (from gr in _context.ProjectsGroups.ToList() where gr.ProjId == taskForProjectsViewModel.tasksForProjects.toProjectId select gr).ToList();
-                foreach(ProjectsGroups projectsID in projectsGroups)
+                List<string> usersIds = new List<string>(); // users whom we already send notification
+                foreach (ProjectsGroups projectsID in projectsGroups)
                 {
                     if(projectsID.Id.ToString() != null)
                     {
                        
                         List<UsersGroups> userGroups = (from gr in _context.UsersGroups.ToList() where gr.GroupId == projectsID.GroupId select gr).ToList();
-                     
                         foreach (UsersGroups userID in userGroups)
                             if (userID.Id.ToString() != null)
                             {
                                 ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == AdminID);
                                 string Title = employeeFrom.DisplayName;
                                 ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == userID.UserId.ToString());
-                                
+
                                 //foreach (ApplicationUser user1 in MassivUsersFromGroups)
                                 //    if (resUsersNotif.isContaint(user1) == false)
                                 //        resUsersNotif.add(user1);
-                                if (employeeTo.FCMToken != null)
+                                
+                                if (employeeTo.FCMToken != null && usersIds.Contains(employeeTo.Id) == false)
                                 {
+                                    usersIds.Add(employeeTo.Id);
                                     var FCMToken = employeeTo.FCMToken;
                                     string token = FCMToken.ToString();
                                     string TouserId = employeeTo.Id;
                                     string Message = taskForProjectsViewModel.tasksForProjects.title;
                                     firebase.FirebaseNotification(token, TouserId, Title, Message);
-
                                 }
                             }
                     }
