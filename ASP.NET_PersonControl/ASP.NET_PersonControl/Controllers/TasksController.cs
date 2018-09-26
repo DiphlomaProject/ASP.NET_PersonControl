@@ -350,14 +350,19 @@ namespace ASP.NET_PersonControl.Controllers
                 {
                     if(projectsID.Id.ToString() != null)
                     {
+                       
                         List<UsersGroups> userGroups = (from gr in _context.UsersGroups.ToList() where gr.GroupId == projectsID.GroupId select gr).ToList();
+                     
                         foreach (UsersGroups userID in userGroups)
                             if (userID.Id.ToString() != null)
                             {
                                 ApplicationUser employeeFrom = _context.Users.SingleOrDefault(emp => emp.Id == AdminID);
                                 string Title = employeeFrom.DisplayName;
                                 ApplicationUser employeeTo = _context.Users.SingleOrDefault(emp => emp.Id == userID.UserId.ToString());
-
+                                
+                                //foreach (ApplicationUser user1 in MassivUsersFromGroups)
+                                //    if (resUsersNotif.isContaint(user1) == false)
+                                //        resUsersNotif.add(user1);
                                 if (employeeTo.FCMToken != null)
                                 {
                                     var FCMToken = employeeTo.FCMToken;

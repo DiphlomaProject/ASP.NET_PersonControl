@@ -6,78 +6,6 @@
 
 @*<h2>Create</h2>*@
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-
-@*@using (Html.BeginForm("Save", "Project"))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                <div class="form-group">
-                    @Html.LabelFor(Model => Model.project.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.customer.Id, new SelectList(Model.customers, "Id", "Company"), "Enter Customer", new { id = "normalDropDown", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => Model.project.Customer, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-
-                    @Html.Label("Project Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => Model.project.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => Model.project.Title, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(Model => Model.project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(Model => Model.project.Description, 10, 55, null)
-                        @Html.ValidationMessageFor(model => Model.project.Description, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.Label(" Price", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => Model.project.PriceInDollars, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => Model.project.PriceInDollars, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(Model => Model.project.isComplite, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.CheckBoxFor(Model => Model.project.isComplite, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => Model.project.isComplite, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.Label("Begin time", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => Model.project.BeginTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker1" } })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Until Time", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => Model.project.UntilTime, new { htmlAttributes = new { @class = "form-control", id = "datepicker2" } })
-                    </div>
-                </div>
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                    <input class="btn" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "Project") + "'");" />
-                </div>
-            </div>
-        </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@
-
 @using (Html.BeginForm("Save", "Project"))
 {
     @Html.AntiForgeryToken()
@@ -184,16 +112,6 @@
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
     <script src="~/Scripts/filedrop.js"></script>
-    @*<script>
-            $("#datepicker1").datetimepicker({
-
-
-
-            }).on('dp.change', function (e) {
-                $(this).data("DateTimePicker").hide();
-            });
-        </script>*@
-
     <script>
         $("#datepicker1").datepicker({
             changeMonth: true,

@@ -35,23 +35,47 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         // GET: Employees
-        public ActionResult Index()
-        {   
+        //public ActionResult Index()
+        //{
+        //    Создать контекст для работы с БД
+        //    var dbContext = new ApplicationDbContext();
+
+        //    var viewModel = new AdministrationFormViewModel
+        //    {
+        //        Roles = roleManager.Roles.ToList(),     // получить список ролей
+        //        Users = dbContext.Users.ToList()        // получить список пользователей
+        //    };
+
+        //    var userRoles = _context.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
+        //    foreach (ApplicationUser user in viewModel.Users)
+        //        user.RoleNames = (from r in userRoles
+        //                          from u in r.Users
+        //                          where u.UserId == user.Id
+        //                          select r.Name).ToList();
+
+        //    return View(viewModel);
+        //}
+
+
+        public ActionResult SearchingEmpl (string searching)
+        {
             // Создать контекст для работы с БД
             var dbContext = new ApplicationDbContext();
+
 
             var viewModel = new AdministrationFormViewModel
             {
                 Roles = roleManager.Roles.ToList(),     // получить список ролей
-                Users = dbContext.Users.ToList()        // получить список пользователей
+                /*Users = dbContext.Users.ToList()*/
+                Users = dbContext.Users.Where(x => x.Email.Contains(searching) || searching == null).ToList()
+                // получить список пользователей
             };
-
             var userRoles = _context.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
             foreach (ApplicationUser user in viewModel.Users)
                 user.RoleNames = (from r in userRoles
-                                 from u in r.Users
-                                 where u.UserId == user.Id
-                                 select r.Name).ToList();
+                                  from u in r.Users
+                                  where u.UserId == user.Id
+                                  select r.Name).ToList();
 
             return View(viewModel);
         }
