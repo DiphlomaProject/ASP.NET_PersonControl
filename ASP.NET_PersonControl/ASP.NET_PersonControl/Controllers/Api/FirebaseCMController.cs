@@ -31,8 +31,6 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 {
                     message = Message,
                     title = Title,
-                   // title = "Short name",
-                   // userId = "f9bFzZPr9mA:APA91bG2sH1uuHlx_xSnd-xsI3iR6_yrqeQsZ-oc1aU65QjbB6k12JBJNaH6ZvGeZisNAlYysMI6yfY92zC31CtH7B7xfSMfWGQD4YlA5_C4KB7m5WEehFlzJnCMC5DbWlv6esZVy5v0",
                    userId = TouserId,
                     status = true
                 }

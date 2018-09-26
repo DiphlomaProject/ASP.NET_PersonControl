@@ -1,15 +1,12 @@
 ﻿@model ASP.NET_PersonControl.ViewModels.ProjectsFormViewModel
-
 @{
-    ViewBag.Title = "Project";
+    ViewBag.Title = "Archive";
 }
-
-
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h2>Project Manager</h2>
-            <h4 class="card-title">Current Active Project</h4>
+            <h2>Archive</h2>
+            <h4 class="card-title">Current Complete Project</h4>
             <div class="table-responsive">
                 <table class="table table-bordered" id="group">
                     <thead>
@@ -26,10 +23,11 @@
                     <tbody>
                         @for (int i = 0; i < Model.projects.Count(); i++)
                         {
-                        <tr>
-                            @if (@Model.projects.ElementAt(i).isComplite.ToString() == "False")
-                            {
+                            <tr>
+                                @if(@Model.projects.ElementAt(i).isComplite.ToString() == "True")
+                                {
 
+                                
                                 <td>
                                     @Html.ActionLink(Model.customers.ElementAt(i).Company, "DeteilCustomer", "Project", new { @id = Model.customers.ElementAt(i).Id }, null)
                                 </td>
@@ -64,7 +62,7 @@
                                 <td>
                                     @Model.projects.ElementAt(i).UntilTime
                                 </td>
-                            }
+                                }
                             </tr>
                         }
                     </tbody>

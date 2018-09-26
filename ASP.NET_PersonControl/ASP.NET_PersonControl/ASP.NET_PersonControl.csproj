@@ -2549,6 +2549,7 @@
     <Content Include="Views\MyProjects\ProjectDitail.cshtml" />
     <Content Include="Views\MyTask\Index.cshtml" />
     <Content Include="Views\FileStorage\Index.cshtml" />
+    <Content Include="Views\Project\Archive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

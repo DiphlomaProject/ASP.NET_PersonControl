@@ -69,11 +69,15 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
 
             ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
+
+            // List<ApplicationUser> toUsers = (from gr in _context.Users.ToList() where gr.RoleNames.ToString() == "Admin" select gr).ToList();
+            List<ApplicationUser> toUsers = _context.Users.Select(c => c).ToList();
+            
             var viewModel = new TasksForUserViewModel
             {
                 tasksForUser = new TasksForUser(),
                 user = employee,
-                toUser = _context.Users.Select(c => c).ToList()
+                toUser = toUsers
 
             };
 
@@ -285,12 +289,14 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
 
             ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
-            List<Projects> projectList = _context.Projects.Select(g => g).ToList<Projects>();
+           // List<Projects> projectList = _context.Projects.Select(g => g).ToList<Projects>();
+            List<Projects> completeProject = (from gr in _context.Projects.ToList() where gr.isComplite.ToString() == "False" select gr).ToList();
+         
             var viewModel = new TaskForProjectsViewModel
             {
                 tasksForProjects   = new TasksForProjects(),
                 user = employee,
-                projects = projectList
+                projects = completeProject
             };
 
             return View(viewModel);
@@ -320,13 +326,16 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
             if (taskForProjectsViewModel.tasksForProjects.description == null || taskForProjectsViewModel.tasksForProjects.dateTimeEnd == null || taskForProjectsViewModel.tasksForProjects.dateTimeBegin == null)
             {
+
                 ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
-                List<Groups> groupList = _context.Groups.Select(g => g).ToList<Groups>();
-                var viewModel = new TaskForGroupsViewModel
+                List<Projects> projectList = _context.Projects.Select(g => g).ToList<Projects>();
+                List<Projects> completeProject = (from gr in _context.Projects.ToList() where gr.isComplite.ToString() == "False" select gr).ToList();
+
+                var viewModel = new TaskForProjectsViewModel
                 {
-                    taskForGroups = new TasksForGroups(),
+                    tasksForProjects = new TasksForProjects(),
                     user = employee,
-                    groups = groupList
+                    projects = completeProject
                 };
                 return View("CreateTaskForProjects", viewModel);
             }
