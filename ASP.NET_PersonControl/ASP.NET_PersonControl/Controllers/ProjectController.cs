@@ -68,19 +68,54 @@ namespace ASP.NET_PersonControl.Controllers
                               from gu in _context.ProjectsGroups.ToList()
                               where gu.ProjId == @project.Id && gu.GroupId == u.Id
                               select u).ToList();
-            var viewModel = new ProjectsFormViewModel
+
+
+            CloudBlobContainer container = GetCloudBlobContainer();
+            string con = container.Name;
+            List<string> blobs = new List<string>();
+            int sessionData = (int)Session["id"];
+            string projectID = Convert.ToString(sessionData);
+            foreach (IListBlobItem item in container.ListBlobs(useFlatBlobListing: true))
+            {
+
+                //if(item.Parent.Container.Name == "8")
+                if (item.GetType() == typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob blob = (CloudBlockBlob)item;
+                    string[] namePart = blob.Name.Split('/');
+                    if (namePart != null && namePart.Count() > 0 && namePart[0] == projectID)
+                        blobs.Add(blob.Name);
+                }
+                else if (item.GetType() == typeof(CloudPageBlob))
+                {
+                    CloudPageBlob blob = (CloudPageBlob)item;
+                    blobs.Add(blob.Name);
+                }
+                else if (item.GetType() == typeof(CloudBlobDirectory))
+                {
+                    CloudBlobDirectory dir = (CloudBlobDirectory)item;
+                    blobs.Add(dir.Uri.ToString());
+                }
+            }
+                var viewModel = new ProjectsFormViewModel
             {
                 project = project,customer = customer,
                 customers = customersList,
                 groups = groupList,
-                groupsInProject = projectGroup
+                groupsInProject = projectGroup,
+                filelist = blobs
 
 
-            };
+                };
             viewModel.SelectedIDArray = viewModel.groupsInProject.Select(u => u.Id.ToString()).ToArray();
             return View(viewModel);
         }
 
+        public void Redirect()
+        {
+            int sessionData = (int)Session["id"];
+            Redirect("/Project/Edit/" + sessionData);
+        }
         public ActionResult Create()
         {
             _context = new ApplicationDbContext();
@@ -199,7 +234,7 @@ namespace ASP.NET_PersonControl.Controllers
       
         public async Task<ActionResult> UploadFiles(HttpPostedFileBase fileData)
         {
-            
+
             int sessionData = (int)Session["id"];
             string projectID = Convert.ToString(sessionData);
             string nameOfStorage = "project";
@@ -207,7 +242,7 @@ namespace ASP.NET_PersonControl.Controllers
             CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
             CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
 
-       
+
 
             CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(nameOfStorage);
             await cloudBlobContainer.CreateIfNotExistsAsync();
@@ -216,66 +251,22 @@ namespace ASP.NET_PersonControl.Controllers
             CloudBlobDirectory cloudBlobDirectory = cloudBlobContainer.GetDirectoryReference(projectID);
             CloudBlockBlob cloudBlockBlob = cloudBlobDirectory.GetBlockBlobReference(fileData.FileName);
             await cloudBlockBlob.UploadFromStreamAsync(fileData.InputStream);
-            return Content("Success"); 
+            return Content("Success");
 
         }
 
 
-        public void ListBlobs()
-        {
-            CloudBlobContainer container = GetCloudBlobContainer();
-            string con = container.Name;
-            List<string> blobs = new List<string>();
-            int sessionData = (int)Session["id"];
-            string projectID = Convert.ToString(sessionData);
-            foreach (IListBlobItem item in container.ListBlobs(useFlatBlobListing: true))
-            {
-               
-                //if(item.Parent.Container.Name == "8")
-                if (item.GetType() == typeof(CloudBlockBlob))
-                {
-                    CloudBlockBlob blob = (CloudBlockBlob)item;
-                    string[] namePart = blob.Name.Split('/');
-                    if(namePart!=null && namePart.Count() > 0 && namePart[0] == projectID )
-                    blobs.Add(blob.Name);
-                }
-                else if (item.GetType() == typeof(CloudPageBlob))
-                {
-                    CloudPageBlob blob = (CloudPageBlob)item;
-                    blobs.Add(blob.Name);
-                }
-                else if (item.GetType() == typeof(CloudBlobDirectory))
-                {
-                    CloudBlobDirectory dir = (CloudBlobDirectory)item;
-                    blobs.Add(dir.Uri.ToString());
-                }
-            }
-//            @model List<string>
- 
-
-// < h2 > List blobs </ h2 >
-    
-
-//    < ul >
-//        @foreach(var item in Model)
-//    {
-//    < li >  < a href = "/home/GetFileFromBlob/?id=@item" > @item </ a ></ li >
-//    }
-//</ ul >
-
-            //return View(blobs);
-        }
 
         private CloudBlobContainer GetCloudBlobContainer()
         {
-            
+
             StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
             CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
             //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxx");
 
             CloudBlobClient BlobClient = cloudStorageAccount.CreateCloudBlobClient();
             CloudBlobContainer c1 = BlobClient.GetContainerReference("project");
-            
+
             return c1;
 
         }
@@ -285,10 +276,11 @@ namespace ASP.NET_PersonControl.Controllers
 
             MemoryStream ms = new MemoryStream();
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
-
-            CloudBlobClient BlobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer c1 = BlobClient.GetContainerReference("mycontainer");
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient BlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer c1 = BlobClient.GetContainerReference("project");
 
             if (c1.Exists())
             {
@@ -309,6 +301,27 @@ namespace ASP.NET_PersonControl.Controllers
             {
                 return Content("Dir does not exist");
             }
+        }
+
+        public ActionResult DeleteFileFromBlob(string id)
+        {
+
+            MemoryStream ms = new MemoryStream();
+
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("xxxxx");
+            StorageCredentials storageCredentials = new StorageCredentials(singleton.storageAccountName, singleton.keyOne);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient BlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer c1 = BlobClient.GetContainerReference("project");
+
+            if (c1.Exists())
+            {
+                CloudBlob file = c1.GetBlobReference(id);
+                file.Delete();
+
+            }
+            int sessionData = (int)Session["id"];
+            return Redirect("/Project/Edit/" + sessionData);
         }
 
 
