@@ -35,26 +35,26 @@ namespace ASP.NET_PersonControl.Controllers
         }
 
         // GET: Employees
-        //public ActionResult Index()
-        //{
-        //    Создать контекст для работы с БД
-        //    var dbContext = new ApplicationDbContext();
+        public ActionResult Index()
+        {
+           // Создать контекст для работы с БД
+            var dbContext = new ApplicationDbContext();
 
-        //    var viewModel = new AdministrationFormViewModel
-        //    {
-        //        Roles = roleManager.Roles.ToList(),     // получить список ролей
-        //        Users = dbContext.Users.ToList()        // получить список пользователей
-        //    };
+            var viewModel = new AdministrationFormViewModel
+            {
+                Roles = roleManager.Roles.ToList(),     // получить список ролей
+                Users = dbContext.Users.ToList()        // получить список пользователей
+            };
 
-        //    var userRoles = _context.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
-        //    foreach (ApplicationUser user in viewModel.Users)
-        //        user.RoleNames = (from r in userRoles
-        //                          from u in r.Users
-        //                          where u.UserId == user.Id
-        //                          select r.Name).ToList();
+            var userRoles = _context.Roles.Include(r => r.Users).ToList(); // get all roles where we have user on position
+            foreach (ApplicationUser user in viewModel.Users)
+                user.RoleNames = (from r in userRoles
+                                  from u in r.Users
+                                  where u.UserId == user.Id
+                                  select r.Name).ToList();
 
-        //    return View(viewModel);
-        //}
+            return View(viewModel);
+        }
 
 
         public ActionResult SearchingEmpl (string searching)
