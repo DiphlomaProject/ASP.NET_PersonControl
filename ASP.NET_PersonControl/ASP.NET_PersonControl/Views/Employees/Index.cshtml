@@ -12,7 +12,7 @@
                 <table id="roles" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Role Id</th>
+                            @*<th>Role Id</th>*@
                             <th>Role name</th>
                             <th>Delete</th>
                         </tr>
@@ -21,7 +21,7 @@
                         @foreach (var role in Model.Roles)
                         {
                         <tr>
-                            <td class="py-1">@role.Id</td>
+                            @*<td class="py-1">@role.Id</td>*@
                             <td class="py-1">@role.Name</td>
                             <td class="py-1">@Html.ActionLink("Delete", "DeleteRole", "Employees", new { @id = role.Id },null)</td>
                            
