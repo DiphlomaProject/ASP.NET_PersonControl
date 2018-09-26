@@ -460,9 +460,11 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 result.Add("message", "FCMToken not found");
                 result.Add("code", HttpStatusCode.ExpectationFailed);
             }
-
-            result.Add("message", "FCMToken was removed.");
-            result.Add("code", HttpStatusCode.Accepted);
+            else
+            {
+                result.Add("message", "FCMToken was removed.");
+                result.Add("code", HttpStatusCode.Accepted);
+            }
 
             return Ok(result);
         }
