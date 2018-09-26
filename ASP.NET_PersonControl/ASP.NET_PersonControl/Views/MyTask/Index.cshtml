@@ -149,7 +149,7 @@
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Create Task</th>
-                                        <th>Time Begin</th>
+                                        <th>Group Name</th>
                                         <th>Time End</th>
                                         <th>Status</th>
                                     </tr>
@@ -162,9 +162,9 @@
 
                                         <td>@Model.taskGroups.ElementAt(i).description</td>
 
-                                        @if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                        @if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
                                         {
-                                            <td>@Model.taskGroups.ElementAt(i).userFrom.UserName</td>
+                                            <td>@Model.taskGroups.ElementAt(i).userFrom.DisplayName</td>
                                         }
                                         else if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.UserName.IsEmpty() == false)
                                         {
@@ -179,7 +179,7 @@
                                             <td> </td>
                                         }
 
-                                        <td>@Model.taskGroups.ElementAt(i).dateTimeBegin</td>
+                                        <td>@Model.groups.ElementAt(i).Title</td>
 
                                         <td>@Model.taskGroups.ElementAt(i).dateTimeEnd</td>
 
@@ -190,7 +190,7 @@
                                             <td><a class="badge badge-success">Completed</a></td>
 
                                         }
-                                        else
+                                        else if (Model.curUserId == Model.groups.ElementAt(i).Owner)
                                         {
                                             <td>
                                                 <div class="dropdown">
@@ -201,6 +201,10 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                        }
+                                        else
+                                        {
+                                            <td><a class="badge badge-warning">In progress</a></td>
                                         }
                                     </tr>
                                     }
@@ -228,7 +232,7 @@
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Create Task</th>
-                                        <th>Time Begin</th>
+                                        <th>Project Name</th>
                                         <th>Time End</th>
                                         <th>Status</th>
                                     </tr>
@@ -241,9 +245,9 @@
 
                                             <td>@Model.taskProjects.ElementAt(i).description</td>
 
-                                            @if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                            @if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
                                             {
-                                                <td>@Model.taskProjects.ElementAt(i).userFrom.UserName</td>
+                                                <td>@Model.taskProjects.ElementAt(i).userFrom.DisplayName</td>
                                             }
                                             else if (@Model.taskProjects.ElementAt(i).userFrom != null && Model.taskProjects.ElementAt(i).userFrom.UserName.IsEmpty() == false)
                                             {
@@ -269,7 +273,7 @@
                                                 <td><a class="badge badge-success">Completed</a></td>
 
                                             }
-                                            else
+                                            else/* if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "False" && (User.IsInRole("Manager") || User.IsInRole("Admin")))*/
                                             {
                                                 <td>
                                                     <div class="dropdown">
@@ -281,6 +285,10 @@
                                                     </div>
                                                 </td>
                                             }
+                                            @*else if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "False")
+                                            {
+                                                 <td><a class="badge badge-warning">In progress</a></td>
+                                            }*@
                                         </tr>
                                     }
                                 </tbody>

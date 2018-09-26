@@ -17,8 +17,9 @@ namespace ASP.NET_PersonControl.ViewModels
         public IEnumerable<TasksForProjects> taskProjects { get; set; }
 
         public IEnumerable<Groups> groups { get; set; }
+        public IEnumerable<Projects> projects { get; set; }
 
-
+        public string curUserId;
 
     }
 }

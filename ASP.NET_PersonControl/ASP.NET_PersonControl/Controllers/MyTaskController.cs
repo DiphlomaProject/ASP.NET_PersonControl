@@ -45,10 +45,15 @@ namespace ASP.NET_PersonControl.Controllers
             List<TasksForGroups> taskGroups = (from gr in groupsList
                                                from task in _context.TasksForGroups.ToList()
                                                where task.toGroupId == gr.Id select task).ToList();
+
+            groupsList.Clear();
             foreach (TasksForGroups groupTask in taskGroups)
             {
                 if (groupTask.fromUserId != null)
+                {
                     groupTask.userFrom = _context.Users.FirstOrDefault(user => user.Id == groupTask.fromUserId.ToString());
+                    groupsList.Add(_context.Groups.FirstOrDefault(g => g.Id == groupTask.toGroupId));
+                }
             }
 
             //project tasks
@@ -71,7 +76,9 @@ namespace ASP.NET_PersonControl.Controllers
             {
                 Tasks = tasklist,
                 taskGroups = taskGroups,
-                taskProjects = taskProjects
+                groups = groupsList,
+                taskProjects = taskProjects,
+                curUserId = User.Identity.GetUserId()
             };
             return View(viewModel);
         }
@@ -80,7 +87,7 @@ namespace ASP.NET_PersonControl.Controllers
         public ActionResult UpdateTask(int id)
         {
             _context = new ApplicationDbContext();
-            TasksForUser tasksForUser = _context.TasksForUser.FirstOrDefault(c => c.Id == id);
+            TasksForGroups tasksForUser = _context.TasksForGroups.FirstOrDefault(c => c.Id == id);
             bool complete = true;
             tasksForUser.isComplite = complete;
             _context.SaveChanges();
