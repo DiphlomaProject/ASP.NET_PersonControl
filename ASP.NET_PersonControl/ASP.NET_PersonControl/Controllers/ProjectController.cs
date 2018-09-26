@@ -110,12 +110,6 @@ namespace ASP.NET_PersonControl.Controllers
             viewModel.SelectedIDArray = viewModel.groupsInProject.Select(u => u.Id.ToString()).ToArray();
             return View(viewModel);
         }
-
-        public void Redirect()
-        {
-            int sessionData = (int)Session["id"];
-            Redirect("/Project/Edit/" + sessionData);
-        }
         public ActionResult Create()
         {
             _context = new ApplicationDbContext();

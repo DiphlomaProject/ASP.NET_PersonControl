@@ -74,7 +74,7 @@
     #dropZone {
         background: gray;
         border: black dashed 3px;
-        width: 1000px;
+        /*width: 1000px;*/
         padding: 50px;
         text-align: center;
         color: white;
@@ -117,13 +117,14 @@
         <button type="button" class="btn btn-primary btn-fw" data-toggle="collapse" data-target="#Panel1" id="panel1State" onclick="setCookie('Panel1')"> Drop Area </button>
         <div id="Panel1" class="collapse">
             <br />
-            <h2>File Drag & Drop Upload</h2>
-            <div id="dropZone" style="
-    min-width: -webkit-fill-available;
+            <div clas="card-body">
+                <div id="dropZone" style="
+   
         ">Drop your files here</div>
-            <br>
+                <br>
+                </div>
+            </div>
         </div>
-    </div>
 </body>
 <br />
 
