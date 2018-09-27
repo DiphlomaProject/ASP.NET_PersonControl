@@ -400,5 +400,20 @@ namespace ASP.NET_PersonControl.Controllers
 
 
         }
+
+
+        public ActionResult UpdateTaskProject(int id)
+        {
+            _context = new ApplicationDbContext();
+            TasksForProjects tasksForUser = _context.TasksForProjects.FirstOrDefault(c => c.Id == id);
+            bool complete = false;
+            tasksForUser.isComplite = complete;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Tasks");
+
+
+
+        }
     }
 }

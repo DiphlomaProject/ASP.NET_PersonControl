@@ -82,12 +82,28 @@ namespace ASP.NET_PersonControl.Controllers
             };
             return View(viewModel);
         }
-
-
-        public ActionResult UpdateTask(int id)
+        public ActionResult UpdateTaskPesonal(int id)
+        {
+            _context = new ApplicationDbContext();
+            TasksForUser tasksForUser = _context.TasksForUser.FirstOrDefault(c => c.Id == id);
+            bool complete = true;
+            tasksForUser.isComplite = complete;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "MyTask");
+        }
+        public ActionResult UpdateTaskGroup(int id)
         {
             _context = new ApplicationDbContext();
             TasksForGroups tasksForUser = _context.TasksForGroups.FirstOrDefault(c => c.Id == id);
+            bool complete = true;
+            tasksForUser.isComplite = complete;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "MyTask");
+        }
+        public ActionResult UpdateTaskProjects(int id)
+        {
+            _context = new ApplicationDbContext();
+            TasksForProjects tasksForUser = _context.TasksForProjects.FirstOrDefault(c => c.Id == id);
             bool complete = true;
             tasksForUser.isComplite = complete;
             _context.SaveChanges();
