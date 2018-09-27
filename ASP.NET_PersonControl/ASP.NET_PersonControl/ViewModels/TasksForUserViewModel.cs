@@ -1,4 +1,5 @@
 ﻿using ASP.NET_PersonControl.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,5 +16,7 @@ namespace ASP.NET_PersonControl.ViewModels
         public IEnumerable<ApplicationUser> toUser { get; set; } // need for edit & create group
         [NotMapped]
         public string[] SelectedIDArray { get; set; }
+
+        public List<IdentityRole> Roles { get; set; }
     }
 }

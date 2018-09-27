@@ -3,68 +3,69 @@
 @{
     ViewBag.Title = "GroupDitail";
 }
+<div class="card">
+    <div class="col-md-5 d-flex align-items-stretch">
+        <div class="row flex-grow">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <h4 class="card-title">Deteil to @Model.group.Title</h4>
+                        <p class="card-description">
 
-            <div class="col-md-5 d-flex align-items-stretch">
-                <div class="row flex-grow">
-                    <div class="col-12 grid-margin">
-                        <div class="card">
-                            <div class="card-body">
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <h4 class="card-title">Deteil to @Model.group.Title</h4>
-                                <p class="card-description">
-                                  
-                                    @Html.HiddenFor(m => m.group.Id)
-                                </p>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Title</span>
-                                        </div>
-                                        <input value=" @Model.group.Title" class="form-control" aria-describedby="basic-addon1" readonly="true">
-                                    </div>
+                            @Html.HiddenFor(m => m.group.Id)
+                        </p>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Title</span>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Owner</span>
-                                        </div>
+                                <input value=" @Model.group.Title" class="form-control" aria-describedby="basic-addon1" readonly="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Owner</span>
+                                </div>
 
-                                        @for (int i = 0; i < Model.usersOfCurrentGroups.Count(); i++)
-                                        {
-                                            if (!Model.usersOfCurrentGroups.ElementAt(i).DisplayName.IsEmpty())
-                                            {
-                                                @Model.usersOfCurrentGroups.ElementAt(i).DisplayName
-                                                @*<input value=" @Model.usersOfCurrentGroups.ElementAt(i).DisplayName" class="form-control" aria-describedby="basic-addon1" readonly>*@
-                                            }
-                                            else
-                                            {
-                                                @Model.usersOfCurrentGroups.ElementAt(i).Email
-                                            }
-                                            if (Model.usersOfCurrentGroups.Count() != (i + 1))
-                                            {
-                                                @String.Format(", ")
+                                @for (int i = 0; i < Model.usersOfCurrentGroups.Count(); i++)
+                                {
+                                    if (!Model.usersOfCurrentGroups.ElementAt(i).DisplayName.IsEmpty())
+                                    {
+                                        @*@Model.usersOfCurrentGroups.ElementAt(i).DisplayName*@
+                                        <input value=" @Model.usersOfCurrentGroups.ElementAt(i).DisplayName" class="form-control" aria-describedby="basic-addon1" readonly>
+                                    }
+                                    else
+                                    {
+                                        @Model.usersOfCurrentGroups.ElementAt(i).Email
+                                    }
+                                    if (Model.usersOfCurrentGroups.Count() != (i + 1))
+                                    {
+                                        @String.Format("  ")
 
-                                            }
-                                            else
-                                            {
-                                                @String.Format(" ")
-                                            }
-                                        }
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        @String.Format(" ")
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Description</span>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Description</span>
-                                        </div>
-                                        <input value=" @Model.group.Description" class="form-control" aria-describedby="basic-addon1" readonly>
-                                    </div>
-                                </div>
-                                <a class="btn btn-light btn-fw" href="@Url.Action("Index", "MyGroups", new {  })" data-form-method="get">
-                                    <i class="mdi mdi-refresh"></i>Back to List
-                                </a>
-                              </div>
-                         </div>
+                                <input value=" @Model.group.Description" class="form-control" aria-describedby="basic-addon1" readonly>
+                            </div>
+                        </div>
+                        <a class="btn btn-light btn-fw" href="@Url.Action("Index", "MyGroups", new {  })" data-form-method="get">
+                            <i class="mdi mdi-refresh"></i>Back to List
+                        </a>
                     </div>
-               </div>
-           </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

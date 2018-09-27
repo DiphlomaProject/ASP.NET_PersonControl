@@ -24,8 +24,14 @@
                                 <tr>
                                     @*<td class="py-1">@role.Id</td>*@
                                     <td class="py-1">@role.Name</td>
-                                    <td class="py-1">@Html.ActionLink("Delete", "DeleteRole", "Employees", new { @id = role.Id }, null)</td>
+                                    @if (role.Name == "Admin")
+                                    {
 
+                                    }
+                                    else
+                                    {
+                                        <td class="py-1">@Html.ActionLink("Delete", "DeleteRole", "Employees", new { @id = role.Id }, null)</td>
+                                    }
                                 </tr>
                             }
                         </tbody>
