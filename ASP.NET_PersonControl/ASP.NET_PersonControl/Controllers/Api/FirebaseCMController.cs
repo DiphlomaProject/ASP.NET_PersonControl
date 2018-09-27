@@ -14,7 +14,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
     public class FirebaseCMController : ApiController
     {
        [HttpGet]
-       public IHttpActionResult FirebaseNotification(string FCMToken,string TouserId,string Title,string Message)
+       public IHttpActionResult FirebaseNotification(string FCMToken,string TouserId,string Title,string Message,string Type)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
                 if (FCMToken.Equals("") == true)
@@ -31,8 +31,9 @@ namespace ASP.NET_PersonControl.Controllers.Api
                 {
                     message = Message,
                     title = Title,
-                   userId = TouserId,
-                    status = true
+                    userId = TouserId,
+                    status = true,
+                    type = Type
                 }
             };
 

@@ -140,11 +140,11 @@ namespace ASP.NET_PersonControl.Controllers
                     string token = FCMToken.ToString();
                     string TouserId = tasksForUserController.userTo.Id;
                     string Message = tasksForUserController.tasksForUser.title;
-
+                    string Type = "Personal";
                     if (_context.TasksForUser.Add(result) != null)
                     {
 
-                        firebase.FirebaseNotification(token, TouserId, Title, Message);
+                        firebase.FirebaseNotification(token, TouserId, Title, Message,Type);
                     }
                     _context.TasksForUser.Add(result);
                 }
@@ -249,7 +249,8 @@ namespace ASP.NET_PersonControl.Controllers
                             string token = FCMToken.ToString();
                             string TouserId = employeeTo.Id;
                             string Message = taskForGroupsViewModel.taskForGroups.title;
-                            firebase.FirebaseNotification(token, TouserId, Title, Message);
+                            string Type = "Group";
+                            firebase.FirebaseNotification(token, TouserId, Title, Message,Type);
                            
                         }
                     }
@@ -371,7 +372,8 @@ namespace ASP.NET_PersonControl.Controllers
                                     string token = FCMToken.ToString();
                                     string TouserId = employeeTo.Id;
                                     string Message = taskForProjectsViewModel.tasksForProjects.title;
-                                    firebase.FirebaseNotification(token, TouserId, Title, Message);
+                                    string Type = "Project";
+                                    firebase.FirebaseNotification(token, TouserId, Title, Message,Type);
                                 }
                             }
                     }
