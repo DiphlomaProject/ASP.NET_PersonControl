@@ -5,7 +5,7 @@
 }
 <body onload="setState()">
     <div class="card">
-        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel1" id="panel1State" onclick="setCookie('Panel1')"> Assigned Task's to Users  (@Model.Tasks.Count()) </button>
+        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel1" id="panel1State" onclick="setCookie('Panel1')"> Assigned Task's to Users  (<font color="red">@Model.Tasks.Count()</font>) </button>
         <div id="Panel1" class="collapse">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -105,7 +105,7 @@
     <br />
 
     <div class="card">
-        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel2" id="panel2State" onclick="setCookie('Panel2')"> Assigned Task's to Groups  (@Model.taskGroups.Count()) </button>
+        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel2" id="panel2State" onclick="setCookie('Panel2')"> Assigned Task's to Groups  (<font color="red">@Model.taskGroups.Count()</font>) </button>
         <div id="Panel2" class="collapse">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -197,7 +197,7 @@
     <br />
 
     <div class="card">
-        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel3" id="panel3State" onclick="setCookie('Panel3')"> Assigned Task's to Project's  (@Model.taskProjects.Count()) </button>
+        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel3" id="panel3State" onclick="setCookie('Panel3')"> Assigned Task's to Project's  <font  color="red"> (<font  color="white">@Model.taskProjects.Count()</font>)</font> </button>
         <div id="Panel3" class="collapse">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
