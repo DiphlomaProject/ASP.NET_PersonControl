@@ -8,7 +8,7 @@
 <h2>Task's</h2>
 <body onload="setState()">
     <div class="card">
-        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel1" id="panel1State" onclick="setCookie('Panel1')"> Active Task  (@Model.Tasks.Count()) </button>
+        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel1" id="panel1State" onclick="setCookie('Panel1')"> Active Task  (<font color="red">@Model.Tasks.Count()</font>) </button>
         <div id="Panel1" class="collapse">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -30,28 +30,31 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.Tasks.Count(); i++)
                                     {
-                                    <tr>
-                                        <td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>
+                                        <tr>
+                                            <td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>
 
-                                        <td>@Model.Tasks.ElementAt(i).description</td>
+                                            <td>@Model.Tasks.ElementAt(i).description</td>
 
-                                        @if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
-                                        {
-                                            <td>@Model.Tasks.ElementAt(i).userFrom.DisplayName</td>
-                                        }else if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.UserName.IsEmpty() == false)
-                                        {
-                                            <td>@Model.Tasks.ElementAt(i).userFrom.UserName</td>
-                                        }
-                                        else if (@Model.Tasks.ElementAt(i).fromUserId != null)
-                                        {
-                                            <td>@Model.Tasks.ElementAt(i).fromUserId</td>
-                                        }else  {
-                                            <td> </td>
-                                        }
+                                            @if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.Tasks.ElementAt(i).userFrom.DisplayName</td>
+                                            }
+                                            else if (@Model.Tasks.ElementAt(i).userFrom != null && Model.Tasks.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.Tasks.ElementAt(i).userFrom.UserName</td>
+                                            }
+                                            else if (@Model.Tasks.ElementAt(i).fromUserId != null)
+                                            {
+                                                <td>@Model.Tasks.ElementAt(i).fromUserId</td>
+                                            }
+                                            else
+                                            {
+                                                <td> </td>
+                                            }
 
-                                        <td>@Model.Tasks.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
+                                            <td>@Model.Tasks.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
 
-                                        <td>@Model.Tasks.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
+                                            <td>@Model.Tasks.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
                                             @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
                                             {
@@ -74,7 +77,7 @@
                                             }
                                             else
                                             {
-                                                 <td><a class="badge badge-warning">Missing time</a></td>
+                                                <td><a class="badge badge-danger"><font color="white">Missing time</font></a></td>
                                             }
                                         </tr>
                                     }
@@ -88,7 +91,7 @@
     </div>
     <br />
     <div class="card">
-        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel2" id="panel2State" onclick="setCookie('Panel2')"> Active Group Task's  (@Model.taskGroups.Count()) </button>
+        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel2" id="panel2State" onclick="setCookie('Panel2')"> Active Group Task's  (<font color="red">@Model.taskGroups.Count()</font>) </button>
         <div id="Panel2" class="collapse">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -110,56 +113,65 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.taskGroups.Count(); i++)
                                     {
-                                    <tr>
-                                        <td>@Html.ActionLink(Model.taskGroups.ElementAt(i).title, "Index", "Home", new { @id = Model.taskGroups.ElementAt(i).Id }, null)</td>
+                                        <tr>
+                                            <td>@Html.ActionLink(Model.taskGroups.ElementAt(i).title, "Index", "Home", new { @id = Model.taskGroups.ElementAt(i).Id }, null)</td>
 
-                                        <td>@Model.taskGroups.ElementAt(i).description</td>
+                                            <td>@Model.taskGroups.ElementAt(i).description</td>
 
-                                        @if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
-                                        {
-                                            <td>@Model.taskGroups.ElementAt(i).userFrom.DisplayName</td>
-                                        }
-                                        else if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.UserName.IsEmpty() == false)
-                                        {
-                                            <td>@Model.taskGroups.ElementAt(i).userFrom.UserName</td>
-                                        }
-                                        else if (@Model.taskGroups.ElementAt(i).fromUserId != null)
-                                        {
-                                            <td>@Model.taskGroups.ElementAt(i).fromUserId</td>
-                                        }
-                                        else
-                                        {
-                                            <td> </td>
-                                        }
+                                            @if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.DisplayName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.taskGroups.ElementAt(i).userFrom.DisplayName</td>
+                                            }
+                                            else if (@Model.taskGroups.ElementAt(i).userFrom != null && Model.taskGroups.ElementAt(i).userFrom.UserName.IsEmpty() == false)
+                                            {
+                                                <td>@Model.taskGroups.ElementAt(i).userFrom.UserName</td>
+                                            }
+                                            else if (@Model.taskGroups.ElementAt(i).fromUserId != null)
+                                            {
+                                                <td>@Model.taskGroups.ElementAt(i).fromUserId</td>
+                                            }
+                                            else
+                                            {
+                                                <td> </td>
+                                            }
 
-                                        <td>@Model.groups.ElementAt(i).Title</td>
+                                            <td>@Model.groups.ElementAt(i).Title</td>
 
-                                        <td>@Model.taskGroups.ElementAt(i).dateTimeEnd</td>
+                                            <td>@Model.taskGroups.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
 
-                                        @if (@Model.taskGroups.ElementAt(i).isComplite.ToString() == "True")
-                                        {
+                                            @if (@Model.taskGroups.ElementAt(i).isComplite.ToString() == "True")
+                                            {
 
-                                            <td><a class="badge badge-success">Completed</a></td>
+                                                <td><a class="badge badge-success">Completed</a></td>
 
-                                        }
-                                        else if (Model.curUserId == Model.groups.ElementAt(i).Owner)
-                                        {
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="badge badge-warning">In progress</button>
-                                                    <div class="dropdown-content">
-                                                        <br />
-                                                        @Html.ActionLink("Completed", "UpdateTaskGroup", "MyTask", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-success" })
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td><a class="badge badge-warning">In progress</a></td>
-                                        }
-                                    </tr>
+                                            }
+                                            else if (Model.curUserId == Model.groups.ElementAt(i).Owner || DateTime.Compare(Model.taskGroups.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
+                                            {
+                                                if (DateTime.Compare(Model.taskGroups.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
+                                                {
+
+
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="badge badge-warning">In progress</button>
+                                                            <div class="dropdown-content">
+                                                                <br />
+                                                                @Html.ActionLink("Completed", "UpdateTaskGroup", "MyTask", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-success" })
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td><a class="badge badge-danger"><font color="white">Missing time</font></a></td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td><a class="badge badge-danger"><font color="white">Missing time</font></a></td>
+                                            }
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -171,7 +183,7 @@
     </div>
     <br />
     <div class="card">
-        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse"  data-target="#Panel3" id="panel3State" onclick="setCookie('Panel3')"> Active Project Task's  (@Model.taskProjects.Count()) </button>
+        <button type="button" class="btn btn-primary btn-fw btn-open" data-toggle="collapse" data-target="#Panel3" id="panel3State" onclick="setCookie('Panel3')"> Active Project Task's  (<font color="red">@Model.taskProjects.Count()</font>) </button>
         <div id="Panel3" class="collapse">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -215,9 +227,9 @@
                                                 <td> </td>
                                             }
 
-                                            <td>@Model.taskProjects.ElementAt(i).dateTimeBegin</td>
+                                            <td>@Model.taskProjects.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
 
-                                            <td>@Model.taskProjects.ElementAt(i).dateTimeEnd</td>
+                                            <td>@Model.taskProjects.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
 
                                             @if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "True")
@@ -226,7 +238,7 @@
                                                 <td><a class="badge badge-success">Completed</a></td>
 
                                             }
-                                            else/* if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "False" && (User.IsInRole("Manager") || User.IsInRole("Admin")))*/
+                                            else if (DateTime.Compare(Model.taskProjects.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
                                             {
                                                 <td>
                                                     <div class="dropdown">
@@ -238,10 +250,10 @@
                                                     </div>
                                                 </td>
                                             }
-                                            @*else if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "False")
+                                            else
                                             {
-                                                 <td><a class="badge badge-warning">In progress</a></td>
-                                            }*@
+                                                <td><a class="badge badge-danger"><font color="white">Missing time</font></a></td>
+                                            }
                                         </tr>
                                     }
                                 </tbody>
@@ -253,8 +265,12 @@
         </div>
     </div>
 </body>
-    @section scripts
+@section scripts
     {
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="~/js/panelState.js"></script>
-    }
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 30000);</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="~/js/panelState.js"></script>
+}

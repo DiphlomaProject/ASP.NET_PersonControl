@@ -26,63 +26,72 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.Tasks.Count(); i++)
                                     {
-                                        <tr>
-                                            @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
+                                    <tr>
+                                        @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
 
-                                            <td>@Model.Tasks.ElementAt(i).title</td>
+                                        <td>@Model.Tasks.ElementAt(i).title</td>
 
-                                            <td>@Model.Tasks.ElementAt(i).description</td>
+                                        <td>@Model.Tasks.ElementAt(i).description</td>
 
-                                            @if (@Model.Tasks.ElementAt(i).userTo != null && Model.Tasks.ElementAt(i).userTo.DisplayName.IsEmpty() == false)
-                                            {
-                                                <td>@Model.Tasks.ElementAt(i).userTo.DisplayName</td>
-                                            }
-                                            else if (@Model.Tasks.ElementAt(i).userTo != null && Model.Tasks.ElementAt(i).userTo.UserName.IsEmpty() == false)
-                                            {
-                                                <td>@Model.Tasks.ElementAt(i).userTo.UserName</td>
-                                            }
-                                            else if (@Model.Tasks.ElementAt(i).userTo != null)
-                                            {
-                                                <td>@Model.Tasks.ElementAt(i).toUserId</td>
-                                            }
-                                            else
-                                            {
-                                                <td> </td>
-                                            }
+                                        @if (@Model.Tasks.ElementAt(i).userTo != null && Model.Tasks.ElementAt(i).userTo.DisplayName.IsEmpty() == false)
+                                        {
+                                            <td>@Model.Tasks.ElementAt(i).userTo.DisplayName</td>
+                                        }
+                                        else if (@Model.Tasks.ElementAt(i).userTo != null && Model.Tasks.ElementAt(i).userTo.UserName.IsEmpty() == false)
+                                        {
+                                            <td>@Model.Tasks.ElementAt(i).userTo.UserName</td>
+                                        }
+                                        else if (@Model.Tasks.ElementAt(i).userTo != null)
+                                        {
+                                            <td>@Model.Tasks.ElementAt(i).toUserId</td>
+                                        }
+                                        else
+                                        {
+                                            <td> </td>
+                                        }
 
-                                            <td>@Model.Tasks.ElementAt(i).dateTimeBegin</td>
+                                        <td>@Model.Tasks.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
 
-                                            <td>@Model.Tasks.ElementAt(i).dateTimeEnd</td>
+                                        <td>@Model.Tasks.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
 
-                                            @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
-                                            {
+                                        @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
+                                        {
 
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="badge badge-success">Completed</button>
-                                                        <div class="dropdown-content">
-                                                            <br />
-                                                            @Html.ActionLink("Delete", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
-                                                        </div>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="badge badge-success">Completed</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Delete", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="badge badge-warning">In progress</button>
-                                                        <div class="dropdown-content">
-                                                            <br />
-                                                            @Html.ActionLink("Cancel", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
-                                                        </div>
+                                        }
+                                        else if (DateTime.Compare(Model.Tasks.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="badge badge-warning">In progress</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Cancel", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
-                                            }
-                                        </tr>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a class="badge badge-danger"><font color="white">Missing time</font></a>
+                                                <br />
+                                                <br />
+                                                @Html.ActionLink("Delete", "DeleteTaskUser", "Tasks", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                            </td>
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -117,55 +126,64 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.taskGroups.Count(); i++)
                                     {
-                                        <tr>
-                                            @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
+                                    <tr>
+                                        @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
 
-                                            <td>@Model.taskGroups.ElementAt(i).title</td>
+                                        <td>@Model.taskGroups.ElementAt(i).title</td>
 
-                                            <td>@Model.taskGroups.ElementAt(i).description</td>
+                                        <td>@Model.taskGroups.ElementAt(i).description</td>
 
-                                            @if (@Model.taskGroups.ElementAt(i).groupName != null && Model.taskGroups.ElementAt(i).groupName.IsEmpty() == false)
-                                            {
-                                                <td>@Model.taskGroups.ElementAt(i).groupName</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@Model.taskGroups.ElementAt(i).toGroupId</td>
-                                            }
+                                        @if (@Model.taskGroups.ElementAt(i).groupName != null && Model.taskGroups.ElementAt(i).groupName.IsEmpty() == false)
+                                        {
+                                            <td>@Model.taskGroups.ElementAt(i).groupName</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Model.taskGroups.ElementAt(i).toGroupId</td>
+                                        }
 
-                                            <td>@Model.taskGroups.ElementAt(i).dateTimeBegin</td>
+                                        <td>@Model.taskGroups.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
 
-                                            <td>@Model.taskGroups.ElementAt(i).dateTimeEnd</td>
+                                        <td>@Model.taskGroups.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
 
-                                            @if (@Model.taskGroups.ElementAt(i).isComplite.ToString() == "True")
-                                            {
+                                        @if (@Model.taskGroups.ElementAt(i).isComplite.ToString() == "True")
+                                        {
 
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="badge badge-success">Completed</button>
-                                                        <div class="dropdown-content">
-                                                            <br />
-                                                            @Html.ActionLink("Delete", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
-                                                        </div>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="badge badge-success">Completed</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Delete", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="badge badge-warning">In progress</button>
-                                                        <div class="dropdown-content">
-                                                            <br />
-                                                            @Html.ActionLink("Cancel", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
-                                                        </div>
+                                        }
+                                        else if (DateTime.Compare(Model.taskGroups.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="badge badge-warning">In progress</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Cancel", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
-                                            }
-                                        </tr>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a class="badge badge-danger"><font color="white">Missing time</font></a>
+                                                <br />
+                                                <br />
+                                                @Html.ActionLink("Delete", "DeleteTaskGroups", "Tasks", new { @id = Model.taskGroups.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                            </td>
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -201,32 +219,32 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.taskProjects.Count(); i++)
                                     {
-                                        <tr>
-                                            @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
+                                    <tr>
+                                        @*<td>@Html.ActionLink(Model.Tasks.ElementAt(i).title, "Index", "Home", new { @id = Model.Tasks.ElementAt(i).Id }, null)</td>*@
 
-                                            <td>@Model.taskProjects.ElementAt(i).title</td>
+                                        <td>@Model.taskProjects.ElementAt(i).title</td>
 
-                                            <td>@Model.taskProjects.ElementAt(i).description</td>
+                                        <td>@Model.taskProjects.ElementAt(i).description</td>
 
-                                            @if (@Model.taskProjects.ElementAt(i).projectName != null && Model.taskProjects.ElementAt(i).projectName.IsEmpty() == false)
-                                            {
-                                                <td>@Model.taskProjects.ElementAt(i).projectName</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@Model.taskProjects.ElementAt(i).toProjectId</td>
-                                            }
+                                        @if (@Model.taskProjects.ElementAt(i).projectName != null && Model.taskProjects.ElementAt(i).projectName.IsEmpty() == false)
+                                        {
+                                            <td>@Model.taskProjects.ElementAt(i).projectName</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Model.taskProjects.ElementAt(i).toProjectId</td>
+                                        }
 
-                                            <td>@Model.taskProjects.ElementAt(i).dateTimeBegin</td>
+                                        <td>@Model.taskProjects.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
 
-                                            <td>@Model.taskProjects.ElementAt(i).dateTimeEnd</td>
+                                        <td>@Model.taskProjects.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
 
-                                            @if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "True")
-                                            {
+                                        @if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "True")
+                                        {
 
                                             <td>
-                                                
+
                                                 <div class="dropdown">
                                                     <button class="badge badge-success">Completed</button>
                                                     <div class="dropdown-content">
@@ -240,21 +258,30 @@
                                             </td>
 
 
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="badge badge-warning">In progress</button>
-                                                        <div class="dropdown-content">
-                                                            <br />
-                                                            @Html.ActionLink("Cancel", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
-                                                        </div>
+                                        }
+                                        else if (DateTime.Compare(Model.taskProjects.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="badge badge-warning">In progress</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Cancel", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
-                                            }
-                                        </tr>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a class="badge badge-danger"><font color="white">Missing time</font></a>
+                                                <br />
+                                                <br />
+                                                @Html.ActionLink("Delete", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                            </td>
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -270,6 +297,10 @@
 
 @section scripts
  {
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 30000);</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="~/js/panelState.js"></script>
 }
