@@ -533,6 +533,7 @@
     <Content Include="js\chart.js" />
     <Content Include="js\chosen.jquery.min.js" />
     <Content Include="js\dashboard.js" />
+    <Content Include="firebase-messaging-sw.js" />
     <Content Include="js\maps.js" />
     <Content Include="js\misc.js" />
     <Content Include="js\off-canvas.js" />
