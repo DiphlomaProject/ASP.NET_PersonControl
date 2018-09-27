@@ -105,9 +105,11 @@
 
                                             @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
                                             {
+
                                                 <td><a class="badge badge-success">Completed</a></td>
+
                                             }
-                                            else if (DateTime.Compare(Model.Tasks.ElementAt(i).dateTimeEnd, DateTime.Now) > 0) 
+                                            else if (DateTime.Compare(Model.Tasks.ElementAt(i).dateTimeEnd, DateTime.Now) > 0)
                                             {
                                                 <td>
                                                     <div class="dropdown">

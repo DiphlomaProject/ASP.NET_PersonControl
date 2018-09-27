@@ -225,15 +225,19 @@
                                             @if (@Model.taskProjects.ElementAt(i).isComplite.ToString() == "True")
                                             {
 
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="badge badge-success">Completed</button>
-                                                        <div class="dropdown-content">
-                                                            <br />
-                                                            @Html.ActionLink("Delete", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
-                                                        </div>
+                                            <td>
+                                                
+                                                <div class="dropdown">
+                                                    <button class="badge badge-success">Completed</button>
+                                                    <div class="dropdown-content">
+                                                        <br />
+                                                        @Html.ActionLink("Delete", "DeleteTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-danger" })
+                                                        <br />
+                                                        <br />
+                                                        @Html.ActionLink("Transpose", "UpdateTaskProject", "Tasks", new { @id = Model.taskProjects.ElementAt(i).Id }, new { @class = "badge badge-info" })
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
 
                                             }
