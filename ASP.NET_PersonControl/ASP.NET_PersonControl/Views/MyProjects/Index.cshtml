@@ -4,67 +4,67 @@
     int counter = 0;
 }
 
-<div class="col-md-5 d-flex align-items-stretch">
-    <div class="row flex-grow">
-        <div class="col-12 grid-margin">
-            <div class="card">
-                <div clas="card-body">
 
-                    <table  class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Project</th>
-                                <th>Customer</th>
-                                <th>Company</th>
-                                <th>Groups</th>
-                                <th>Date end</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2>My Projects</h2>
+            <h4 class="card-title">Curent Projects</h4>
 
-                            @*here must be foreach*@
-                            @foreach (ASP.NET_PersonControl.Models.Projects pj in Model.projectsList)
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>Customer</th>
+                        <th>Company</th>
+                        <th>Groups</th>
+                        <th>Date end</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @*here must be foreach*@
+                    @foreach (ASP.NET_PersonControl.Models.Projects pj in Model.projectsList)
+                    {
+                        <tr>
+                            <td> @Html.ActionLink(pj.Title, "ProjectDitail", "MyProjects", new { @id = pj.Id }, null) </td>
+
+                            @foreach (Dictionary<int, ASP.NET_PersonControl.Models.Customers> dicCust in Model.customersList)
                             {
-                            <tr>
-                                <td> @Html.ActionLink(pj.Title, "ProjectDitail", "MyProjects", new { @id = pj.Id }, null) </td>
-                               
-                                @foreach (Dictionary<int, ASP.NET_PersonControl.Models.Customers> dicCust in Model.customersList)
+                                if (dicCust.Keys.ElementAt(counter) == pj.Id)
                                 {
-                                    if (dicCust.Keys.ElementAt(counter) == pj.Id)
-                                    {
-                                        <td>@dicCust[pj.Id].ContactPerson</td>
-                                        <td>@dicCust[pj.Id].Company</td>
-                                    }
+                                    <td>@dicCust[pj.Id].ContactPerson</td>
+                                    <td>@dicCust[pj.Id].Company</td>
                                 }
-
-                                @foreach (Dictionary<int, List<ASP.NET_PersonControl.Models.Groups>> listDictGroups in Model.groupsInProjectList)
-                                {
-                                    if (listDictGroups.Keys.ElementAt(counter) == pj.Id)
-                                    {
-                                        List<ASP.NET_PersonControl.Models.Groups> groups = listDictGroups[pj.Id];
-                                        String resGroups = "";
-                                        foreach (ASP.NET_PersonControl.Models.Groups group in groups)
-                                        {
-                                            if (resGroups.IsEmpty() == false)
-                                            {
-                                                resGroups = resGroups + "  |  ";
-                                            }
-                                            resGroups = resGroups + group.Title;
-                                        }
-                                        <td>@resGroups</td>
-                                    }
-                                }
-                                <td>@pj.UntilTime</td>
-                            </tr>
-
-                                counter++;
                             }
 
-                        </tbody>
-                    </table>
+                            @foreach (Dictionary<int, List<ASP.NET_PersonControl.Models.Groups>> listDictGroups in Model.groupsInProjectList)
+                            {
+                                if (listDictGroups.Keys.ElementAt(counter) == pj.Id)
+                                {
+                                    List<ASP.NET_PersonControl.Models.Groups> groups = listDictGroups[pj.Id];
+                                    String resGroups = "";
+                                    foreach (ASP.NET_PersonControl.Models.Groups group in groups)
+                                    {
+                                        if (resGroups.IsEmpty() == false)
+                                        {
+                                            resGroups = resGroups + "  |  ";
+                                        }
+                                        resGroups = resGroups + group.Title;
+                                    }
+                                    <td>@resGroups</td>
+                                }
+                            }
+                            <td>@pj.UntilTime</td>
+                        </tr>
 
-                </div>
-            </div>
+                        counter++;
+                    }
+
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>
+        
