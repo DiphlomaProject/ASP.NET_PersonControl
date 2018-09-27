@@ -99,31 +99,32 @@
                                             <td> </td>
                                         }
 
-                                        <td>@Model.Tasks.ElementAt(i).dateTimeBegin</td>
+                                        <td>@Model.Tasks.ElementAt(i).dateTimeBegin.ToShortDateString()</td>
 
-                                        <td>@Model.Tasks.ElementAt(i).dateTimeEnd</td>
+                                        <td>@Model.Tasks.ElementAt(i).dateTimeEnd.ToShortDateString()</td>
 
-
-                                        @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
-                                        {
-
-                                            <td><a class="badge badge-success">Completed</a></td>
-
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="badge badge-warning">In progress</button>
-                                                    <div class="dropdown-content">
-                                                        <br />
-                                                        @Html.ActionLink("Completed", "UpdateTask", "MyTask", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-success" })
+                                            @if (@Model.Tasks.ElementAt(i).isComplite.ToString() == "True")
+                                            {
+                                                <td><a class="badge badge-success">Completed</a></td>
+                                            }
+                                            else if (DateTime.Compare(Model.Tasks.ElementAt(i).dateTimeEnd, DateTime.Now) > 0) 
+                                            {
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="badge badge-warning">In progress</button>
+                                                        <div class="dropdown-content">
+                                                            <br />
+                                                            @Html.ActionLink("Completed", "UpdateTask", "MyTask", new { @id = Model.Tasks.ElementAt(i).Id }, new { @class = "badge badge-success" })
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
+                                                </td>
 
-                                        }
-                                    </tr>
+                                            }
+                                            else
+                                            {
+                                                 <td><a class="badge badge-warning">Missing time</a></td>
+                                            }
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
