@@ -16,8 +16,7 @@
                             <th>Description</th>
                             <th>Price</th>
                             <th>Status</th>
-                            <th>Created</th>
-                            <th>Deadline</th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +32,7 @@
                                 </td>
 
                                 <td>
-                                    @Html.ActionLink(Model.projects.ElementAt(i).Title, "Edit", "Project", new { @id = Model.projects.ElementAt(i).Id }, null)
+                                    @Model.projects.ElementAt(i).Title
                                 </td>
 
 
@@ -56,12 +55,7 @@
                                         <label class="badge badge-warning">In progress</label>
                                     </td>
                                 }
-                                <td>
-                                    @Model.projects.ElementAt(i).BeginTime
-                                </td>
-                                <td>
-                                    @Model.projects.ElementAt(i).UntilTime
-                                </td>
+                              
                                 }
                             </tr>
                         }
