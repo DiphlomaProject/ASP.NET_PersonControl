@@ -50,13 +50,34 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
             if (users == null) return NotFound(); //Ok(new Dictionary<string, object>() { { "code", HttpStatusCode.NoContent } });
 
-            List<Groups> groupsList = db.Groups.Select(g => g).ToList<Groups>();
+           
+            string curUserID = user.id;
+
+            List<Groups> groupsList = (from gr in db.Groups.ToList()
+                                       from ug in db.UsersGroups.ToList()
+                                       where gr.Id == ug.GroupId && ug.UserId == curUserID
+                                       select gr).ToList();
+            List<Groups> gWhereUserOwner = (from gr in db.Groups.ToList()
+                                            where gr.Owner == curUserID
+                                            select gr).ToList();
+            groupsList.AddRange(gWhereUserOwner);
+            
+
+
             List<ApplicationUser> ownersList = new List<ApplicationUser>();
             foreach (String owner_id in groupsList.Select(g => g.Owner).ToList())
                 if (db.Users.FirstOrDefault(o => o.Id == owner_id) != null)
                     ownersList.Add(db.Users.FirstOrDefault(o => o.Id == owner_id));
 
-            if(groupsList.Count <= 0 || ownersList.Count <0)
+            //OLD CODE
+            // List<Groups> groupsList = db.Groups.Select(g => g).ToList<Groups>();
+            //_context.Groups.Select(g => g).ToList<Groups>();
+            //List<ApplicationUser> ownersList = new List<ApplicationUser>();
+            //foreach (String owner_id in groupsList.Select(g => g.Owner).ToList())
+            //    if (db.Users.FirstOrDefault(o => o.Id == owner_id) != null)
+            //        ownersList.Add(db.Users.FirstOrDefault(o => o.Id == owner_id));
+            //OLD CODE
+            if (groupsList.Count <= 0 || ownersList.Count <0)
             {
                 result.Add("code", HttpStatusCode.NotAcceptable);
                 result.Add("groups_count", groupsList.Count);

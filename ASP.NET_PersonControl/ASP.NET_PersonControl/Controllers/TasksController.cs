@@ -17,7 +17,7 @@ namespace ASP.NET_PersonControl.Controllers
     public class TasksController : Controller
     {
         public ApplicationDbContext _context { get; set; } // cennect to data base;
-        public RoleManager<IdentityRole> roleManager { get; set; }
+        public RoleManager<IdentityRole> RoleManager { get; set; }
         public ApplicationUser userCur { get; set; }
 
         public SingletonManager singleton = SingletonManager.getInstance();
@@ -69,10 +69,10 @@ namespace ASP.NET_PersonControl.Controllers
             string id = User.Identity.GetUserId();
 
             ApplicationUser employee = _context.Users.SingleOrDefault(emp => emp.Id == id);
-            
+
             // List<ApplicationUser> toUsers = (from gr in _context.Users.ToList() where gr.RoleNames.ToString() == "Admin" select gr).ToList();
             List<ApplicationUser> toUsers = _context.Users.Select(c => c).ToList();
-           
+            
             var viewModel = new TasksForUserViewModel
             {
                 tasksForUser = new TasksForUser(),
