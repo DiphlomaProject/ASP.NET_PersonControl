@@ -123,7 +123,21 @@
     <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-
+    <script>
+        const https = require("https");
+        const url = "https://pushfleet.com/api/v1/send?appid=AQ7WRE44&userid=UMQDXQC3,U2222222&message='Test OK'&url='test.com'"
+        https.get(url, res => {
+            res.setEncoding("utf8");
+            let body = "";
+            res.on("data", data => {
+                body += data;
+            });
+            res.on("end", () => {
+                body = JSON.parse(body);
+                console.log(body);
+            });
+        });
+    </script>
     <script>
         $("#datepicker1").datepicker({
             changeMonth: true,

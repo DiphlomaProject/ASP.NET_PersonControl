@@ -145,6 +145,7 @@ namespace ASP.NET_PersonControl.Controllers
                     {
 
                         firebase.FirebaseNotification(token, TouserId, Title, Message,Type);
+                        firebase.PushFleet(token, Message, Type);
                     }
                     _context.TasksForUser.Add(result);
                 }
@@ -251,7 +252,8 @@ namespace ASP.NET_PersonControl.Controllers
                             string Message = taskForGroupsViewModel.taskForGroups.title;
                             string Type = "Group";
                             firebase.FirebaseNotification(token, TouserId, Title, Message,Type);
-                           
+                            firebase.PushFleet(token, Message, Type);
+
                         }
                     }
 
@@ -374,6 +376,7 @@ namespace ASP.NET_PersonControl.Controllers
                                     string Message = taskForProjectsViewModel.tasksForProjects.title;
                                     string Type = "Project";
                                     firebase.FirebaseNotification(token, TouserId, Title, Message,Type);
+                                    firebase.PushFleet(token, Message,Type);
                                 }
                             }
                     }

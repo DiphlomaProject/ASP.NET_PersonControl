@@ -273,6 +273,7 @@ namespace ASP.NET_PersonControl.Controllers
                 userInDB.City = user.City;
                 userInDB.Address = user.Address;
                 userInDB.DisplayName = user.DisplayName;
+                userInDB.FCMToken = user.FCMToken;
             }
 
 

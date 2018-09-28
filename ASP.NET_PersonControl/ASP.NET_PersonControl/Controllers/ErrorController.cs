@@ -18,5 +18,11 @@ namespace ASP.NET_PersonControl.Controllers
         {
             return View();
         }
+
+        public ActionResult IndexPhone()
+        {
+            //return Redirect("personcontrol://");
+            return View();
+        }
     }
 }

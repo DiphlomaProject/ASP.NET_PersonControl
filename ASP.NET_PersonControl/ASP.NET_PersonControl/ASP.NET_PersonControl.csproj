@@ -2554,6 +2554,7 @@
     <Content Include="Views\Project\Archive.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\Index500.cshtml" />
+    <Content Include="Views\Error\IndexPhone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
