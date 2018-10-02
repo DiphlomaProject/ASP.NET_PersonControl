@@ -213,6 +213,49 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
         [HttpPost]
         [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult Update(User user)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            if (!isTokenValid(user.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+                return Ok(result);
+            }
+
+            db = new ApplicationDbContext();
+
+            var employee = db.Users.SingleOrDefault(c => c.Id == user.id);
+            if (employee == null) //add
+            {
+                ApplicationUser newUser = new ApplicationUser();
+                employee.DisplayName = user.displayName;
+                employee.Address = user.address;
+                employee.City = user.city;
+                employee.Country = user.country;
+                employee.PhoneNumber = user.phone;
+                db.SaveChanges();
+                UserManager<IdentityUser> userManager =
+                new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("message", "User was updated");
+                result.Add("user", newUser);
+            }
+            else
+            {
+                result.Add("code", HttpStatusCode.Found);
+                result.Add("message", "User wasn't found in db.");
+            }
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
         public IHttpActionResult SignIn(User user)
         {
             Dictionary<string, object> result = new Dictionary<string, object>();
