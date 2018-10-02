@@ -261,6 +261,7 @@
     <Compile Include="Controllers\Api\ProjectsController.cs" />
     <Compile Include="Controllers\Api\RestApiHelperController.cs" />
     <Compile Include="Controllers\Api\RolesController.cs" />
+    <Compile Include="Controllers\Api\TasksController.cs" />
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\BitmapImage.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
