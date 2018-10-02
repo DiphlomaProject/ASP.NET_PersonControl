@@ -462,6 +462,9 @@ namespace ASP.NET_PersonControl.Controllers.Api
             }
             else
             {
+                ApplicationUser userForRemove = db.Users.FirstOrDefault(u => u.Id == db.Tokens.FirstOrDefault(token => token.token == user.token).userId);
+                userForRemove.FCMToken = null;
+                db.SaveChanges();
                 result.Add("message", "FCMToken was removed.");
                 result.Add("code", HttpStatusCode.Accepted);
             }

@@ -40,7 +40,7 @@ namespace ASP.NET_PersonControl.Controllers
                     if(groupsList.Contains(g2) == false)
                             groupsList.Add(g2);
 
-             List<Projects> projectsList = (from pj in _context.Projects.ToList()
+             List<Projects> projectsList = (from pj in _context.Projects.Where(p => p.isComplite == false).ToList()
                                             from gl in groupsList
                                             from gp in _context.ProjectsGroups.ToList()
                                             where pj.Id == gp.ProjId && gp.GroupId == gl.Id
