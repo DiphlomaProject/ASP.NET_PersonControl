@@ -228,7 +228,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
             db = new ApplicationDbContext();
 
             var employee = db.Users.SingleOrDefault(c => c.Id == user.id);
-            if (employee == null) //add
+            if (employee != null) //add
             {
                 ApplicationUser newUser = new ApplicationUser();
                 employee.DisplayName = user.displayName;
