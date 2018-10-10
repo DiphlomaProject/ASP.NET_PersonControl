@@ -12,7 +12,7 @@ namespace ASP.NET_PersonControl.Controllers.Api
 {
     public struct TasksAction
     {
-        public string taskId { get; set; }
+        public int taskId { get; set; }
         public string token { get; set; }
         public string userId { get; set; }
         public string answer { get; set; }
@@ -126,6 +126,118 @@ namespace ASP.NET_PersonControl.Controllers.Api
 
             result.Add("code", HttpStatusCode.Accepted);
             result.Add("data", dictRes);
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+            return Ok(result);
+        }
+
+
+
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult UpdateTasksPersonal(TasksAction tasksAction)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            if (!isTokenValid(tasksAction.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+                return Ok(result);
+            }
+
+            TasksForUser tasksForUser = db.TasksForUser.FirstOrDefault(c => c.Id == tasksAction.taskId);
+            if (tasksForUser != null) //add
+            {
+                //TasksForUser tasksForUser = db.TasksForUser.FirstOrDefault(c => c.Id == id);
+                bool complete = true;
+                tasksForUser.isComplite = complete;
+                db.SaveChanges();
+
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("message", "PTask was updated");
+                result.Add("user", tasksForUser);
+            }
+            else
+            {
+                result.Add("code", HttpStatusCode.Found);
+                result.Add("message", "PTask wasn't found in db.");
+            }
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+            return Ok(result);
+        }
+
+
+
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult UpdateTasksGroup(TasksAction tasksAction)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            if (!isTokenValid(tasksAction.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+                return Ok(result);
+            }
+
+            TasksForGroups tasksForGroup = db.TasksForGroups.FirstOrDefault(c => c.Id == tasksAction.taskId);
+            if (tasksForGroup != null) //add
+            {
+                //TasksForUser tasksForUser = db.TasksForUser.FirstOrDefault(c => c.Id == id);
+                bool complete = true;
+                tasksForGroup.isComplite = complete;
+                db.SaveChanges();
+
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("message", "GTask was updated");
+                result.Add("user", tasksForGroup);
+            }
+            else
+            {
+                result.Add("code", HttpStatusCode.Found);
+                result.Add("message", "GTask wasn't found in db.");
+            }
+            result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+            return Ok(result);
+        }
+
+
+        [HttpPost]
+        [ResponseType(typeof(Dictionary<string, object>))]
+        public IHttpActionResult UpdateTasksProject(TasksAction tasksAction)
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            if (!isTokenValid(tasksAction.token))
+            {
+                result.Add("code", HttpStatusCode.ExpectationFailed);
+                result.Add("message", "Token is not valid.");
+                result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
+
+                return Ok(result);
+            }
+
+            TasksForProjects tasksForProject = db.TasksForProjects.FirstOrDefault(c => c.Id == tasksAction.taskId);
+            if (tasksForProject != null) //add
+            {
+                bool complete = true;
+                tasksForProject.isComplite = complete;
+                db.SaveChanges();
+
+                result.Add("code", HttpStatusCode.Accepted);
+                result.Add("message", "ProjTask was updated");
+                result.Add("user", tasksForProject);
+            }
+            else
+            {
+                result.Add("code", HttpStatusCode.Found);
+                result.Add("message", "ProjTask wasn't found in db.");
+            }
             result.Add("time", DateTime.Now.ToString("ddd, dd MMMM yyyy H:mm:ss tt"));
 
             return Ok(result);
