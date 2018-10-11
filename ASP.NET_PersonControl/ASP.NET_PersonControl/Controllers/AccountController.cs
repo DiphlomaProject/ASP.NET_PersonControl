@@ -89,7 +89,7 @@ namespace ASP.NET_PersonControl.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+                    ModelState.AddModelError("", "Failed login attempt.");
                     return View(model);
             }
         }
@@ -126,7 +126,7 @@ namespace ASP.NET_PersonControl.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+                    ModelState.AddModelError("", "Failed login attempt.");
                     return View(model);
             }
         }
@@ -169,7 +169,7 @@ namespace ASP.NET_PersonControl.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неправильный код.");
+                    ModelState.AddModelError("", "Error code .");
                     return View(model);
             }
         }
@@ -208,7 +208,7 @@ namespace ASP.NET_PersonControl.Controllers
                         // Отправка сообщения электронной почты с этой ссылкой
                         string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+                        await UserManager.SendEmailAsync(user.Id, "Account Verification ", " Confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                         try
                         {
@@ -294,7 +294,7 @@ namespace ASP.NET_PersonControl.Controllers
             // Отправка сообщения электронной почты с этой ссылкой
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
             var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(user.Id, "Сброс пароля", "Сбросьте ваш пароль, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+            await UserManager.SendEmailAsync(user.Id, "Reset password", "Reset your password by clicking <a href=\"" + callbackUrl + "\">здесь</a>");
             return;
         }
 
@@ -319,7 +319,7 @@ namespace ASP.NET_PersonControl.Controllers
                 // Отправка сообщения электронной почты с этой ссылкой
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Сброс пароля", "Сбросьте ваш пароль, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+                await UserManager.SendEmailAsync(user.Id, "Reset password", "Reset your password by clicking <a href=\"" + callbackUrl + "\">здесь</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
