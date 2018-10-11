@@ -66,6 +66,9 @@ namespace ASP.NET_PersonControl.Controllers
             List<TasksForProjects> taskProjects = (from pj in projectsList
                                                    from task in _context.TasksForProjects.ToList()
                                                    where task.toProjectId == pj.Id select task).ToList();
+            foreach (TasksForProjects pj in taskProjects)
+                pj.projectName = _context.Projects.FirstOrDefault(p => p.Id == pj.toProjectId).Title;
+
             foreach (TasksForProjects projTask in taskProjects)
             {
                 if (projTask.fromUserId != null)
