@@ -394,6 +394,9 @@
     <Content Include="fonts\Roboto\LICENSE.txt" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ImagesHomePage\android.png" />
+    <Content Include="ImagesHomePage\apple.png" />
+    <Content Include="ImagesHomePage\home.png" />
     <Content Include="images\auth\login_1.jpg" />
     <Content Include="images\auth\register.jpg" />
     <Content Include="images\faces-clipart\pic-1.png" />
