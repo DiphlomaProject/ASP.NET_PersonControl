@@ -3,38 +3,29 @@
 @{
     ViewBag.Title = "GroupDitail";
 }
-<div class="card">
-    <div class="col-md-5 d-flex align-items-stretch">
-        <div class="row flex-grow">
-            <div class="col-12 grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <h4 class="card-title">Deteil to @Model.group.Title</h4>
-                        <p class="card-description">
 
-                            @Html.HiddenFor(m => m.group.Id)
-                        </p>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Title</span>
-                                </div>
-                                <input value=" @Model.group.Title" class="form-control" aria-describedby="basic-addon1" readonly="true">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Owner</span>
-                                </div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2>Detail to @Model.group.Title</h2>
+            <h4 class="card-title">@Model.group.Title information.</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="group">
+                    <tbody>
+                        <tr>
+                            <td class="table-warning"><strong>Title:</strong></td>
+                            <td class="table-warning">@Model.group.Title</td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px;" class="table-info"><strong>Owner:</strong></td>
+                            <td class="table-info">
 
                                 @for (int i = 0; i < Model.usersOfCurrentGroups.Count(); i++)
                                 {
                                     if (!Model.usersOfCurrentGroups.ElementAt(i).DisplayName.IsEmpty())
                                     {
                                         @*@Model.usersOfCurrentGroups.ElementAt(i).DisplayName*@
-                                        <input value=" @Model.usersOfCurrentGroups.ElementAt(i).DisplayName" class="form-control" aria-describedby="basic-addon1" readonly>
+                                        @Model.usersOfCurrentGroups.ElementAt(i).DisplayName 
                                     }
                                     else
                                     {
@@ -42,7 +33,7 @@
                                     }
                                     if (Model.usersOfCurrentGroups.Count() != (i + 1))
                                     {
-                                        @String.Format("  ")
+                                        @String.Format(" , ")
 
                                     }
                                     else
@@ -50,21 +41,18 @@
                                         @String.Format(" ")
                                     }
                                 }
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Description</span>
-                                </div>
-                                <input value=" @Model.group.Description" class="form-control" aria-describedby="basic-addon1" readonly>
-                            </div>
-                        </div>
-                        <a class="btn btn-light btn-fw" href="@Url.Action("Index", "MyGroups", new {  })" data-form-method="get">
-                            <i class="mdi mdi-refresh"></i>Back to List
-                        </a>
-                    </div>
-                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-warning"><strong>Description:</strong></td>
+                            <td class="table-warning">@Model.group.Description</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <a class="btn btn-light btn-fw" href="@Url.Action("Index", "MyGroups", new {  })" data-form-method="get">
+                    <i class="mdi mdi-refresh"></i>Back to List
+                </a>
             </div>
         </div>
     </div>
